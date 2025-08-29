@@ -249,6 +249,12 @@
               "name": "Product/Service name",
               "value": "={{ $('Prepare Workflow Data').item.json.rawData['Product/Service name'] || 'Unknown' }}",
               "type": "string"
+            },
+            {
+              "id": "raw_data",
+              "name": "rawData",
+              "value": "={{ $('Prepare Workflow Data').item.json.rawData }}",
+              "type": "object"
             }
           ]
         },
@@ -1132,6 +1138,12 @@
               "name": "Product/Service name",
               "value": "={{ $('Prepare Workflow Data').item.json.rawData['Product/Service name'] || 'Unknown' }}",
               "type": "string"
+            },
+            {
+              "id": "raw_data",
+              "name": "rawData",
+              "value": "={{ $('Prepare Workflow Data').item.json.rawData }}",
+              "type": "object"
             }
           ]
         },
@@ -1258,7 +1270,7 @@
     },
     {
       "parameters": {
-        "mode": "mergeByIndex"
+        "mode": "append"
       },
       "name": "Wait for A & B Completion",
       "type": "n8n-nodes-base.merge",
@@ -1324,44 +1336,186 @@
     },
     {
       "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "bvp_framework",
-              "name": "bvpFramework",
-              "value": "={{ $('C. BVP Generator').item.json }}",
-              "type": "object"
-            },
-            {
-              "id": "workflow_step",
-              "name": "workflowStep",
-              "value": "C_BVPFramework",
-              "type": "string"
-            },
-            {
-              "id": "timestamp",
-              "name": "timestamp",
-              "value": "={{ new Date().toISOString() }}",
-              "type": "string"
-            },
-            {
-              "id": "product_service_name",
-              "name": "Product/Service name",
-              "value": "={{ $('Prepare Benefits for BVP').item.json.brandContext.productName || 'Unknown' }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
+        "jsCode": "// Store BVP Framework with comprehensive OpenAI response parsing\nconst openaiResponse = $input.first().json;\nconsole.log('OpenAI Response structure:', Object.keys(openaiResponse));\nconsole.log('Message field type:', typeof openaiResponse.message);\nconsole.log('Message field value:', openaiResponse.message);\n\nlet bvpFramework;\n\n// Handle various OpenAI response formats\nif (openaiResponse.message) {\n  console.log('Found message field, attempting to parse...');\n  \n  // Try to parse as JSON string first\n  if (typeof openaiResponse.message === 'string') {\n    console.log('Message is string, parsing as JSON...');\n    try {\n      bvpFramework = JSON.parse(openaiResponse.message);\n      console.log('Successfully parsed BVP framework from message string');\n    } catch (parseError) {\n      console.log('Failed to parse message as JSON:', parseError.message);\n      console.log('Message content (first 500 chars):', openaiResponse.message.substring(0, 500));\n      throw new Error('Failed to parse OpenAI message as JSON: ' + parseError.message);\n    }\n  } else if (typeof openaiResponse.message === 'object' && openaiResponse.message !== null) {\n    console.log('Message is object, using directly...');\n    bvpFramework = openaiResponse.message;\n  } else {\n    console.log('Message field has unexpected type:', typeof openaiResponse.message);\n    throw new Error('Message field is not string or object: ' + typeof openaiResponse.message);\n  }\n} else if (openaiResponse.content && typeof openaiResponse.content === 'string') {\n  console.log('Parsing JSON from OpenAI content field...');\n  try {\n    bvpFramework = JSON.parse(openaiResponse.content);\n    console.log('Successfully parsed BVP framework from content');\n  } catch (parseError) {\n    console.log('Failed to parse OpenAI content as JSON:', parseError.message);\n    console.log('Content:', openaiResponse.content.substring(0, 500));\n    throw new Error('Failed to parse OpenAI content: ' + parseError.message);\n  }\n} else if (openaiResponse.bvp_framework || openaiResponse.framework_summary) {\n  // Direct BVP framework object\n  console.log('Found direct BVP framework object');\n  bvpFramework = openaiResponse;\n} else if (openaiResponse.choices && Array.isArray(openaiResponse.choices) && openaiResponse.choices.length > 0) {\n  // Handle OpenAI API direct response format\n  console.log('Found choices array, processing...');\n  const choice = openaiResponse.choices[0];\n  if (choice.message && choice.message.content) {\n    console.log('Parsing JSON from OpenAI choices[0].message.content...');\n    try {\n      bvpFramework = JSON.parse(choice.message.content);\n      console.log('Successfully parsed BVP framework from choices');\n    } catch (parseError) {\n      console.log('Failed to parse choice content as JSON:', parseError.message);\n      console.log('Choice content:', choice.message.content.substring(0, 500));\n      throw new Error('Failed to parse OpenAI choice content: ' + parseError.message);\n    }\n  } else {\n    console.log('Choice structure:', Object.keys(choice));\n    throw new Error('Unexpected OpenAI choices structure');\n  }\n} else if (typeof openaiResponse === 'string') {\n  // Sometimes the entire response is a JSON string\n  console.log('Parsing entire response as JSON string...');\n  try {\n    bvpFramework = JSON.parse(openaiResponse);\n    console.log('Successfully parsed BVP framework from response string');\n  } catch (parseError) {\n    console.log('Failed to parse response string as JSON:', parseError.message);\n    console.log('Response string:', openaiResponse.substring(0, 500));\n    throw new Error('Failed to parse response string: ' + parseError.message);\n  }\n} else {\n  console.log('Full OpenAI Response (first 1000 chars):', JSON.stringify(openaiResponse, null, 2).substring(0, 1000));\n  console.log('Available response keys:', Object.keys(openaiResponse));\n  \n  // Last resort - check if any field contains JSON-like content\n  for (const [key, value] of Object.entries(openaiResponse)) {\n    if (typeof value === 'string' && value.includes('{') && value.includes('}')) {\n      console.log(`Found potential JSON in field '${key}', attempting to parse...`);\n      try {\n        bvpFramework = JSON.parse(value);\n        console.log(`Successfully parsed BVP framework from '${key}' field`);\n        break;\n      } catch (parseError) {\n        console.log(`Failed to parse '${key}' as JSON:`, parseError.message);\n      }\n    }\n  }\n  \n  if (!bvpFramework) {\n    throw new Error('Cannot extract BVP framework from OpenAI response. Available keys: ' + Object.keys(openaiResponse).join(', '));\n  }\n}\n\nconsole.log('BVP Framework keys:', Object.keys(bvpFramework));\n\n// Validate that we have the expected BVP structure\nif (!bvpFramework.bvp_framework && !bvpFramework.framework_summary) {\n  console.log('Warning: BVP framework does not contain expected structure');\n  console.log('Available keys in parsed framework:', Object.keys(bvpFramework));\n}\n\n// Get brand context from previous node\nconst brandContext = $('Prepare Benefits for BVP').item.json.brandContext;\n\nreturn {\n  bvpFramework: bvpFramework,\n  workflowStep: 'C_BVPFramework',\n  timestamp: new Date().toISOString(),\n  'Product/Service name': brandContext?.productName || 'Unknown'\n};"
       },
       "name": "Store BVP Framework",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
       "position": [
         -5120,
         -264
       ],
       "id": "3374aa34-2a73-4b52-8846-20ae1140b279"
+    },
+    {
+      "parameters": {
+        "jsCode": "// COMPREHENSIVE BVP Framework Processing with bulletproof OpenAI response handling\nconst inputData = $input.first().json;\nconsole.log('=== STARTING BVP PROCESSING ===');\nconsole.log('Input data structure:', JSON.stringify(Object.keys(inputData), null, 2));\n\nlet rawBvpData = inputData.bvpFramework;\nconst productName = inputData['Product/Service name'];\nconst timestamp = inputData.timestamp;\n\nif (!rawBvpData) {\n  throw new Error('BVP framework data not found in input. Available keys: ' + Object.keys(inputData).join(', '));\n}\n\nconsole.log('Raw BVP Data type:', typeof rawBvpData);\nconsole.log('Raw BVP Data keys:', rawBvpData && typeof rawBvpData === 'object' ? Object.keys(rawBvpData) : 'Not an object');\n\n// COMPREHENSIVE JSON EXTRACTION FUNCTION\nfunction extractBvpJson(data, depth = 0) {\n  const indent = '  '.repeat(depth);\n  console.log(`${indent}Extracting BVP JSON at depth ${depth}, type:`, typeof data);\n  \n  if (depth > 5) {\n    throw new Error('Maximum extraction depth exceeded - circular reference or too deeply nested');\n  }\n  \n  // If it's already a valid BVP object\n  if (data && typeof data === 'object' && (data.bvp_framework || data.framework_summary)) {\n    console.log(`${indent}✓ Found direct BVP framework object`);\n    return data;\n  }\n  \n  // If it's a string, try to parse as JSON\n  if (typeof data === 'string') {\n    console.log(`${indent}Attempting to parse string as JSON (length: ${data.length})`);\n    try {\n      const parsed = JSON.parse(data);\n      console.log(`${indent}✓ Successfully parsed string as JSON`);\n      return extractBvpJson(parsed, depth + 1);\n    } catch (e) {\n      console.log(`${indent}✗ Failed to parse string as JSON:`, e.message);\n      console.log(`${indent}String preview:`, data.substring(0, 200));\n      return null;\n    }\n  }\n  \n  // If it's an object, check for common OpenAI response patterns\n  if (data && typeof data === 'object') {\n    const keys = Object.keys(data);\n    console.log(`${indent}Object has keys:`, keys.join(', '));\n    \n    // Pattern 1: {message: ...} \n    if (data.message) {\n      console.log(`${indent}Found 'message' field, extracting...`);\n      return extractBvpJson(data.message, depth + 1);\n    }\n    \n    // Pattern 2: {content: ...}\n    if (data.content) {\n      console.log(`${indent}Found 'content' field, extracting...`);\n      return extractBvpJson(data.content, depth + 1);\n    }\n    \n    // Pattern 3: {choices: [{message: {content: ...}}]}\n    if (data.choices && Array.isArray(data.choices) && data.choices.length > 0) {\n      console.log(`${indent}Found 'choices' array with ${data.choices.length} items`);\n      const choice = data.choices[0];\n      if (choice.message && choice.message.content) {\n        return extractBvpJson(choice.message.content, depth + 1);\n      }\n    }\n    \n    // Pattern 4: {data: ...} or {result: ...} or similar wrapper patterns\n    const wrapperKeys = ['data', 'result', 'response', 'output', 'json', 'payload'];\n    for (const key of wrapperKeys) {\n      if (data[key]) {\n        console.log(`${indent}Found wrapper field '${key}', extracting...`);\n        const extracted = extractBvpJson(data[key], depth + 1);\n        if (extracted) return extracted;\n      }\n    }\n    \n    // Pattern 5: Look for any field that might contain JSON strings\n    for (const [key, value] of Object.entries(data)) {\n      if (typeof value === 'string' && value.includes('{') && value.includes('bvp_framework')) {\n        console.log(`${indent}Found potential BVP JSON in field '${key}', extracting...`);\n        const extracted = extractBvpJson(value, depth + 1);\n        if (extracted) return extracted;\n      }\n    }\n    \n    // Pattern 6: If object has array properties, check if any contain BVP data\n    for (const [key, value] of Object.entries(data)) {\n      if (Array.isArray(value) && value.length > 0) {\n        console.log(`${indent}Checking array field '${key}' with ${value.length} items`);\n        for (let i = 0; i < value.length; i++) {\n          const extracted = extractBvpJson(value[i], depth + 1);\n          if (extracted) {\n            console.log(`${indent}✓ Found BVP data in array[${i}]`);\n            return extracted;\n          }\n        }\n      }\n    }\n  }\n  \n  // If it's an array, check each item\n  if (Array.isArray(data)) {\n    console.log(`${indent}Data is array with ${data.length} items`);\n    for (let i = 0; i < data.length; i++) {\n      const extracted = extractBvpJson(data[i], depth + 1);\n      if (extracted) {\n        console.log(`${indent}✓ Found BVP data in array[${i}]`);\n        return extracted;\n      }\n    }\n  }\n  \n  console.log(`${indent}✗ No BVP data found at this level`);\n  return null;\n}\n\n// EXTRACT THE BVP DATA\nconsole.log('=== STARTING BVP EXTRACTION ===');\nconst bvpData = extractBvpJson(rawBvpData);\n\nif (!bvpData) {\n  console.log('=== EXTRACTION FAILED - DETAILED DEBUG INFO ===');\n  console.log('Raw data type:', typeof rawBvpData);\n  console.log('Raw data preview:', JSON.stringify(rawBvpData, null, 2).substring(0, 2000));\n  throw new Error('Could not extract BVP framework from any level of the response data');\n}\n\nconsole.log('=== BVP EXTRACTION SUCCESSFUL ===');\nconsole.log('Final BVP data keys:', Object.keys(bvpData));\n\n// EXTRACT BENEFITS AND BRAND CONTEXT\nlet benefits, brandContext;\n\nif (bvpData.bvp_framework) {\n  benefits = bvpData.bvp_framework;\n  brandContext = bvpData.brand_context || {};\n  console.log('✓ Found bvp_framework structure with', benefits.length, 'benefits');\n} else if (Array.isArray(bvpData)) {\n  benefits = bvpData;\n  brandContext = {};\n  console.log('✓ Using direct benefits array with', benefits.length, 'benefits');\n} else if (bvpData.benefits) {\n  benefits = bvpData.benefits;\n  brandContext = bvpData.brand_context || {};\n  console.log('✓ Found benefits property with', benefits.length, 'benefits');\n} else {\n  console.log('=== BENEFITS EXTRACTION FAILED ===');\n  console.log('BVP data structure:', JSON.stringify(bvpData, null, 2).substring(0, 1000));\n  throw new Error('Cannot find benefits array in BVP data. Available keys: ' + Object.keys(bvpData).join(', '));\n}\n\nif (!benefits || !Array.isArray(benefits) || benefits.length === 0) {\n  throw new Error('No valid benefits array found. Benefits type: ' + typeof benefits + ', length: ' + (benefits ? benefits.length : 'N/A'));\n}\n\nconsole.log('=== BENEFITS VALIDATION ===');\nconsole.log('Benefits count:', benefits.length);\nconsole.log('Sample benefit keys:', benefits[0] ? Object.keys(benefits[0]) : 'No benefits');\n\n// EXTRACT CONTEXT INFORMATION\nconst industryParts = brandContext?.industry ? brandContext.industry.split(' > ') : [];\nconst unspscSegment = industryParts[0] || brandContext?.unspscSegment || 'Unknown';\nconst unspscFamily = industryParts[1] || brandContext?.unspscFamily || 'Unknown';\nconst unspscClass = industryParts[2] || brandContext?.unspscClass || 'Unknown';\nconst unspscCommodity = industryParts[3] || brandContext?.unspscCommodity || 'Unknown';\nconst commodityCode = 'TBD';\nconst brandName = brandContext?.brand_name || 'Unknown';\nconst targetLanguage = bvpData.target_language || brandContext?.targetLanguage || 'Unknown';\nconst targetMarket = brandContext?.targetMarket || 'Unknown';\n\nconsole.log('=== PROCESSING BENEFITS ===');\nconst outputItems = [];\nlet popCount = 0, podCount = 0, skippedCount = 0;\n\nbenefits.forEach((benefit, index) => {\n  if (!benefit || typeof benefit !== 'object') {\n    console.log(`⚠️ Skipping invalid benefit at index ${index}:`, benefit);\n    skippedCount++;\n    return;\n  }\n  \n  const source = benefit.source || '';\n  console.log(`Processing benefit ${index}: source = \"${source}\"`);\n  \n  if (source.includes('Points of Parity') || source.includes('Product')) {\n    outputItems.push({\n      json: {\n        type: 'PoP',\n        benefit_id: benefit.benefit_id || `PoP_${index}`,\n        'Segment Title': unspscSegment,\n        'Family Title': unspscFamily,\n        'Class Title': unspscClass,\n        'Commodity Title': unspscCommodity,\n        'Commodity Code': commodityCode,\n        benefit: benefit.benefit || 'Unknown benefit',\n        stakeholder: benefit.stakeholder || 'Unknown',\n        stk_category: benefit.category || 'Unknown',\n        stk_sub_category: benefit.sub_category || 'Unknown',\n        value: benefit.value || 'Unknown',\n        personality: benefit.personality || 'Unknown',\n        target_language: targetLanguage,\n        target_market: targetMarket\n      }\n    });\n    popCount++;\n  } else if (source.includes('Points of Differentiation') || source.includes('Brand')) {\n    outputItems.push({\n      json: {\n        type: 'PoD',\n        benefit_id: benefit.benefit_id || `PoD_${index}`,\n        brand_name: brandName,\n        product_name: productName,\n        benefit: benefit.benefit || 'Unknown benefit',\n        stakeholder: benefit.stakeholder || 'Unknown',\n        stk_category: benefit.category || 'Unknown',\n        stk_sub_category: benefit.sub_category || 'Unknown',\n        value: benefit.value || 'Unknown',\n        personality: benefit.personality || 'Unknown',\n        'Segment Title': unspscSegment,\n        'Family Title': unspscFamily,\n        'Class Title': unspscClass,\n        'Commodity Title': unspscCommodity,\n        'Commodity Code': commodityCode,\n        target_language: targetLanguage,\n        target_market: targetMarket\n      }\n    });\n    podCount++;\n  } else {\n    console.log(`⚠️ Benefit ${index} has unclear source: \"${source}\" - skipping`);\n    skippedCount++;\n  }\n});\n\nconsole.log('=== PROCESSING COMPLETE ===');\nconsole.log(`✓ Processed ${popCount} PoP benefits`);\nconsole.log(`✓ Processed ${podCount} PoD benefits`);\nconsole.log(`⚠️ Skipped ${skippedCount} benefits`);\nconsole.log(`📊 Total output items: ${outputItems.length}`);\n\nif (outputItems.length === 0) {\n  console.log('=== NO OUTPUT ITEMS GENERATED ===');\n  console.log('Sample benefit for debugging:', JSON.stringify(benefits[0], null, 2));\n  throw new Error('No benefits were processed into output items. Check benefit source values and data structure.');\n}\n\nreturn outputItems;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -5120,
+        -264
+      ],
+      "id": "prep-bvp-sheets",
+      "name": "Prepare BVP for Sheets"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "pop_filter",
+              "leftValue": "={{ $json.type }}",
+              "rightValue": "PoP",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [
+        -4896,
+        -364
+      ],
+      "id": "filter-pop-benefits",
+      "name": "Filter PoP Benefits"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "pod_filter",
+              "leftValue": "={{ $json.type }}",
+              "rightValue": "PoD",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [
+        -4896,
+        -164
+      ],
+      "id": "filter-pod-benefits",
+      "name": "Filter PoD Benefits"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w",
+          "mode": "list",
+          "cachedResultName": "Brand Mindset Input-test",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "PoP_Benefits",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {
+          "cellFormat": "USER_ENTERED"
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        -4672,
+        -364
+      ],
+      "id": "save-pop-benefits",
+      "name": "Save PoP Benefits",
+      "continueOnFail": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "GP0ycwiOqi6LmXaw",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w",
+          "mode": "list",
+          "cachedResultName": "Brand Mindset Input-test", 
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "PoD_Benefits",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {
+          "cellFormat": "USER_ENTERED"
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets", 
+      "typeVersion": 4,
+      "position": [
+        -4672,
+        -164
+      ],
+      "id": "save-pod-benefits",
+      "name": "Save PoD Benefits",
+      "continueOnFail": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "GP0ycwiOqi6LmXaw",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "passThrough"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        -4448,
+        -264
+      ],
+      "id": "merge-bvp-results",
+      "name": "Merge BVP Results"
     },
     {
       "parameters": {
@@ -1383,10 +1537,10 @@
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "bvpFramework": "={{ JSON.stringify($json.bvpFramework) }}",
-            "workflowStep_C": "={{ $json.workflowStep }}",
-            "timestamp_C": "={{ $json.timestamp }}",
-            "Product/Service name": "={{ $json['Product/Service name'] }}"
+            "bvp_summary": "BVP Benefits Saved Successfully",
+            "workflowStep_C": "C_BVPFramework",
+            "timestamp_C": "={{ new Date().toISOString() }}",
+            "Product/Service name": "={{ $('Store BVP Framework').item.json['Product/Service name'] }}"
           },
           "matchingColumns": [
             "Product/Service name"
@@ -1402,8 +1556,8 @@
               "canBeUsedToMatch": true
             },
             {
-              "id": "bvpFramework",
-              "displayName": "bvpFramework",
+              "id": "bvp_summary",
+              "displayName": "bvp_summary",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -1432,11 +1586,11 @@
         },
         "options": {}
       },
-      "name": "Save BVP Framework to Excel",
+      "name": "Save BVP Summary to Excel",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4,
       "position": [
-        -4896,
+        -4224,
         -264
       ],
       "id": "7971823a-99ba-44c5-9d3a-5c0930d9c565",
@@ -1926,13 +2080,7 @@
     },
     {
       "parameters": {
-        "mode": "combine",
-        "mergeByFields": {
-          "values": [
-            {}
-          ]
-        },
-        "options": {}
+        "mode": "append"
       },
       "name": "Merge Language Versions",
       "type": "n8n-nodes-base.merge",
@@ -2323,14 +2471,85 @@
       "main": [
         [
           {
-            "node": "Save BVP Framework to Excel",
+            "node": "Prepare BVP for Sheets",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Save BVP Framework to Excel": {
+    "Prepare BVP for Sheets": {
+      "main": [
+        [
+          {
+            "node": "Filter PoP Benefits",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Filter PoD Benefits",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter PoP Benefits": {
+      "main": [
+        [
+          {
+            "node": "Save PoP Benefits",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter PoD Benefits": {
+      "main": [
+        [
+          {
+            "node": "Save PoD Benefits",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save PoP Benefits": {
+      "main": [
+        [
+          {
+            "node": "Merge BVP Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save PoD Benefits": {
+      "main": [
+        [
+          {
+            "node": "Merge BVP Results",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge BVP Results": {
+      "main": [
+        [
+          {
+            "node": "Save BVP Summary to Excel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save BVP Summary to Excel": {
       "main": [
         [
           {

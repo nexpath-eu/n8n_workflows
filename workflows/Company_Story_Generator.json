@@ -1,0 +1,10 @@
+{
+  "createdAt": "2025-08-02T12:53:41.738Z",
+  "updatedAt": "2025-08-17T12:10:58.375Z",
+  "id": "brUxYv45fL9BGX9a",
+  "name": "Test-comic story generation",
+  "active": false,
+  "isArchived": false,
+  "description": "Company story generator with comic illustration creation using AI",
+  "tags": ["Testing"]
+}

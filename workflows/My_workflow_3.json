@@ -1,0 +1,95 @@
+{
+  "createdAt": "2025-08-28T13:05:33.581Z",
+  "updatedAt": "2025-08-28T16:40:13.264Z",
+  "id": "Xnm7uK6YfYxJVqwS",
+  "name": "My workflow 3",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -4080,
+        432
+      ],
+      "id": "f4bee80b-7370-44d3-a32a-4e0bb277fa77",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w",
+          "mode": "list",
+          "cachedResultName": "Brand Mindset Input-test",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2138296752,
+          "mode": "list",
+          "cachedResultName": "Form Responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w/edit#gid=2138296752"
+        },
+        "options": {}
+      },
+      "name": "Read Brand Form Data",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        -3856,
+        432
+      ],
+      "id": "685de697-20d7-4451-b0cd-1a82143fc705",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "GP0ycwiOqi6LmXaw",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Read Brand Form Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "772900aa-99ca-444e-a16b-b44307ee3640",
+  "triggerCount": 0,
+  "shared": [
+    {
+      "createdAt": "2025-08-28T13:05:33.581Z",
+      "updatedAt": "2025-08-28T13:05:33.581Z",
+      "role": "workflow:owner",
+      "workflowId": "Xnm7uK6YfYxJVqwS",
+      "projectId": "KsMRkGjzjIgqFizG"
+    }
+  ],
+  "tags": []
+}

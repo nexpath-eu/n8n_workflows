@@ -1,0 +1,19 @@
+{
+	"servers": {
+		"n8n-mcp": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"n8n-mcp"
+			],
+			"env": {
+				"MCP_MODE": "stdio",
+				"LOG_LEVEL": "error",
+				"DISABLE_CONSOLE_OUTPUT": "true",
+				"N8N_API_URL": "https://agent.nexpath.eu/",
+				"N8N_API_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkMDRjMWRmYy1kZmQ3LTQ4MjAtOTU3MS00NmU5Mzc2NDU2M2IiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwiaWF0IjoxNzU2NTQ5MDczfQ.-MAdBc2MZXkDf8i_PDkXgHd9HyrxUoe7JHuZXIOyYBw",
+			}
+		}
+	},
+	"inputs": []
+}

@@ -1,15 +1,15 @@
 # n8n Workflow Collection - Sync Summary
 
 ## Overview
-Successfully synchronized **9 accessible workflows** from your n8n instance to this repository. This collection represents a comprehensive automation suite covering LinkedIn management, AI-powered content generation, brand development, and SEO optimization.
+Successfully synchronized **10 accessible workflows** from your n8n instance to this repository. This collection represents a comprehensive automation suite covering LinkedIn management, AI-powered content generation, brand development, and SEO optimization.
 
 ## Workflow Collection Summary
 
 ### 📊 **Workflow Statistics**
-- **Total Workflows Downloaded**: 9
+- **Total Workflows Downloaded**: 10
 - **Active Workflows**: 0 (all currently inactive)
 - **Archived Workflows**: 3
-- **Workflows with AI Integration**: 7
+- **Workflows with AI Integration**: 8
 - **Workflows with Google Sheets**: 3
 - **LinkedIn Automation Workflows**: 2
 
@@ -124,9 +124,9 @@ d:/Projects-Live/workflow-maker/
 │   ├── Company_Story_Generator.json
 │   ├── Company_Story_Generator_Optimized.json
 │   ├── Congru_BVP_Creation.json
+│   ├── n8n-CongruBVPgenerator.json
 │   └── SEO_Blog_Generator.json
 ├── Complete-BrandBookMaker.json (existing)
-├── n8n-CongruBVPgenerator.json (existing)
 └── WORKFLOW_SYNC_SUMMARY.md (this file)
 ```
 
@@ -167,7 +167,7 @@ d:/Projects-Live/workflow-maker/
 ---
 
 **Last Updated**: 2025-08-30
-**Total Workflows**: 9 successfully downloaded
+**Total Workflows**: 10 successfully downloaded
 **Repository**: d:/Projects-Live/workflow-maker/
 **Status**: Ready for activation and deployment
-**Note**: testttttttt workflow removed from both repository and n8n instance
+**Note**: testttttttt workflow removed, n8n-CongruBVPgenerator.json moved to workflows folder

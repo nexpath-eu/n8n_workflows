@@ -1,19 +1,22 @@
 {
 	"servers": {
-		"n8n-mcp": {
-			"type": "stdio",
-			"command": "npx",
+		"n8n-local": {
+			"command": "node",
 			"args": [
-				"n8n-mcp"
+				"D:\\n8n-mcp\\n8n-mcp\\dist\\mcp\\index.js"
 			],
 			"env": {
-				"MCP_MODE": "stdio",
-				"LOG_LEVEL": "error",
-				"DISABLE_CONSOLE_OUTPUT": "true",
 				"N8N_API_URL": "https://agent.nexpath.eu/",
 				"N8N_API_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkMDRjMWRmYy1kZmQ3LTQ4MjAtOTU3MS00NmU5Mzc2NDU2M2IiLCJpc3MiOiJuOG4iLCJhdWQiOiJwdWJsaWMtYXBpIiwiaWF0IjoxNzU2NTQ5MDczfQ.-MAdBc2MZXkDf8i_PDkXgHd9HyrxUoe7JHuZXIOyYBw",
 			}
 		}
 	},
-	"inputs": []
+	"inputs": [
+        {
+            "type": "promptString",
+            "id": "n8n-mcp-token",
+            "description": "Your n8n-MCP AUTH_TOKEN",
+            "password": true
+        }
+    ],
 }

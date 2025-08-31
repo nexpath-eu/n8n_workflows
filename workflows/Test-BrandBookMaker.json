@@ -18,7 +18,10 @@
       },
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
-      "position": [-2160, 448],
+      "position": [
+        -2160,
+        448
+      ],
       "id": "57bfc901-9c75-48b2-b6ff-97a350a5ab94",
       "name": "Schedule Trigger"
     },
@@ -43,7 +46,10 @@
       "name": "Read Brand Form Data",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4,
-      "position": [-1936, 448],
+      "position": [
+        -1936,
+        448
+      ],
       "id": "78d166fe-c11e-49bc-bf62-34889906f414",
       "credentials": {
         "googleSheetsOAuth2Api": {
@@ -67,7 +73,10 @@
       "name": "Filter Pending Items",
       "type": "n8n-nodes-base.if",
       "typeVersion": 1,
-      "position": [-1712, 448],
+      "position": [
+        -1712,
+        448
+      ],
       "id": "7bfe3783-f20b-47a7-806e-ca4d1d82f010"
     },
     {
@@ -80,52 +89,11 @@
       "name": "Process One Item",
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 2,
-      "position": [-1488, 352],
+      "position": [
+        -1488,
+        352
+      ],
       "id": "9979e2cf-e94e-436d-86df-9336a97a6099"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "company_language",
-              "name": "companyLanguage",
-              "value": "={{ $json['Company Language'] || 'English' }}",
-              "type": "string"
-            },
-            {
-              "id": "target_languages",
-              "name": "targetLanguages",
-              "value": "={{ $json['Target Market Language'].split(',').map(lang => lang.trim()) }}",
-              "type": "array"
-            },
-            {
-              "id": "all_languages",
-              "name": "allLanguages",
-              "value": "={{ [...new Set([$json['Company Language'] || 'English', ...$json['Target Market Language'].split(',').map(lang => lang.trim())])] }}",
-              "type": "array"
-            },
-            {
-              "id": "workflow_id",
-              "name": "workflowId",
-              "value": "={{ $json['Timestamp'] + '_' + Date.now() }}",
-              "type": "string"
-            },
-            {
-              "id": "raw_data",
-              "name": "rawData",
-              "value": "={{ $json }}",
-              "type": "object"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "name": "Prepare Workflow Data",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [-1264, 352],
-      "id": "1b53329c-59ca-4661-8ccc-7ade50a2ac5b"
     }
   ],
   "connections": {
@@ -161,17 +129,6 @@
           }
         ]
       ]
-    },
-    "Process One Item": {
-      "main": [
-        [
-          {
-            "node": "Prepare Workflow Data",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
     }
   },
   "settings": {
@@ -182,5 +139,18 @@
   "pinData": {},
   "versionId": "7838163b-d515-48fe-a6c4-a01d4dd3e6d4",
   "triggerCount": 0,
-  "tags": ["Congru", "Testing"]
+  "tags": [
+    {
+      "createdAt": "2025-08-06T11:13:58.849Z",
+      "updatedAt": "2025-08-17T12:13:20.985Z",
+      "id": "PTDpGFle0Aa0Jj9D",
+      "name": "Congru"
+    },
+    {
+      "createdAt": "2025-08-17T12:10:56.665Z",
+      "updatedAt": "2025-08-17T12:10:56.665Z",
+      "id": "m21eE29eBX9CJ3bL",
+      "name": "Testing"
+    }
+  ]
 }

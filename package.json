@@ -1,20 +1,8 @@
 {
-  "name": "n8n-workflow-sync",
+  "name": "n8n-workflows",
   "version": "1.0.0",
-  "description": "Sync workflows between n8n instance and local repository",
-  "main": "sync.js",
-  "scripts": {
-    "list": "node sync.js list",
-    "pull": "node sync.js pull",
-    "backup": "node sync.js backup",
-    "sync": "node sync.js"
-  },
-  "dependencies": {
-    "axios": "^1.6.0",
-    "commander": "^11.0.0"
-  },
-  "devDependencies": {},
-  "keywords": ["n8n", "workflow", "automation", "sync"],
+  "description": "Repository for storing and managing n8n workflows",
+  "keywords": ["n8n", "workflow", "automation"],
   "author": "Your Name",
   "license": "MIT"
 }

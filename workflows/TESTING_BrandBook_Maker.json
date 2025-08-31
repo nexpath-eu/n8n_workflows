@@ -1,0 +1,2873 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4",
+          "mode": "list",
+          "cachedResultName": "GPT-4"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You are a Congru Model specialist with deep expertise in brand categorization frameworks.",
+              "role": "system"
+            },
+            {
+              "content": "# BVP CATEGORIZATION USING CONGRU MODEL\n\nCategorize the BVP framework elements according to the Congru Model classification system.\n\n## INPUT BVP FRAMEWORK\n{{ $('C. BVP Generator').item.json }}\n\n## CATEGORIZATION TASK\nApply Congru Model categories to each BVP element:\n- Fixed Identity (non-negotiable core elements)\n- Growth Identity (evolving/developmental elements)\n- Situational Identity (context-dependent elements)\n\n## OUTPUT FORMAT\nProvide JSON with categorized BVP elements according to Congru Model:\n- fixed_elements: Core non-negotiable BVP items\n- growth_elements: Developmental BVP items\n- situational_elements: Context-adaptive BVP items\n- categorization_rationale: Explanation of categorization logic"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -640,
+        32
+      ],
+      "id": "0c790af7-0cf6-4c38-911a-97f47470d232",
+      "name": "D. BVP Categorization",
+      "credentials": {
+        "openAiApi": {
+          "id": "24f4qODVRQ0INcJS",
+          "name": "OpenAI - n8n automations"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w",
+          "mode": "list",
+          "cachedResultName": "Brand Mindset Input-test"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Categorized_BVP",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "name": "Store Categorized BVP",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        -224,
+        32
+      ],
+      "id": "8f7ffdea-d26d-40a2-9128-ea13bb63a06e",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "GP0ycwiOqi6LmXaw",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4",
+          "mode": "list",
+          "cachedResultName": "GPT-4"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "Using your expertise in the Burmann Identity model, answer all queries and complete tasks related to brand identity. Provide detailed, accurate, and well-structured information grounded in the Burmann Identity model. The tone should be inspiring, and the narrative should reflect the brand personality.",
+              "role": "system"
+            },
+            {
+              "content": "# BRAND ORIGIN STORY CREATION\n\nCreate the origin story for {{ $('Prepare Workflow Data').item.json.rawData.brandName || $('Prepare Workflow Data').item.json.rawData.companyName || 'the brand' }}, highlighting its {{ $('Prepare Workflow Data').item.json.rawData['Brand Origin'] || $('Prepare Workflow Data').item.json.rawData['Company\\'s Origin (Heritage)'] || 'brand origin' }}.\n\n## BRAND CONTEXT\n- **Brand Name:** {{ $('Prepare Workflow Data').item.json.rawData.brandName || $('Prepare Workflow Data').item.json.rawData.companyName }}\n- **Brand Origin:** {{ $('Prepare Workflow Data').item.json.rawData['Brand Origin'] || $('Prepare Workflow Data').item.json.rawData['Company\\'s Origin (Heritage)'] }}\n- **Brand Advantage:** {{ $('Prepare Workflow Data').item.json.rawData['Brand Advantage (Superior Benefit)'] }}\n- **Industry:** {{ $('Prepare Workflow Data').item.json.rawData['Industry (vertical) / ISIC code'] || $('Prepare Workflow Data').item.json.rawData['ISIC5 - Class Title'] }}\n- **Brand Stage:** {{ $('Prepare Workflow Data').item.json.rawData['Brand Stage (Lifecycle Phase)'] }}\n- **Founding Spark:** {{ $('Prepare Workflow Data').item.json.rawData['Founding spark (year/place)'] }}\n- **First Barrier:** {{ $('Prepare Workflow Data').item.json.rawData['First barrier & response'] }}\n- **Growth Barrier:** {{ $('Prepare Workflow Data').item.json.rawData['Biggest Brand Growth Barrier'] }}\n\n## OUTPUT REQUIREMENTS\nCreate two tables:\n1. **Brand Origin Statement** - Core origin narrative\n2. **Brand History** - Key milestones and development\n\nProvide JSON with brand_origin_statement and brand_history structures."
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -288,
+        -160
+      ],
+      "id": "85edd213-02d6-4646-b0de-c42e7e51a791",
+      "name": "E. Origin Maker",
+      "credentials": {
+        "openAiApi": {
+          "id": "24f4qODVRQ0INcJS",
+          "name": "OpenAI - n8n automations"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4",
+          "mode": "list",
+          "cachedResultName": "GPT-4"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You are an expert in Brand Identity and know the Burmann Identity model in detail. Use inspiring language that motivates stakeholders to align behind a common future state.",
+              "role": "system"
+            },
+            {
+              "content": "# BRAND VISION CREATION\n\nCraft an aspirational, future-oriented Vision that describes the brand goals.\n\n## BRAND CONTEXT\n- **Brand Vision:** {{ $('Prepare Workflow Data').item.json.rawData['Brand Vision'] }}\n- **Future of Brand:** {{ $('Prepare Workflow Data').item.json.rawData['Future of the Brand (BHAGs)'] }}\n- **Future of Industry:** {{ $('Prepare Workflow Data').item.json.rawData['Future of the Industry'] }}\n- **Core Values:** {{ $('Prepare Workflow Data').item.json.rawData['Core Values'] }}\n- **Industry:** {{ $('Prepare Workflow Data').item.json.rawData['Industry (vertical) / ISIC code'] || $('Prepare Workflow Data').item.json.rawData['ISIC5 - Class Title'] }}\n\n## TASK\nCombine Vision with Core Values in the industry context to produce a finalized Brand Vision Statement.\n\n## OUTPUT FORMAT\nProvide JSON with brand_vision_statement structure including vision_description, supporting_values, and industry_alignment."
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -288,
+        224
+      ],
+      "id": "a3583165-76ea-405a-a1fe-09cdce937512",
+      "name": "F. Vision Maker",
+      "credentials": {
+        "openAiApi": {
+          "id": "24f4qODVRQ0INcJS",
+          "name": "OpenAI - n8n automations"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4",
+          "mode": "list",
+          "cachedResultName": "GPT-4"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You are a strategic brand consultant specializing in BCG strategy palette implementation for brand development.",
+              "role": "system"
+            },
+            {
+              "content": "# BRAND STRATEGY DEVELOPMENT\n\nCreate a comprehensive brand strategy using the BCG strategy palette approach.\n\n## BRAND CONTEXT\n- **Personal vs Corporate Impact:** {{ $('Prepare Workflow Data').item.json.rawData['Personal vs. Corporate Brand Impact (1–10, the lower means more Personal)'] }}\n- **Brand Stage:** {{ $('Prepare Workflow Data').item.json.rawData['Brand Stage (Lifecycle Phase)'] }}\n- **Brand Position:** {{ $('Prepare Workflow Data').item.json.rawData['Brand Position (in the Market Location)'] }}\n- **Target Market:** {{ $('Prepare Workflow Data').item.json.rawData['Product Target Market'] }}\n- **Decision Making:** {{ $('Prepare Workflow Data').item.json.rawData['Decision-Making Style (Organizational mindset)'] }}\n- **Customer Types:** {{ $('Prepare Workflow Data').item.json.rawData['Type of customer'] }}\n- **Customer Benefits:** {{ $('Prepare Workflow Data').item.json.rawData['Customer Benefits (Brand-level)'] }}\n- **Brand Advantage:** {{ $('Prepare Workflow Data').item.json.rawData['Brand Advantage (Superior Benefit)'] }}\n- **Growth Barrier:** {{ $('Prepare Workflow Data').item.json.rawData['Biggest Brand Growth Barrier'] }}\n- **Long-term Goals:** {{ $('Prepare Workflow Data').item.json.rawData['Future of the Brand (BHAGs)'] }}\n\n## TASK\nDevelop brand strategy using BCG strategy palette (classical, adaptive, visionary, shaping, renewal).\n\n## OUTPUT FORMAT\nProvide JSON with mindset_brief and strategy_palette structures."
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -288,
+        416
+      ],
+      "id": "bc4e6d86-c973-4f21-9e41-e561d79d11f6",
+      "name": "G. Brand Strategy Maker",
+      "credentials": {
+        "openAiApi": {
+          "id": "24f4qODVRQ0INcJS",
+          "name": "OpenAI - n8n automations"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "brand_components",
+              "name": "brandComponents",
+              "value": "={{ { origin: $('E. Origin Maker').item.json, vision: $('F. Vision Maker').item.json, strategy: $('G. Brand Strategy Maker').item.json, workflowId: $('Prepare Workflow Data').item.json.workflowId } }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Merge Brand Components",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        64,
+        128
+      ],
+      "id": "cf157c68-dee2-44ed-8746-f77dcc3202a4"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w",
+          "mode": "list",
+          "cachedResultName": "Brand Mindset Input-test"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Brand_Components",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "name": "Store Brand Components",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        352,
+        128
+      ],
+      "id": "b6a8ba9a-8316-4f3e-81c0-a4795293e0d0",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "GP0ycwiOqi6LmXaw",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "identity_context",
+              "name": "identityContext",
+              "value": "={{ { categorizedBVP: $('D. BVP Categorization').item.json, rawData: $('Prepare Workflow Data').item.json.rawData, workflowId: $('Prepare Workflow Data').item.json.workflowId } }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Prepare Identity Context",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        64,
+        416
+      ],
+      "id": "1f93dbfe-21fb-4cd5-918b-12b2a014a28e"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4",
+          "mode": "list",
+          "cachedResultName": "GPT-4"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You are a brand identity specialist focusing on core, non-negotiable brand elements using established branding frameworks.",
+              "role": "system"
+            },
+            {
+              "content": "# FIXED IDENTITY CREATION\n\nExtract and define the core, non-negotiable brand identity elements from the categorized BVP framework.\n\n## CATEGORIZED BVP DATA\n{{ $json.identityContext.categorizedBVP }}\n\n## BRAND CONTEXT\n- **Industry:** {{ $json.identityContext.rawData['Industry (vertical) / ISIC code'] || $json.identityContext.rawData['ISIC5 - Class Title'] }}\n- **Target Audiences:** {{ $json.identityContext.rawData['Most Valuable Customer Groups'] || $json.identityContext.rawData['Type of customer'] }}\n\n## TASK\nFrom the fixed_elements in the categorized BVP:\n1. Extract 3 core benefits that are non-negotiable\n2. Define 3 core values with specific Do/Don't statements\n3. Identify 3 core personality traits\n4. Choose a single brand archetype\n5. Define communication style implications\n\n## OUTPUT FORMAT\nProvide JSON with fixed_identity structure including benefits, values, personality traits, archetype, and communication_style."
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        288,
+        320
+      ],
+      "id": "5664ec6a-63ef-4ba6-bb5e-946226043215",
+      "name": "H. Fixed Identity Maker",
+      "credentials": {
+        "openAiApi": {
+          "id": "24f4qODVRQ0INcJS",
+          "name": "OpenAI - n8n automations"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4",
+          "mode": "list",
+          "cachedResultName": "GPT-4"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You are a brand development specialist focusing on evolutionary and growth-oriented brand characteristics.",
+              "role": "system"
+            },
+            {
+              "content": "# GROWTH IDENTITY CREATION\n\nDefine the evolving, developmental aspects of brand identity from the categorized BVP framework.\n\n## CATEGORIZED BVP DATA\n{{ $json.identityContext.categorizedBVP }}\n\n## BRAND CONTEXT\n- **Industry:** {{ $json.identityContext.rawData['Industry (vertical) / ISIC code'] || $json.identityContext.rawData['ISIC5 - Class Title'] }}\n- **Brand Stage:** {{ $json.identityContext.rawData['Brand Stage (Lifecycle Phase)'] }}\n- **Growth Goals:** {{ $json.identityContext.rawData['Future of the Brand (BHAGs)'] }}\n\n## TASK\nFrom the growth_elements in the categorized BVP:\n1. Identify evolving benefits as the brand grows\n2. Define developmental values\n3. Describe growing personality traits\n4. Explain how these influence communication style\n5. Create brand identity strategy for growth phase\n\n## OUTPUT FORMAT\nProvide JSON with growth_identity structure including evolving_benefits, developmental_values, growing_personality, communication_evolution, and growth_strategy."
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        288,
+        512
+      ],
+      "id": "4732da1a-28a6-4216-9bc6-4348bba7a00c",
+      "name": "I. Growth Identity Maker",
+      "credentials": {
+        "openAiApi": {
+          "id": "24f4qODVRQ0INcJS",
+          "name": "OpenAI - n8n automations"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4",
+          "mode": "list",
+          "cachedResultName": "GPT-4"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You are a brand adaptation specialist focusing on context-dependent and situational brand characteristics.",
+              "role": "system"
+            },
+            {
+              "content": "# SITUATIONAL IDENTITY CREATION\n\nDefine the context-adaptive aspects of brand identity from the categorized BVP framework.\n\n## CATEGORIZED BVP DATA\n{{ $json.identityContext.categorizedBVP }}\n\n## BRAND CONTEXT\n- **Industry:** {{ $json.identityContext.rawData['Industry (vertical) / ISIC code'] || $json.identityContext.rawData['ISIC5 - Class Title'] }}\n- **Target Audiences:** {{ $json.identityContext.rawData['Most Valuable Customer Groups'] || $json.identityContext.rawData['Type of customer'] }}\n- **Market Contexts:** {{ $json.identityContext.rawData['Product Target Market'] }}\n\n## TASK\nFrom the situational_elements in the categorized BVP:\n1. Define context-dependent benefits for different situations\n2. Identify adaptive values for various contexts\n3. Describe situational personality adaptations\n4. Map communication style variations by context\n5. Create adaptation guidelines\n\n## OUTPUT FORMAT\nProvide JSON with situational_identity structure including context_benefits, adaptive_values, situational_personality, communication_adaptations, and adaptation_guidelines."
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        288,
+        704
+      ],
+      "id": "af0879ec-0944-41e8-bd96-a85dbc56b053",
+      "name": "J. Situational Identity Maker",
+      "credentials": {
+        "openAiApi": {
+          "id": "24f4qODVRQ0INcJS",
+          "name": "OpenAI - n8n automations"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "all_identity_types",
+              "name": "allIdentityTypes",
+              "value": "={{ { fixed: $('H. Fixed Identity Maker').item.json, growth: $('I. Growth Identity Maker').item.json, situational: $('J. Situational Identity Maker').item.json, workflowId: $('Prepare Workflow Data').item.json.workflowId } }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Merge Identity Types",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        640,
+        416
+      ],
+      "id": "4740b3e1-8c13-4ea2-b23e-5da579bd722f"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w",
+          "mode": "list",
+          "cachedResultName": "Brand Mindset Input-test"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Identity_Types",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "name": "Store Identity Types",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        864,
+        416
+      ],
+      "id": "3a34f35a-a754-4bac-aa9a-ae32df85441c",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "GP0ycwiOqi6LmXaw",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "complete_brandbook_data",
+              "name": "completeBrandbookData",
+              "value": "={{ { workflowId: $('Prepare Workflow Data').item.json.workflowId, rawData: $('Prepare Workflow Data').item.json.rawData, benefits: { pop: $('A. Product Benefit Finder').item.json, pod: $('B. Brand-Product Benefit Creator').item.json }, bvpFramework: $('C. BVP Generator').item.json, categorizedBVP: $('D. BVP Categorization').item.json, brandComponents: $('Merge Brand Components').item.json.brandComponents, identityTypes: $json.allIdentityTypes } }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Compile Complete BrandBook Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1088,
+        128
+      ],
+      "id": "47159888-f628-445f-9ae1-d35d5e95d709"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4",
+          "mode": "list",
+          "cachedResultName": "GPT-4"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You are a professional brand book compiler and document designer specializing in comprehensive brand identity documentation.",
+              "role": "system"
+            },
+            {
+              "content": "# COMPLETE BRANDBOOK COMPILATION\n\nCompile all brand identity components into a comprehensive, well-structured brand book.\n\n## COMPLETE BRAND DATA\n{{ $json.completeBrandbookData }}\n\n## COMPILATION REQUIREMENTS\n1. **Executive Summary** - Overview of brand identity\n2. **Brand Foundation** - Origin, vision, strategy\n3. **Brand Benefits** - PoP and PoD analysis\n4. **BVP Framework** - Benefits, values, personality mapping\n5. **Identity Types** - Fixed, growth, situational identities\n6. **Implementation Guidelines** - Practical application instructions\n7. **Brand Standards** - Usage guidelines and examples\n\n## OUTPUT FORMAT\nProvide JSON with complete brandbook structure including all sections, formatted for professional presentation in {{ $json.completeBrandbookData.rawData.targetMarketLanguage }}."
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        1312,
+        128
+      ],
+      "id": "5964a9b7-a29d-413e-8bc8-959d90910cdc",
+      "name": "K. BrandBook Compiler",
+      "credentials": {
+        "openAiApi": {
+          "id": "24f4qODVRQ0INcJS",
+          "name": "OpenAI - n8n automations"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w",
+          "mode": "list",
+          "cachedResultName": "Brand Mindset Input-test"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2138296752,
+          "mode": "list",
+          "cachedResultName": "Form Responses 1"
+        },
+        "options": {}
+      },
+      "name": "Update Status to Done",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        1664,
+        128
+      ],
+      "id": "43df282c-7e3c-4be2-b785-c79bbc8782a5",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "GP0ycwiOqi6LmXaw",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -5376,
+        704
+      ],
+      "id": "f9396a96-c08e-4d25-bc3d-4dae7ea73002",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w",
+          "mode": "list",
+          "cachedResultName": "Brand Mindset Input-test",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2138296752,
+          "mode": "list",
+          "cachedResultName": "Form Responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w/edit#gid=2138296752"
+        },
+        "options": {}
+      },
+      "name": "Read Brand Form Data",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        -5152,
+        704
+      ],
+      "id": "360fb4da-a218-4710-8612-d50d9f4bb7f5",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "GP0ycwiOqi6LmXaw",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json[\"Status\"]}}",
+              "operation": "notEqual",
+              "value2": "Done"
+            }
+          ]
+        }
+      },
+      "name": "Filter Pending Items",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        -4928,
+        704
+      ],
+      "id": "9add1863-5a05-41a2-9879-ca082a24da03"
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {
+          "reset": false
+        }
+      },
+      "name": "Process One Item",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [
+        -4704,
+        608
+      ],
+      "id": "466e0c86-ab70-46be-9679-754c46d1a7eb"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "company_language",
+              "name": "companyLanguage",
+              "value": "={{ $json['Company Language'] || 'English' }}",
+              "type": "string"
+            },
+            {
+              "id": "target_languages",
+              "name": "targetLanguages",
+              "value": "={{ $json['Target Market Language'].split(',').map(lang => lang.trim()) }}",
+              "type": "array"
+            },
+            {
+              "id": "all_languages",
+              "name": "allLanguages",
+              "value": "={{ [...new Set([$json['Company Language'] || 'English', ...$json['Target Market Language'].split(',').map(lang => lang.trim())])] }}",
+              "type": "array"
+            },
+            {
+              "id": "workflow_id",
+              "name": "workflowId",
+              "value": "={{ $json['Timestamp'] + '_' + Date.now() }}",
+              "type": "string"
+            },
+            {
+              "id": "raw_data",
+              "name": "rawData",
+              "value": "={{ $json }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Prepare Workflow Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -4480,
+        608
+      ],
+      "id": "904fdff4-080d-4a5d-8ab9-5dba69713e0f"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "raw_data",
+              "name": "rawData",
+              "value": "={{ $json.rawData }}",
+              "type": "object"
+            },
+            {
+              "id": "workflow_id",
+              "name": "workflowId",
+              "value": "={{ $json.workflowId }}",
+              "type": "string"
+            },
+            {
+              "id": "target_languages",
+              "name": "targetLanguages",
+              "value": "={{ $json.targetLanguages }}",
+              "type": "array"
+            },
+            {
+              "id": "target_language",
+              "name": "targetLanguage",
+              "value": "={{ $json.rawData['Target Market Language'] }}",
+              "type": "string"
+            },
+            {
+              "id": "company_data",
+              "name": "companyData",
+              "value": "={{ {\n  companyName: $json.rawData['Company name'] || 'Unknown Company',\n  companyDescription: $json.rawData['Company description / mission (short)'] || 'Unknown',\n  companyOrigin: $json.rawData['Company\\'s Origin (Heritage)'] || 'Unknown',\n  foundingSpark: $json.rawData['Founding spark (year/place)'] || 'Unknown',\n  firstBarrier: $json.rawData['First barrier & response'] || 'Unknown',\n  proofPoints: $json.rawData['Proof points achieved'] || 'Unknown',\n  personalVsCorporate: $json.rawData['Personal vs. Corporate Brand Impact (1–10, the lower means more Personal)'] || 'Unknown',\n  decisionMaking: $json.rawData['Decision-Making Style (Organizational mindset)'] || 'Unknown'\n} }}",
+              "type": "object"
+            },
+            {
+              "id": "brand_data",
+              "name": "brandData",
+              "value": "={{ {\n  brandName: $json.rawData['Brand name'] || $json.rawData['Company name'] || 'Unknown Brand',\n  brandStage: $json.rawData['Brand Stage (Lifecycle Phase)'] || 'Unknown',\n  brandVision: $json.rawData['Brand Vision'] || 'Unknown',\n  brandMission: $json.rawData['Brand Mission'] || 'Unknown',\n  brandPurpose: $json.rawData['Brand Purpose'] || 'Unknown',\n  brandAdvantage: $json.rawData['Brand Advantage (Superior Benefit)'] || 'Unknown',\n  brandPosition: $json.rawData['Brand Position (in the Market Location)'] || 'Unknown',\n  coreValues: $json.rawData['Core Values'] || 'Unknown',\n  brandOrigin: $json.rawData['Brand Origin'] || $json.rawData['Company\\'s Origin (Heritage)'] || 'Unknown',\n  growthBarrier: $json.rawData['Biggest Brand Growth Barrier'] || 'Unknown',\n  futureGoals: $json.rawData['Future of the Brand (BHAGs)'] || 'Unknown',\n  environmentalPredictability: $json.rawData['Axis A — Environmental Predictability'] || 'Unknown',\n  brandInfluence: $json.rawData['Axis B — Brand Influence / Ability to Act'] || 'Unknown'\n} }}",
+              "type": "object"
+            },
+            {
+              "id": "product_data",
+              "name": "productData",
+              "value": "={{ {\n  productName: $json.rawData['Product/Service name'] || 'Unknown Product',\n  productDescriptionShort: $json.rawData['Product description (short)'] || 'Unknown',\n  productDescriptionDetailed: $json.rawData['Product description (detailed)'] || 'Unknown',\n  targetMarket: $json.rawData['Product Target Market'] || 'Unknown Market'\n} }}",
+              "type": "object"
+            },
+            {
+              "id": "product_classification",
+              "name": "productClassification",
+              "value": "={{ {\n  unspscSegmentTitle: $json.rawData['UNSPSC - Segment Title'] || 'Unknown',\n  unspscSegmentCode: $json.rawData['UNSPSC - Segment Code'] || 'Unknown',\n  unspscFamilyTitle: $json.rawData['UNSPSC - Family Title'] || 'Unknown',\n  unspscFamilyCode: $json.rawData['UNSPSC - Family Code'] || 'Unknown',\n  unspscClassTitle: $json.rawData['UNSPSC - Class Title'] || 'Unknown',\n  unspscClassCode: $json.rawData['UNSPSC - Class Code'] || 'Unknown',\n  unspscCommodityTitle: $json.rawData['UNSPSC - Commodity Title'] || 'Unknown',\n  unspscCommodityCode: $json.rawData['UNSPSC - Commodity Code'] || 'Unknown',\n  unspscHierarchy: ($json.rawData['UNSPSC - Segment Title'] + ' (' + $json.rawData['UNSPSC - Segment Code'] + ') > ' + $json.rawData['UNSPSC - Family Title'] + ' (' + $json.rawData['UNSPSC - Family Code'] + ') > ' + $json.rawData['UNSPSC - Class Title'] + ' (' + $json.rawData['UNSPSC - Class Code'] + ') > ' + $json.rawData['UNSPSC - Commodity Title'] + ' (' + $json.rawData['UNSPSC - Commodity Code'] + ')') || 'Unknown'\n} }}",
+              "type": "object"
+            },
+            {
+              "id": "industry_classification",
+              "name": "industryClassification",
+              "value": "={{ {\n  isicGroupTitle: $json.rawData['ISIC5 - Group Title'] || 'Unknown',\n  isicGroupCode: $json.rawData['ISIC5 - Group Code'] || 'Unknown',\n  isicClassTitle: $json.rawData['ISIC5 - Class Title'] || 'Unknown',\n  isicClassCode: $json.rawData['ISIC5 - Class Code'] || 'Unknown',\n  industryVertical: $json.rawData['Industry (vertical) / ISIC code'] || 'Unknown',\n  industryFuture: $json.rawData['Future of the Industry'] || 'Unknown',\n  isicHierarchy: (($json.rawData['ISIC5 - Group Title'] ? $json.rawData['ISIC5 - Group Title'] + ' (' + ($json.rawData['ISIC5 - Group Code'] || 'N/A') + ')' : 'N/A') + ' > ' + $json.rawData['ISIC5 - Class Title'] + ' (' + $json.rawData['ISIC5 - Class Code'] + ')') || 'Unknown'\n} }}",
+              "type": "object"
+            },
+            {
+              "id": "customer_market_data",
+              "name": "customerMarketData",
+              "value": "={{ {\n  customerType: $json.rawData['Type of customer'] || 'Unknown',\n  marketGroups: $json.rawData['Market Groups'] || 'Unknown',\n  valuableCustomers: $json.rawData['Most Valuable Customer Groups'] || 'Unknown',\n  successGroups: $json.rawData['Groups Where You've Succeeded'] || 'Unknown',\n  customerBenefits: $json.rawData['Customer Benefits (Brand-level)'] || 'Unknown'\n} }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Brand Context Repository",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -4256,
+        608
+      ],
+      "id": "brand-context-repo-001"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5-nano",
+          "mode": "list",
+          "cachedResultName": "GPT-5-NANO"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are an expert brand manager and marketing strategist with over 15 years of experience in international markets. You specialize in competitive analysis, market intelligence, and stakeholder-centric brand positioning using the Brand Equity Theory by David Aaker. \n\nYour key tasks:\n- Apply Aaker's Model (brand loyalty, awareness, perceived quality, associations, proprietary assets) for all benefit mapping.\n- Perform context-aware product name translation using the full UNSPSC hierarchy.\n- Identify real market leaders in {{ $json.rawData['Product Target Market'] }} and analyze their communicated value for stakeholders using accurate, web-researched information.\n- Organize findings into a 3-level hierarchy: Stakeholder Group > Benefit Category > Sub-Category.\n- Always use the following predefined English terms EXACTLY for each of the three output levels; never translate or paraphrase:\n  - Stakeholder Groups: End-Users, Employees, Distributors, Investors, Regulators and Compliance Bodies, Community, Media and Influencers\n  - Benefit Categories: Financial, Functional, Self-Expression, Emotional, Experiential, Social, Cultural\n  - Sub-Categories (see below)\n\nCRITICAL TRANSLATION GUIDELINES:\n1. **Hierarchical Context Translation**: When translating the product name, consider the complete categorical context:\n   - Segment ({{ $json.rawData['UNSPSC - Segment Title'] }}) - The broadest industrial category\n   - Family ({{ $json.rawData['UNSPSC - Family Title'] }}) - The product family within that segment\n   - Class ({{ $json.rawData['UNSPSC - Class Title'] }}) - The specific product class\n   - Commodity ({{ $json.rawData['UNSPSC - Commodity Title'] }}) - The exact product being analyzed\n\n2. **Translation Strategy**:\n   - Research how this specific product type is commonly named in the market(s) of {{ $json.rawData['Product Target Market'] }}\n   - Consider industry-specific terminology and standards used in {{ $json.targetLanguages[0] }}\n   - Look for official translations in technical documentation, standards, or trade publications\n   - Ensure the translated name maintains the technical precision of the original while being culturally appropriate\n   - If multiple valid translations exist, choose the one most commonly used in commercial/B2B contexts\n\n3. **Market Research for Translation**:\n   - Analyze how leading companies in {{ $json.rawData['Product Target Market'] }} refer to this product category\n   - Check official government classifications, import/export documentation\n   - Review technical specifications and product catalogs from major manufacturers\n   - Consider regional variations within the target market\n\n4. **Quality Validation**:\n   - Ensure the translated name would be understood by industry professionals\n   - Verify it aligns with local regulatory terminology if applicable\n   - Check that it doesn't create confusion with similar but different product categories\n\nCritical Language Guidelines:\n- All Stakeholder, Category, and Sub-Category keys must remain in English and match exactly.\n- ALWAYS generate benefit descriptions in the {{ $json.targetLanguages[0] }} Language\n- Use the {{ $json.rawData['Product Target Market'] }} for market research and competitive context\n- Ensure linguistic and cultural appropriateness for the {{ $json.targetLanguages[0] }} language\n- **IMPORTANT: The product you're analyzing is \"{{ $json.rawData['UNSPSC - Commodity Title'] }}\" within the context of {{ $json.rawData['UNSPSC - Class Title'] }} > {{ $json.rawData['UNSPSC - Family Title'] }} > {{ $json.rawData['UNSPSC - Segment Title'] }}. Consider this full hierarchical context to understand the specific product category and generate relevant benefits.**\n- Translate the product name considering its full categorical context into the target language ({{ $json.targetLanguages[0] }}), ensuring it is accurate and culturally appropriate. Output this translated product name as \"{{ $json.rawData['Product/Service name'] }}\" in your JSON response.",
+              "role": "system"
+            },
+            {
+              "content": "=# PRODUCT ANALYSIS REQUEST\n\nAnalyze this product—by stakeholder group—for Points of Parity (PoP), tailored to the target market and language, using David Aaker's Brand Equity Model.\n\n## PRODUCT HIERARCHY & CONTEXT\n**Understanding the Product:** The commodity \"{{ $json.rawData['UNSPSC - Commodity Title'] }}\" should be understood within its complete UNSPSC hierarchy:\n- **Segment:** {{ $json.rawData['UNSPSC - Segment Title'] }} - UNSPSC Segment code: {{ $json.rawData['UNSPSC - Segment Code'] }}\n- **Family:** Family {{ $json.rawData['UNSPSC - Family Title'] }} - UNSPSC Family code: {{ $json.rawData['UNSPSC - Family Code'] }}\n- **Class:** Class {{ $json.rawData['UNSPSC - Class Title'] }} - UNSPSC Class code: {{ $json.rawData['UNSPSC - Class Code'] }}\n- **Commodity:** Commodity {{ $json.rawData['UNSPSC - Commodity Title'] }} - UNSPSC Commodity code: {{ $json.rawData['UNSPSC - Commodity Code'] }}\n\n**Analysis Focus:** Use this hierarchical context to identify the specific product type and generate benefits relevant to this exact category, not just the commodity title in isolation.\n\n## TARGET PARAMETERS  \n- **Target Language:** {{ $json.rawData['Target Market Language'] }}\n- **Target Market:** {{ $json.rawData['Product Target Market'] }}\n\n// Add this emphasis to your user message:\n\"**CRITICAL: Translation Priority**\n- The product name translation is crucial for accurate market research\n- Use the complete hierarchy context: \"{{ $json.rawData['UNSPSC - Commodity Title'] }}\"\n- Research how industry professionals in {{ $json.rawData['Product Target Market'] }} refer to this specific product category\n- Ensure technical accuracy while maintaining cultural appropriateness\"\n---\n\n## BENEFIT CATEGORIES AND SUB-CATEGORIES  \n**Use these keys, never translated or changed:**\n\n**1. FINANCIAL:** \n- Cost Savings\n- Investment \n- Value for Money \n- Income Generation \n- Financial Security \n- Rewards and Incentives\n  \n**2. FUNCTIONAL:** \n- Convenience\n- Quality \n- Reliability \n- Performance \n- Safety\n\n**3. SELF-EXPRESSION:** \n- Individuality \n- Status \n- Lifestyle \n- Personality\n\n**4. EMOTIONAL:** \n- Happiness\n- Security \n- Belonging\n- Self-esteem \n- Nostalgia\n\n**5. EXPERIENTIAL:** \n- Sensory Experience \n- Adventure \n- Learning \n- Entertainment\n\n**6. SOCIAL:** \n- Social Approval \n- Community\n- Altruism\n\n**7. CULTURAL:** \n- Cultural Representation\n- Cultural Participation \n- Cultural Preservation \n- Cultural Innovation\n- Cultural Education \n- Cultural Expression \n- Community and Identity\n\n\n---\n\n## RESEARCH & MAPPING METHODOLOGY\n\n- **Framework:** Use Aaker's Brand Equity Model for prioritization.\n- Each benefit description must be in the specified **Target Language**, regardless of the **Target Market**\n- Use the **Target Market** for market research and competitive analysis, but generate all text in the **Target Language**\n- **Context-Aware Analysis:** Research market leaders and competitors specifically within the {{ $json.rawData['UNSPSC - Segment Title'] }} > {{ $json.rawData['UNSPSC - Family Title'] }} > {{ $json.rawData['UNSPSC - Class Title'] }} > {{ $json.rawData['UNSPSC - Commodity Title'] }} category\n- **Steps:**\n  1. Understand the product within its full hierarchical context\n  2. Extract authentic stakeholder-focused benefit messaging from market leaders in this specific category\n  3. Assign each benefit to the proper **Stakeholder Group > Benefit Category > Sub-Category**, using only the keys listed above.\n  4. Each benefit description must be in {{ $json.targetLanguages[0] }}, with its source company noted if possible.\n\n- **Stakeholder Groups (use exactly as shown):**  \n  - End-Users  \n  - Employees  \n  - Distributors  \n  - Investors  \n  - Regulators and Compliance Bodies  \n  - Community  \n  - Media and Influencers  \n\n- **Benefit Quantities (rough guideline):**  \n  - End-Users: 15-20 statements  \n  - Employees & Distributors: 4-6 each  \n  - Distributors: 6-10 each\n  - Investors: 4-6 each\n  - Regulators, Community, Media: 4-6 each  \n  - Community: 4-6 each\n\n---\n\n## OUTPUT FORMAT\n\n```jsonc  \n{  \n  \\\"Points_of_Parity\\\": {  \n    \\\"End-Users\\\": {  \n      \\\"Financial\\\": {  \n        \\\"Cost Savings\\\": [  \n          \\\"...\\\" // Example in target language  \n        ],  \n        \\\"Value for Money\\\": [ \\\"...\\\" ],  \n        // etc.  \n      },  \n      \\\"Functional\\\": {  \n        \\\"Quality\\\": [ \\\"...\\\" ],  \n        // etc.  \n      }  \n      // more categories...  \n    },  \n    \\\"Employees\\\": {  \n      // structure as above  \n    }  \n    // more stakeholder groups...  \n  },\n  \\\"ProductName_Localized\\\": \\\"...\\\" // Product name in the target language considering full context\n} "
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -4032,
+        128
+      ],
+      "id": "c4aad448-2f03-429c-901d-b2f60c0f2f6d",
+      "name": "A. Product Benefit Finder",
+      "credentials": {
+        "openAiApi": {
+          "id": "24f4qODVRQ0INcJS",
+          "name": "OpenAI - n8n automations"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5-nano",
+          "mode": "list",
+          "cachedResultName": "GPT-5-NANO"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are an expert brand manager and marketing strategist with over 15 years of experience in international markets. You specialize in competitive differentiation, market intelligence, and stakeholder-centric brand positioning using David Aaker’s Brand Equity Model.\n\nYour key tasks:\n- Apply Aaker's Model (brand loyalty, awareness, perceived quality, associations, proprietary assets) to identify Points of Differentiation (PoD) that are credible, relevant, and defensible for {{ $('Prepare Workflow Data').item.json.rawData['Product/Service name'] }}, not the generic category.\n- Translate the product name contextually using the full UNSPSC hierarchy provided by the user and the brand’s intended naming in the target market.\n- Use the brand-owner inputs (provided in the user message) as the PRIMARY source for differentiation. Treat these as constraints and raw materials for crafting brand-specific benefits.\n- Contrast the brand’s inputs against the table-stakes expectations of the category (PoP baselines) to surface unique, ownable PoDs.\n- Organize PoDs into a 3-level hierarchy: Stakeholder Group > Benefit Category > Sub-Category.\n- Always use the following predefined English terms EXACTLY for each of the three output levels; never translate or paraphrase the keys:\n  - Stakeholder Groups: End-Users, Employees, Distributors, Investors, Regulators and Compliance Bodies, Community, Media and Influencers\n  - Benefit Categories: Financial, Functional, Self-Expression, Emotional, Experiential, Social, Cultural\n  - Sub-Categories (see below)\n\nCRITICAL DIFFERENTIATION PRINCIPLES:\n1) Brand-anchored evidence: Every PoD must be traceable to at least one brand-owner input placeholder (e.g., “Proof points achieved”, “Brand Advantage”, “Core Values”, “Industry (vertical) / ISIC code”).\n2) Defensibility: Prefer PoDs tied to proprietary assets, capabilities, processes, data, certifications, partnerships, geographic strengths, or organization-specific know-how.\n3) Relevance by stakeholder: Tie each PoD to a specific stakeholder’s outcome (e.g., for Investors, focus on growth efficiency, de-risking; for Regulators, compliance readiness; for End-Users, outcomes and experiences).\n4) Verifiability: Where possible, echo quantitative or specific qualitative proof from “Proof points achieved,” “Groups Where You’ve Succeeded,” and similar fields.\n5) Stage-fit: Adapt the tone and plausibility to the “Brand Stage (Lifecycle Phase)” and “Brand Position (in the Market Location).”\n6) Market/linguistic fit: Generate all benefit descriptions in {{ $('Prepare Workflow Data').item.json.rawData['Target Market Language'] }} Language; use the Target Market ({{ $('Prepare Workflow Data').item.json.rawData['Product Target Market'] }}) for contextualization and terminology.\n7) Category-context translation: Translate and localize the product name ({{ $('Prepare Workflow Data').item.json.rawData['Product/Service name'] }}) within the complete hierarchy and the brand’s market naming conventions. If the brand has a preferred product name, respect it while ensuring market intelligibility.\n\nSub-Categories (use exactly as written):\n- Financial: Cost Savings, Investment, Value for Money, Income Generation, Financial Security, Rewards and Incentives\n- Functional: Convenience, Quality, Reliability, Performance, Safety\n- Self-Expression: Individuality, Status, Lifestyle, Personality\n- Emotional: Happiness, Security, Belonging, Self-esteem, Nostalgia\n- Experiential: Sensory Experience, Adventure, Learning, Entertainment\n- Social: Social Approval, Community, Altruism\n- Cultural: Cultural Representation, Cultural Participation, Cultural Preservation, Cultural Innovation, Cultural Education, Cultural Expression, Community and Identity\n\nLanguage and Market Guidelines:\n- All Stakeholder, Category, and Sub-Category keys must remain in English and match exactly.\n- ALWAYS generate benefit descriptions in {{ $('Prepare Workflow Data').item.json.rawData['Target Market Language'] }} Language.\n- Use {{ $('Prepare Workflow Data').item.json.rawData['Product Target Market'] }} for market/competitive context and cultural-linguistic appropriateness.\n- The product being analyzed must be understood within its complete UNSPSC hierarchy provided by the user. Translate the product name accordingly and output it in the JSON as \"ProductName_Localized\".\n\nMethodological Guardrails:\n- Do NOT produce generic category benefits (PoPs). Always tie each benefit to the brand’s unique attributes, resources, or strategic choices found in the placeholders.\n- If a brand input is missing or ambiguous, infer conservative PoDs by combining other provided inputs (e.g., “Brand Purpose” + “Core Values” + “Groups Where You’ve Succeeded”), and mark them as “Derived from [fields]”.\n- Validate that each PoD is:\n  - Relevant (solves a stakeholder’s real need)\n  - Differentiated (distinct from typical competitors)\n  - Credible (supported by brand inputs)\n  - Defensible (hard for others to copy quickly)",
+              "role": "system"
+            },
+            {
+              "content": "=# BRAND-PRODUCT BENEFIT CREATOR REQUEST (PoD)\n\nCreate Points of Differentiation (PoD) for the specific brand’s product—by stakeholder group—tailored to the target market and language, using David Aaker’s Brand Equity Model and the brand-owner inputs below.\n\n## PRODUCT HIERARCHY & CONTEXT\nProvide the complete UNSPSC hierarchy to ground translation and category context:\n- Segment: {{ $('Prepare Workflow Data').item.json.rawData['UNSPSC - Segment Title'] }} — Code: {{ $('Prepare Workflow Data').item.json.rawData['UNSPSC - Segment Code'] }}\n- Family: {{ $('Prepare Workflow Data').item.json.rawData['UNSPSC - Family Title'] }} — Code: {{ $('Prepare Workflow Data').item.json.rawData['UNSPSC - Family Code'] }}\n- Class: {{ $('Prepare Workflow Data').item.json.rawData['UNSPSC - Class Title'] }} — Code: {{ $('Prepare Workflow Data').item.json.rawData['UNSPSC - Class Code'] }}\n- Commodity: {{ $('Prepare Workflow Data').item.json.rawData['UNSPSC - Commodity Title'] }} — Code: {{ $('Prepare Workflow Data').item.json.rawData['UNSPSC - Commodity Code'] }}\n\nAnalysis Focus: Use this hierarchical context AND the brand-owner inputs to craft brand-specific PoDs. The goal is to surface differentiators unique to this brand-product, not generic category benefits.\n\n## TARGET PARAMETERS\n- Target Language: {{ $('Prepare Workflow Data').item.json.rawData['Target Market Language'] }}\n- Target Market: {{ $('Prepare Workflow Data').item.json.rawData['Product Target Market'] }}\n\n\"CRITICAL: Brand-Differentiation Priority\"\n- The brand-owner inputs are the primary source of truth.\n- Translate/localize the product name using the full hierarchy and the brand’s intended positioning.\n- Ensure each benefit is stakeholder-relevant, brand-evidenced, and culturally/linguistically appropriate to the Target Market ({{ $('Prepare Workflow Data').item.json.rawData['Product Target Market'] }}).\n\n## BRAND-OWNER INPUTS (Placeholders)\n- Company description / mission (short): {{ $('Prepare Workflow Data').item.json.rawData['Company description / mission (short)'] }}\n- Company's Origin (Heritage): {{ $('Prepare Workflow Data').item.json.rawData['Company\\'s Origin (Heritage)'] }}\n- Product Target Market: {{ $('Prepare Workflow Data').item.json.rawData['Product Target Market'] }}\n- Product description (short): {{ $('Prepare Workflow Data').item.json.rawData['Product description (short)'] }}\n- Product description (detailed): {{ $('Prepare Workflow Data').item.json.rawData['Product description (detailed)'] }}\n- Brand Stage (Lifecycle Phase): {{ $('Prepare Workflow Data').item.json.rawData['Brand Stage (Lifecycle Phase)'] }}\n- Founding spark (year/place): {{ $('Prepare Workflow Data').item.json.rawData['Founding spark (year/place)'] }}\n- First barrier & response: {{ $('Prepare Workflow Data').item.json.rawData['First barrier & response'] }}\n- Proof points achieved: {{ $('Prepare Workflow Data').item.json.rawData['Proof points achieved'] }}\n- Industry (vertical) / ISIC code: {{ $('Prepare Workflow Data').item.json.rawData['ISIC5 - Class Title'] }} / {{ $('Prepare Workflow Data').item.json.rawData['ISIC5 - Class Code'] }}\n- Brand Position (in the Market Location): {{ $('Prepare Workflow Data').item.json.rawData['Brand Position (in the Market Location)'] }}\n- Type of customer: {{ $('Prepare Workflow Data').item.json.rawData['Type of customer'] }}\n- Market Groups: {{ $('Prepare Workflow Data').item.json.rawData['Market Groups'] }}\n- Most Valuable Customer Groups: {{ $('Prepare Workflow Data').item.json.rawData['Most Valuable Customer Groups'] }}\n- Groups Where You’ve Succeeded: {{ $('Prepare Workflow Data').item.json.rawData['Groups Where You’ve Succeeded'] }}\n- Decision-Making Style (Organizational mindset): {{ $('Prepare Workflow Data').item.json.rawData['Decision-Making Style (Organizational mindset)'] }}\n- Personal vs. Corporate Brand Impact (1–10, the lower means more Personal): {{ $('Prepare Workflow Data').item.json.rawData['Personal vs. Corporate Brand Impact'] }}\n- Biggest Brand Growth Barrier: {{ $('Prepare Workflow Data').item.json.rawData['Biggest Brand Growth Barrier'] }}\n- Customer Benefits (Brand-level): {{ $('Prepare Workflow Data').item.json.rawData['Customer Benefits (Brand-level)'] }}\n- Brand Advantage (Superior Benefit): {{ $('Prepare Workflow Data').item.json.rawData['Brand Advantage (Superior Benefit)'] }}\n- Brand Purpose: {{ $('Prepare Workflow Data').item.json.rawData['Brand Purpose'] }}\n- Future of the Industry: {{ $('Prepare Workflow Data').item.json.rawData['Future of the Industry'] }}\n- Future of the Brand (BHAGs): {{ $('Prepare Workflow Data').item.json.rawData['Future of the Brand (BHAGs)'] }}\n- Core Values: {{ $('Prepare Workflow Data').item.json.rawData['Core Values'] }}\n- Brand Vision: {{ $('Prepare Workflow Data').item.json.rawData['Brand Vision'] }}\n- Brand Mission: {{ $('Prepare Workflow Data').item.json.rawData['Brand Mission'] }}\n- Brand Origin: {{ $('Prepare Workflow Data').item.json.rawData['Brand Origin'] }}\n- Environmental Predictability: {{ $('Prepare Workflow Data').item.json.rawData['Axis A — Environmental Predictability'] }}\n- Brand Influence / Ability to Act: {{ $('Prepare Workflow Data').item.json.rawData['Axis B — Brand Influence / Ability to Act'] }}\n\n## RESEARCH & MAPPING METHODOLOGY\nFramework: Use Aaker's Brand Equity Model for prioritization and to connect PoDs to loyalty, awareness, perceived quality, associations, and proprietary assets.\n\nSteps:\n1) Interpret the product within the full UNSPSC hierarchy and local market conventions.\n2) Extract differentiators directly from brand-owner inputs (e.g., unique capabilities, partnerships, certifications, data assets, geographic specialization, go-to-market, IP).\n3) For each found differentiator, state the stakeholder outcome and tie it to Aaker’s dimensions (e.g., perceived quality via certification; loyalty via proven retention).\n4) Validate defensibility using “Proof points achieved,” “Groups Where You’ve Succeeded,” “Brand Advantage,” “Brand Position,” and “Core Values.”\n5) Translate all benefits into {{ $('Prepare Workflow Data').item.json.targetLanguages[0] }} Language, keeping keys in English.\n6) Prioritize PoDs most aligned to the Brand Stage and Target Market dynamics.\n7) Where helpful, contrast each PoD briefly against the category baseline (“Compared to typical providers: …”) in the note field.\n\nStakeholder Groups (use exactly as shown):\n- End-Users\n- Employees\n- Distributors\n- Investors\n- Regulators and Compliance Bodies\n- Community\n- Media and Influencers\n\nRecommended Quantity (guideline; prioritize quality over quantity):\n- End-Users: 10–16 PoD statements\n- Employees: 4–6\n- Distributors: 5–8\n- Investors: 4–6\n- Regulators and Compliance Bodies: 4–6\n- Community: 4–6\n- Media and Influencers: 4–6\n\n## OUTPUT FORMAT\nReturn valid JSON using the following schema. Keep all keys in English. All benefit descriptions must be in {{ $('Prepare Workflow Data').item.json.targetLanguages[0] }} Language. Use arrays for each Sub-Category, even if one item.\n\n{\n  \"Points_of_Differentiation\": {\n    \"End-Users\": {\n      \"Financial\": {\n        \"Cost Savings\": [\"...\"], \n        \"Investment\": [\"...\"],\n        \"Value for Money\": [\"...\"],\n        \"Income Generation\": [\"...\"],\n        \"Financial Security\": [\"...\"],\n        \"Rewards and Incentives\": [\"...\"]\n      },\n      \"Functional\": {\n        \"Convenience\": [\"...\"],\n        \"Quality\": [\"...\"],\n        \"Reliability\": [\"...\"],\n        \"Performance\": [\"...\"],\n        \"Safety\": [\"...\"]\n      },\n      \"Self-Expression\": {\n        \"Individuality\": [\"...\"],\n        \"Status\": [\"...\"],\n        \"Lifestyle\": [\"...\"],\n        \"Personality\": [\"...\"]\n      },\n      \"Emotional\": {\n        \"Happiness\": [\"...\"],\n        \"Security\": [\"...\"],\n        \"Belonging\": [\"...\"],\n        \"Self-esteem\": [\"...\"],\n        \"Nostalgia\": [\"...\"]\n      },\n      \"Experiential\": {\n        \"Sensory Experience\": [\"...\"],\n        \"Adventure\": [\"...\"],\n        \"Learning\": [\"...\"],\n        \"Entertainment\": [\"...\"]\n      },\n      \"Social\": {\n        \"Social Approval\": [\"...\"],\n        \"Community\": [\"...\"],\n        \"Altruism\": [\"...\"]\n      },\n      \"Cultural\": {\n        \"Cultural Representation\": [\"...\"],\n        \"Cultural Participation\": [\"...\"],\n        \"Cultural Preservation\": [\"...\"],\n        \"Cultural Innovation\": [\"...\"],\n        \"Cultural Education\": [\"...\"],\n        \"Cultural Expression\": [\"...\"],\n        \"Community and Identity\": [\"...\"]\n      }\n    },\n    \"Employees\": { ... same category/sub-category structure ... },\n    \"Distributors\": { ... },\n    \"Investors\": { ... },\n    \"Regulators and Compliance Bodies\": { ... },\n    \"Community\": { ... },\n    \"Media and Influencers\": { ... }\n  },\n  \"Evidence_Map\": [\n    {\n      \"pod_statement\": \"Target Language benefit text\",\n      \"stakeholder\": \"End-Users | Employees | ...\",\n      \"category\": \"Functional | Financial | ...\",\n      \"sub_category\": \"Quality | Performance | ...\",\n      \"derived_from\": [\"Brand Advantage\", \"Proof points achieved\", \"Core Values\"], \n      \"aaker_dimension\": [\"Perceived Quality\", \"Brand Associations\", \"Brand Loyalty\"],\n      \"note\": \"Compared to typical providers: brief contrast (Target Language)\"\n    }\n  ],\n  \"Assumptions_and_Gaps\": [\n    {\n      \"issue\": \"Missing or ambiguous input field\",\n      \"impact\": \"What could be affected\",\n      \"mitigation\": \"How the assumption was made\",\n      \"derived_from\": [\"...\"]\n    }\n  ],\n  \"ProductName_Localized\": \"...\"\n}\n\nValidation Rules:\n- Ensure every listed PoD in Points_of_Differentiation appears at least once in the Evidence_Map with its source fields noted.\n- Do not invent external competitors or data; rely on brand-owner inputs for PoDs. If external proof is essential (e.g., certification names), only include if provided or logically derived from inputs; otherwise flag under Assumptions_and_Gaps.\n- The JSON must be syntactically valid.\n"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -4032,
+        704
+      ],
+      "id": "f0c6839e-a4fb-4e8f-b207-08d05209d7f8",
+      "name": "B. Brand-Product Benefit Creator",
+      "credentials": {
+        "openAiApi": {
+          "id": "24f4qODVRQ0INcJS",
+          "name": "OpenAI - n8n automations"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "product_benefits_structured",
+              "name": "productBenefitsStructured",
+              "value": "={{ $('A. Product Benefit Finder').item.json }}",
+              "type": "object"
+            },
+            {
+              "id": "workflow_step",
+              "name": "workflowStep",
+              "value": "A_ProductBenefits",
+              "type": "string"
+            },
+            {
+              "id": "timestamp",
+              "name": "timestamp",
+              "value": "={{ new Date().toISOString() }}",
+              "type": "string"
+            },
+            {
+              "id": "company_name",
+              "name": "companyName",
+              "value": "={{ $('Prepare Workflow Data').item.json.rawData['Company name'] || 'Unknown' }}",
+              "type": "string"
+            },
+            {
+              "id": "brand_stage",
+              "name": "brandStage",
+              "value": "={{ $('Prepare Workflow Data').item.json.rawData['Brand Stage (Lifecycle Phase)'] || 'Unknown' }}",
+              "type": "string"
+            },
+            {
+              "id": "product_service_name",
+              "name": "Product/Service name",
+              "value": "={{ $('Prepare Workflow Data').item.json.rawData['Product/Service name'] || 'Unknown' }}",
+              "type": "string"
+            },
+            {
+              "id": "raw_data",
+              "name": "rawData",
+              "value": "={{ $('Prepare Workflow Data').item.json.rawData }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Store Product Benefits",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3680,
+        128
+      ],
+      "id": "1104912b-b03f-4583-afe0-2837eb3b96a8"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w",
+          "mode": "list",
+          "cachedResultName": "Brand Mindset Input-test",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2138296752,
+          "mode": "list",
+          "cachedResultName": "Form Responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w/edit#gid=2138296752"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {
+            "productBenefitsStructured": "={{ JSON.stringify($json.productBenefitsStructured) }}",
+            "Product/Service name": "={{ $json['Product/Service name'] }}"
+          },
+          "matchingColumns": [
+            "Product/Service name"
+          ],
+          "schema": [
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Company/Organization Name",
+              "displayName": "Company/Organization Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Company headquarters (City, Country)",
+              "displayName": "Company headquarters (City, Country)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Company description / mission (short)",
+              "displayName": "Company description / mission (short)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Company's Origin (Heritage)",
+              "displayName": "Company's Origin (Heritage)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Do you have more than one brand under the company?",
+              "displayName": "Do you have more than one brand under the company?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "How are your brands organized within the company?",
+              "displayName": "How are your brands organized within the company?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Brand name",
+              "displayName": "Brand name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Brand Stage (Lifecycle Phase)",
+              "displayName": "Brand Stage (Lifecycle Phase)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Founding spark (year/place)",
+              "displayName": "Founding spark (year/place)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "First barrier & response",
+              "displayName": "First barrier & response",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Proof points achieved",
+              "displayName": "Proof points achieved",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Year(s) / Phase(s)",
+              "displayName": "Year(s) / Phase(s)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Barrier / Industry norm",
+              "displayName": "Barrier / Industry norm",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Heritage action / Breakthrough",
+              "displayName": "Heritage action / Breakthrough",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Customer advantage (for the Brand Industry)",
+              "displayName": "Customer advantage (for the Brand Industry)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Industry (vertical) / ISIC code",
+              "displayName": "Industry (vertical) / ISIC code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Brand Position (in the Market Location)",
+              "displayName": "Brand Position (in the Market Location)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Type of customer",
+              "displayName": "Type of customer",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Market Groups",
+              "displayName": "Market Groups",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Most Valuable Customer Groups",
+              "displayName": "Most Valuable Customer Groups",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Groups Where You’ve Succeeded",
+              "displayName": "Groups Where You’ve Succeeded",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Decision-Making Style (Organizational mindset)",
+              "displayName": "Decision-Making Style (Organizational mindset)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Personal vs. Corporate Brand Impact",
+              "displayName": "Personal vs. Corporate Brand Impact",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Biggest Brand Growth Barrier",
+              "displayName": "Biggest Brand Growth Barrier",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Customer Benefits (Brand-level)",
+              "displayName": "Customer Benefits (Brand-level)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Brand Advantage (Superior Benefit)",
+              "displayName": "Brand Advantage (Superior Benefit)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Brand Purpose",
+              "displayName": "Brand Purpose",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Future of the Industry",
+              "displayName": "Future of the Industry",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Future of the Brand (BHAGs)",
+              "displayName": "Future of the Brand (BHAGs)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Core Values",
+              "displayName": "Core Values",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Brand Vision",
+              "displayName": "Brand Vision",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Brand Mission",
+              "displayName": "Brand Mission",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Brand Origin",
+              "displayName": "Brand Origin",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Axis A — Environmental Predictability",
+              "displayName": "Axis A — Environmental Predictability",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Axis B — Brand Influence / Ability to Act",
+              "displayName": "Axis B — Brand Influence / Ability to Act",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Website representing the Brand/Product",
+              "displayName": "Website representing the Brand/Product",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Instagram URL",
+              "displayName": "Instagram URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "LinkedIn URL",
+              "displayName": "LinkedIn URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Brand architecture role",
+              "displayName": "Brand architecture role",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Product/Service name",
+              "displayName": "Product/Service name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "UNSPSC Product/Service Category",
+              "displayName": "UNSPSC Product/Service Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Product description (short)",
+              "displayName": "Product description (short)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Product description (detailed)",
+              "displayName": "Product description (detailed)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Address",
+              "displayName": "Address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Phone number",
+              "displayName": "Phone number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Product Target Market",
+              "displayName": "Product Target Market",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Target Market Language",
+              "displayName": "Target Market Language",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ISIC5 - Class Code",
+              "displayName": "ISIC5 - Class Code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ISIC5 - Class Title",
+              "displayName": "ISIC5 - Class Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ISIC5 - Group Code",
+              "displayName": "ISIC5 - Group Code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ISIC5 - Group Title",
+              "displayName": "ISIC5 - Group Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ISIC5 - Division Code",
+              "displayName": "ISIC5 - Division Code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ISIC5 - Division Title",
+              "displayName": "ISIC5 - Division Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ISIC5 - Section Code",
+              "displayName": "ISIC5 - Section Code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ISIC5 - Section Title",
+              "displayName": "ISIC5 - Section Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ISIC5 - Includes",
+              "displayName": "ISIC5 - Includes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ISIC5 - Includes Also",
+              "displayName": "ISIC5 - Includes Also",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ISIC5 - Excludes",
+              "displayName": "ISIC5 - Excludes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "UNSPSC - Search Input",
+              "displayName": "UNSPSC - Search Input",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "UNSPSC - Matched Title",
+              "displayName": "UNSPSC - Matched Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "UNSPSC - Match Score",
+              "displayName": "UNSPSC - Match Score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "UNSPSC - Commodity Code",
+              "displayName": "UNSPSC - Commodity Code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "UNSPSC - Commodity Title",
+              "displayName": "UNSPSC - Commodity Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "UNSPSC - Class Code",
+              "displayName": "UNSPSC - Class Code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "UNSPSC - Class Title",
+              "displayName": "UNSPSC - Class Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "UNSPSC - Family Code",
+              "displayName": "UNSPSC - Family Code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "UNSPSC - Family Title",
+              "displayName": "UNSPSC - Family Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "UNSPSC - Segment Code",
+              "displayName": "UNSPSC - Segment Code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "UNSPSC - Segment Title",
+              "displayName": "UNSPSC - Segment Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "productBenefitsStructured",
+              "displayName": "productBenefitsStructured",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "workflowStep",
+              "displayName": "workflowStep",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "timestamp",
+              "displayName": "timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "companyName",
+              "displayName": "companyName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "brandStage",
+              "displayName": "brandStage",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "name": "Save Product Benefits to Excel",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        -3456,
+        224
+      ],
+      "id": "be8f3824-f4d8-4fc3-beab-8c293ece912b",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "GP0ycwiOqi6LmXaw",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "individual_benefits",
+              "name": "individualBenefits",
+              "value": "={{ \n  const benefits = [];\n  const pop = $json.productBenefitsStructured.Points_of_Parity || {};\n  \n  Object.keys(pop).forEach(stakeholder => {\n    const stakeholderData = pop[stakeholder];\n    Object.keys(stakeholderData).forEach(category => {\n      const categoryData = stakeholderData[category];\n      Object.keys(categoryData).forEach(subCategory => {\n        const benefitList = categoryData[subCategory];\n        if (Array.isArray(benefitList)) {\n          benefitList.forEach((benefit, index) => {\n            benefits.push({\n              stakeholder: stakeholder,\n              category: category,\n              subCategory: subCategory,\n              benefit: benefit,\n              benefitId: `${stakeholder}_${category}_${subCategory}_${index}`,\n              companyName: $('Store Product Benefits').item.json.companyName,\n              brandStage: $('Store Product Benefits').item.json.brandStage\n            });\n          });\n        }\n      });\n    });\n  });\n  \n  return benefits;\n}}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Extract Individual Benefits",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3456,
+        416
+      ],
+      "id": "176fd7ed-9924-41a6-bcf4-5c4e9c6e5ce7"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "brand_benefits_structured",
+              "name": "brandBenefitsStructured",
+              "value": "={{ $('B. Brand-Product Benefit Creator').item.json }}",
+              "type": "object"
+            },
+            {
+              "id": "workflow_step",
+              "name": "workflowStep",
+              "value": "B_BrandBenefits",
+              "type": "string"
+            },
+            {
+              "id": "timestamp",
+              "name": "timestamp",
+              "value": "={{ new Date().toISOString() }}",
+              "type": "string"
+            },
+            {
+              "id": "company_name",
+              "name": "companyName",
+              "value": "={{ $('Prepare Workflow Data').item.json.rawData['Company name'] || 'Unknown' }}",
+              "type": "string"
+            },
+            {
+              "id": "brand_stage",
+              "name": "brandStage",
+              "value": "={{ $('Prepare Workflow Data').item.json.rawData['Brand Stage (Lifecycle Phase)'] || 'Unknown' }}",
+              "type": "string"
+            },
+            {
+              "id": "product_service_name",
+              "name": "Product/Service name",
+              "value": "={{ $('Prepare Workflow Data').item.json.rawData['Product/Service name'] || 'Unknown' }}",
+              "type": "string"
+            },
+            {
+              "id": "raw_data",
+              "name": "rawData",
+              "value": "={{ $('Prepare Workflow Data').item.json.rawData }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Store Brand Benefits",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3680,
+        704
+      ],
+      "id": "9db92181-64dc-43fd-9de1-0a23460f673a"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w",
+          "mode": "list",
+          "cachedResultName": "Brand Mindset Input-test",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2138296752,
+          "mode": "list",
+          "cachedResultName": "Form Responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w/edit#gid=2138296752"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {
+            "Customer Benefits (Brand-level)": "={{ JSON.stringify($json.brandBenefitsStructured) }}",
+            "workflowStep_B": "={{ $json.workflowStep }}",
+            "timestamp_B": "={{ $json.timestamp }}",
+            "Product/Service name": "={{ $json['Product/Service name'] }}"
+          },
+          "matchingColumns": [
+            "Product/Service name"
+          ],
+          "schema": [
+            {
+              "id": "Product/Service name",
+              "displayName": "Product/Service name",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Customer Benefits (Brand-level)",
+              "displayName": "Customer Benefits (Brand-level)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "workflowStep_B",
+              "displayName": "workflowStep_B",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "timestamp_B",
+              "displayName": "timestamp_B",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "name": "Save Brand Benefits to Excel",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        -3456,
+        608
+      ],
+      "id": "b5ae4611-fe23-416d-be61-6f647ce5b79f",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "GP0ycwiOqi6LmXaw",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "individual_brand_benefits",
+              "name": "individualBrandBenefits",
+              "value": "={{ \n  const benefits = [];\n  const pod = $json.brandBenefitsStructured.Points_of_Differentiation || {};\n  \n  Object.keys(pod).forEach(stakeholder => {\n    const stakeholderData = pod[stakeholder];\n    Object.keys(stakeholderData).forEach(category => {\n      const categoryData = stakeholderData[category];\n      Object.keys(categoryData).forEach(subCategory => {\n        const benefitList = categoryData[subCategory];\n        if (Array.isArray(benefitList)) {\n          benefitList.forEach((benefit, index) => {\n            benefits.push({\n              stakeholder: stakeholder,\n              category: category,\n              subCategory: subCategory,\n              benefit: benefit,\n              benefitId: `${stakeholder}_${category}_${subCategory}_${index}`,\n              companyName: $('Store Brand Benefits').item.json.companyName,\n              brandStage: $('Store Brand Benefits').item.json.brandStage,\n              benefitType: 'brand_differentiation'\n            });\n          });\n        }\n      });\n    });\n  });\n  \n  return benefits;\n}}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Extract Individual Brand Benefits",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3456,
+        800
+      ],
+      "id": "e6ff87f0-f245-4d50-bcab-b8b4511e4603"
+    },
+    {
+      "parameters": {},
+      "name": "Wait for A & B Completion",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        -3456,
+        32
+      ],
+      "id": "a486f2a9-1b5b-4ba9-bf87-8d96a97277cd"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-5-nano",
+          "mode": "list",
+          "cachedResultName": "GPT-5-NANO"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are an advanced branding and marketing expert specializing in practical Value and Personality (BVP) frameworks for educational and consulting organizations. You are fluent in Finnish and in leveraging David Aaker’s Brand Equity Model and stakeholder-centric value creation to build credible, defendable brand attributes.\n\nYour process always ensures each benefit provided is mapped to:\n- a concrete, actionable Finnish-language value (what the brand or product must actually do to deliver this benefit)\n- a set of brand or product personality traits (relevant, consistent, in Finnish) that best support and express that value\n\nYou pay attention to the context and type (PoP vs PoD) of each benefit.",
+              "role": "system"
+            },
+            {
+              "content": "=# BVP FRAMEWORK GENERATOR  \n\nCreate a comprehensive Brand-Value-Personality (BVP) framework by processing ALL benefits from both Product (Points of Parity) and Brand (Points of Differentiation) analyses.  \n\n\n## BRAND CONTEXT\n- Brand Name: {{ $('Wait for A & B Completion').item.json.rawData['Brand name'] }}\n- Product Name: {{ $json.inputData.brandContext.productName }}\n- Industry (UNSPSC): {{ $json.inputData.brandContext.unspscSegment }} > {{ $json.inputData.brandContext.unspscFamily }} > {{ $('Prepare Benefits for BVP').item.json.brandContext.unspscClass }} > {{ $('Prepare Benefits for BVP').item.json.brandContext.unspscCommodity }}  \n- Product Category (ISIC): {{ $('Prepare Benefits for BVP').item.json.brandContext.isicGroup }} > {{ $('Prepare Benefits for BVP').item.json.brandContext.isicClass }}  \n- Target Market: {{ $('Prepare Benefits for BVP').item.json.brandContext.targetMarket }}  \n- Output Language: {{ $('Prepare Benefits for BVP').item.json.brandContext.targetLanguage }}  \n- Total Benefits to Process: {{ $('Prepare Benefits for BVP').item.json.consolidatedBenefits.length }}  \n\n\n\n## COMPLETE BENEFIT LIST\nProcess each of these benefits to create Value and Personality mappings:\n{{ $json.benefits }}\n\n\n\n## TASK REQUIREMENTS\n\nFor EACH benefit listed above, create:\n\n1) Specific Actionable Value (in {{ $('Prepare Benefits for BVP').item.json.brandContext.targetLanguage }}):  \n- A practical, implementable action that creates and sustains this benefit in the {{ $('Prepare Benefits for BVP').item.json.brandContext.unspscClass }} > {{ $('Prepare Benefits for BVP').item.json.brandContext.unspscCommodity }} context and the {{ $('Prepare Benefits for BVP').item.json.brandContext.targetMarket }} market.  \n- Make it operational, measurable, and resource-aware (e.g., process, KPIs, cadence, ownership).  \n\n2) Brand/Product Personality (in {{ $('Prepare Benefits for BVP').item.json.brandContext.targetLanguage }}):  \n- 1–3 concise adjectives or short phrases that fit the stakeholder and benefit.  \n- Harmonize traits across similar benefits for consistency.  \n\n## IMPORTANT GUIDELINES\n\n- For Product Benefits (PoP):  \n  - Focus on financial and functional values (durability, quality, speed, cost-effectiveness, efficiency)\n  - Example traits: “luotettava”, “johdonmukainen”, “asiallinen”, “tarkka”.  \n\n\n- For Brand Benefits (PoD):  \n  - Include emotional, social, cultural, and self-expressive value\n  - Example traits: “rohkea”, “inspiroiva”, “lähellä ihmistä”, “yhteisöllinen”, “kunnioittava”.  \n\n\n- Value Creation Rules:  \n  - Values must be appropriate to industry resources and capabilities\n  - Quality = precise testing and excellent raw materials\n  - Speed = increased personnel and improved processes\n  - Each value should be actionable and measurable\n \n\n**Output Requirements:**\n- Generate ALL content in {{ $('Prepare Benefits for BVP').item.json.brandContext.targetLanguage }} language\n- Maintain consistency across all BVP mappings\n- Ensure personalities complement each other\n- Create defensible, credible values\n\n## OUTPUT FORMAT\n\nProvide JSON with this exact structure:\n\n```json\n{\n  \"bvp_framework\": [\n    {\n      \"benefit_id\": \"POD_End-Users_Functional_Quality_0\",\n      \"benefit\": \"Original benefit text in target language\",\n      \"stakeholder\": \"End-Users\",\n      \"category\": \"Functional\",\n      \"sub_category\": \"Quality\",\n      \"source\": \"Brand (Points of Differentiation)\",\n      \"value\": \"Specific actionable value in target language\",\n      \"personality\": \"Brand personality traits in target language\",\n      \"implementation_priority\": \"High|Medium|Low\"\n    }\n  ],\n  \"framework_summary\": {\n    \"total_benefits_processed\": 0,\n    \"product_benefits_count\": 0,\n    \"brand_benefits_count\": 0,\n    \"stakeholder_coverage\": [],\n    \"primary_values\": [],\n    \"core_personality_traits\": []\n  },\n  \"target_language\": \"{{ $('Prepare Benefits for BVP').item.json.brandContext.targetLanguage }}\",\n  \"brand_context\": {\n    \"brand_name\": \"{{ $('Prepare Benefits for BVP').item.json.brandContext.brandName }}\",\n    \"product_name\": \"{{ $('Prepare Benefits for BVP').item.json.brandContext.productName }}\",\n    \"industry\": \"{{ $('Prepare Benefits for BVP').item.json.brandContext.unspscClass }} > {{ $('Prepare Benefits for BVP').item.json.brandContext.unspscCommodity }}\"\n  }\n}\n```\n\n**Critical**: Process every single benefit from the input list. The bvp_framework array should contain exactly {{ $('Prepare Benefits for BVP').item.json.consolidatedBenefits.length }} items."
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -2560,
+        32
+      ],
+      "id": "34eadd57-96d4-46d5-8872-27fe708277d4",
+      "name": "C. BVP Generator",
+      "alwaysOutputData": true,
+      "retryOnFail": false,
+      "executeOnce": false,
+      "credentials": {
+        "openAiApi": {
+          "id": "24f4qODVRQ0INcJS",
+          "name": "OpenAI - n8n automations"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Store BVP Framework with comprehensive OpenAI response parsing\nconst openaiResponse = $input.first().json;\nconsole.log('OpenAI Response structure:', Object.keys(openaiResponse));\nconsole.log('Message field type:', typeof openaiResponse.message);\nconsole.log('Message field value:', openaiResponse.message);\n\nlet bvpFramework;\n\n// Handle various OpenAI response formats\nif (openaiResponse.message) {\n  console.log('Found message field, attempting to parse...');\n  \n  // Try to parse as JSON string first\n  if (typeof openaiResponse.message === 'string') {\n    console.log('Message is string, parsing as JSON...');\n    try {\n      bvpFramework = JSON.parse(openaiResponse.message);\n      console.log('Successfully parsed BVP framework from message string');\n    } catch (parseError) {\n      console.log('Failed to parse message as JSON:', parseError.message);\n      console.log('Message content (first 500 chars):', openaiResponse.message.substring(0, 500));\n      throw new Error('Failed to parse OpenAI message as JSON: ' + parseError.message);\n    }\n  } else if (typeof openaiResponse.message === 'object' && openaiResponse.message !== null) {\n    console.log('Message is object, using directly...');\n    bvpFramework = openaiResponse.message;\n  } else {\n    console.log('Message field has unexpected type:', typeof openaiResponse.message);\n    throw new Error('Message field is not string or object: ' + typeof openaiResponse.message);\n  }\n} else if (openaiResponse.content && typeof openaiResponse.content === 'string') {\n  console.log('Parsing JSON from OpenAI content field...');\n  try {\n    bvpFramework = JSON.parse(openaiResponse.content);\n    console.log('Successfully parsed BVP framework from content');\n  } catch (parseError) {\n    console.log('Failed to parse OpenAI content as JSON:', parseError.message);\n    console.log('Content:', openaiResponse.content.substring(0, 500));\n    throw new Error('Failed to parse OpenAI content: ' + parseError.message);\n  }\n} else if (openaiResponse.bvp_framework || openaiResponse.framework_summary) {\n  // Direct BVP framework object\n  console.log('Found direct BVP framework object');\n  bvpFramework = openaiResponse;\n} else if (openaiResponse.choices && Array.isArray(openaiResponse.choices) && openaiResponse.choices.length > 0) {\n  // Handle OpenAI API direct response format\n  console.log('Found choices array, processing...');\n  const choice = openaiResponse.choices[0];\n  if (choice.message && choice.message.content) {\n    console.log('Parsing JSON from OpenAI choices[0].message.content...');\n    try {\n      bvpFramework = JSON.parse(choice.message.content);\n      console.log('Successfully parsed BVP framework from choices');\n    } catch (parseError) {\n      console.log('Failed to parse choice content as JSON:', parseError.message);\n      console.log('Choice content:', choice.message.content.substring(0, 500));\n      throw new Error('Failed to parse OpenAI choice content: ' + parseError.message);\n    }\n  } else {\n    console.log('Choice structure:', Object.keys(choice));\n    throw new Error('Unexpected OpenAI choices structure');\n  }\n} else if (typeof openaiResponse === 'string') {\n  // Sometimes the entire response is a JSON string\n  console.log('Parsing entire response as JSON string...');\n  try {\n    bvpFramework = JSON.parse(openaiResponse);\n    console.log('Successfully parsed BVP framework from response string');\n  } catch (parseError) {\n    console.log('Failed to parse response string as JSON:', parseError.message);\n    console.log('Response string:', openaiResponse.substring(0, 500));\n    throw new Error('Failed to parse response string: ' + parseError.message);\n  }\n} else {\n  console.log('Full OpenAI Response (first 1000 chars):', JSON.stringify(openaiResponse, null, 2).substring(0, 1000));\n  console.log('Available response keys:', Object.keys(openaiResponse));\n  \n  // Last resort - check if any field contains JSON-like content\n  for (const [key, value] of Object.entries(openaiResponse)) {\n    if (typeof value === 'string' && value.includes('{') && value.includes('}')) {\n      console.log(`Found potential JSON in field '${key}', attempting to parse...`);\n      try {\n        bvpFramework = JSON.parse(value);\n        console.log(`Successfully parsed BVP framework from '${key}' field`);\n        break;\n      } catch (parseError) {\n        console.log(`Failed to parse '${key}' as JSON:`, parseError.message);\n      }\n    }\n  }\n  \n  if (!bvpFramework) {\n    throw new Error('Cannot extract BVP framework from OpenAI response. Available keys: ' + Object.keys(openaiResponse).join(', '));\n  }\n}\n\nconsole.log('BVP Framework keys:', Object.keys(bvpFramework));\n\n// Validate that we have the expected BVP structure\nif (!bvpFramework.bvp_framework && !bvpFramework.framework_summary) {\n  console.log('Warning: BVP framework does not contain expected structure');\n  console.log('Available keys in parsed framework:', Object.keys(bvpFramework));\n}\n\n// Get brand context from previous node\nconst brandContext = $('Prepare Benefits for BVP').item.json.brandContext;\n\nreturn {\n  bvpFramework: bvpFramework,\n  workflowStep: 'C_BVPFramework',\n  timestamp: new Date().toISOString(),\n  'Product/Service name': brandContext?.productName || 'Unknown'\n};"
+      },
+      "name": "Store BVP Framework",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1984,
+        32
+      ],
+      "id": "85dd1d6b-28d1-4436-a98f-59a55596738e"
+    },
+    {
+      "parameters": {
+        "jsCode": "// COMPREHENSIVE BVP Framework Processing with bulletproof OpenAI response handling\nconst inputData = $input.first().json;\nconsole.log('=== STARTING BVP PROCESSING ===');\nconsole.log('Input data structure:', JSON.stringify(Object.keys(inputData), null, 2));\n\nlet rawBvpData = inputData.bvpFramework;\nconst productName = inputData['Product/Service name'];\nconst timestamp = inputData.timestamp;\n\nif (!rawBvpData) {\n  throw new Error('BVP framework data not found in input. Available keys: ' + Object.keys(inputData).join(', '));\n}\n\nconsole.log('Raw BVP Data type:', typeof rawBvpData);\nconsole.log('Raw BVP Data keys:', rawBvpData && typeof rawBvpData === 'object' ? Object.keys(rawBvpData) : 'Not an object');\n\n// COMPREHENSIVE JSON EXTRACTION FUNCTION\nfunction extractBvpJson(data, depth = 0) {\n  const indent = '  '.repeat(depth);\n  console.log(`${indent}Extracting BVP JSON at depth ${depth}, type:`, typeof data);\n  \n  if (depth > 5) {\n    throw new Error('Maximum extraction depth exceeded - circular reference or too deeply nested');\n  }\n  \n  // If it's already a valid BVP object\n  if (data && typeof data === 'object' && (data.bvp_framework || data.framework_summary)) {\n    console.log(`${indent}✓ Found direct BVP framework object`);\n    return data;\n  }\n  \n  // If it's a string, try to parse as JSON\n  if (typeof data === 'string') {\n    console.log(`${indent}Attempting to parse string as JSON (length: ${data.length})`);\n    try {\n      const parsed = JSON.parse(data);\n      console.log(`${indent}✓ Successfully parsed string as JSON`);\n      return extractBvpJson(parsed, depth + 1);\n    } catch (e) {\n      console.log(`${indent}✗ Failed to parse string as JSON:`, e.message);\n      console.log(`${indent}String preview:`, data.substring(0, 200));\n      return null;\n    }\n  }\n  \n  // If it's an object, check for common OpenAI response patterns\n  if (data && typeof data === 'object') {\n    const keys = Object.keys(data);\n    console.log(`${indent}Object has keys:`, keys.join(', '));\n    \n    // Pattern 1: {message: ...} \n    if (data.message) {\n      console.log(`${indent}Found 'message' field, extracting...`);\n      return extractBvpJson(data.message, depth + 1);\n    }\n    \n    // Pattern 2: {content: ...}\n    if (data.content) {\n      console.log(`${indent}Found 'content' field, extracting...`);\n      return extractBvpJson(data.content, depth + 1);\n    }\n    \n    // Pattern 3: {choices: [{message: {content: ...}}]}\n    if (data.choices && Array.isArray(data.choices) && data.choices.length > 0) {\n      console.log(`${indent}Found 'choices' array with ${data.choices.length} items`);\n      const choice = data.choices[0];\n      if (choice.message && choice.message.content) {\n        return extractBvpJson(choice.message.content, depth + 1);\n      }\n    }\n    \n    // Pattern 4: {data: ...} or {result: ...} or similar wrapper patterns\n    const wrapperKeys = ['data', 'result', 'response', 'output', 'json', 'payload'];\n    for (const key of wrapperKeys) {\n      if (data[key]) {\n        console.log(`${indent}Found wrapper field '${key}', extracting...`);\n        const extracted = extractBvpJson(data[key], depth + 1);\n        if (extracted) return extracted;\n      }\n    }\n    \n    // Pattern 5: Look for any field that might contain JSON strings\n    for (const [key, value] of Object.entries(data)) {\n      if (typeof value === 'string' && value.includes('{') && value.includes('bvp_framework')) {\n        console.log(`${indent}Found potential BVP JSON in field '${key}', extracting...`);\n        const extracted = extractBvpJson(value, depth + 1);\n        if (extracted) return extracted;\n      }\n    }\n    \n    // Pattern 6: If object has array properties, check if any contain BVP data\n    for (const [key, value] of Object.entries(data)) {\n      if (Array.isArray(value) && value.length > 0) {\n        console.log(`${indent}Checking array field '${key}' with ${value.length} items`);\n        for (let i = 0; i < value.length; i++) {\n          const extracted = extractBvpJson(value[i], depth + 1);\n          if (extracted) {\n            console.log(`${indent}✓ Found BVP data in array[${i}]`);\n            return extracted;\n          }\n        }\n      }\n    }\n  }\n  \n  // If it's an array, check each item\n  if (Array.isArray(data)) {\n    console.log(`${indent}Data is array with ${data.length} items`);\n    for (let i = 0; i < data.length; i++) {\n      const extracted = extractBvpJson(data[i], depth + 1);\n      if (extracted) {\n        console.log(`${indent}✓ Found BVP data in array[${i}]`);\n        return extracted;\n      }\n    }\n  }\n  \n  console.log(`${indent}✗ No BVP data found at this level`);\n  return null;\n}\n\n// EXTRACT THE BVP DATA\nconsole.log('=== STARTING BVP EXTRACTION ===');\nconst bvpData = extractBvpJson(rawBvpData);\n\nif (!bvpData) {\n  console.log('=== EXTRACTION FAILED - DETAILED DEBUG INFO ===');\n  console.log('Raw data type:', typeof rawBvpData);\n  console.log('Raw data preview:', JSON.stringify(rawBvpData, null, 2).substring(0, 2000));\n  throw new Error('Could not extract BVP framework from any level of the response data');\n}\n\nconsole.log('=== BVP EXTRACTION SUCCESSFUL ===');\nconsole.log('Final BVP data keys:', Object.keys(bvpData));\n\n// EXTRACT BENEFITS AND BRAND CONTEXT\nlet benefits, brandContext;\n\nif (bvpData.bvp_framework) {\n  benefits = bvpData.bvp_framework;\n  brandContext = bvpData.brand_context || {};\n  console.log('✓ Found bvp_framework structure with', benefits.length, 'benefits');\n} else if (Array.isArray(bvpData)) {\n  benefits = bvpData;\n  brandContext = {};\n  console.log('✓ Using direct benefits array with', benefits.length, 'benefits');\n} else if (bvpData.benefits) {\n  benefits = bvpData.benefits;\n  brandContext = bvpData.brand_context || {};\n  console.log('✓ Found benefits property with', benefits.length, 'benefits');\n} else {\n  console.log('=== BENEFITS EXTRACTION FAILED ===');\n  console.log('BVP data structure:', JSON.stringify(bvpData, null, 2).substring(0, 1000));\n  throw new Error('Cannot find benefits array in BVP data. Available keys: ' + Object.keys(bvpData).join(', '));\n}\n\nif (!benefits || !Array.isArray(benefits) || benefits.length === 0) {\n  throw new Error('No valid benefits array found. Benefits type: ' + typeof benefits + ', length: ' + (benefits ? benefits.length : 'N/A'));\n}\n\nconsole.log('=== BENEFITS VALIDATION ===');\nconsole.log('Benefits count:', benefits.length);\nconsole.log('Sample benefit keys:', benefits[0] ? Object.keys(benefits[0]) : 'No benefits');\n\n// EXTRACT CONTEXT INFORMATION\nconst industryParts = brandContext?.industry ? brandContext.industry.split(' > ') : [];\nconst unspscSegment = industryParts[0] || brandContext?.unspscSegment || 'Unknown';\nconst unspscFamily = industryParts[1] || brandContext?.unspscFamily || 'Unknown';\nconst unspscClass = industryParts[2] || brandContext?.unspscClass || 'Unknown';\nconst unspscCommodity = industryParts[3] || brandContext?.unspscCommodity || 'Unknown';\nconst commodityCode = 'TBD';\nconst brandName = brandContext?.brand_name || 'Unknown';\nconst targetLanguage = bvpData.target_language || brandContext?.targetLanguage || 'Unknown';\nconst targetMarket = brandContext?.targetMarket || 'Unknown';\n\nconsole.log('=== PROCESSING BENEFITS ===');\nconst outputItems = [];\nlet popCount = 0, podCount = 0, skippedCount = 0;\n\nbenefits.forEach((benefit, index) => {\n  if (!benefit || typeof benefit !== 'object') {\n    console.log(`⚠️ Skipping invalid benefit at index ${index}:`, benefit);\n    skippedCount++;\n    return;\n  }\n  \n  const source = benefit.source || '';\n  console.log(`Processing benefit ${index}: source = \"${source}\"`);\n  \n  if (source.includes('Points of Parity') || source.includes('Product')) {\n    outputItems.push({\n      json: {\n        type: 'PoP',\n        benefit_id: benefit.benefit_id || `PoP_${index}`,\n        'Segment Title': unspscSegment,\n        'Family Title': unspscFamily,\n        'Class Title': unspscClass,\n        'Commodity Title': unspscCommodity,\n        'Commodity Code': commodityCode,\n        benefit: benefit.benefit || 'Unknown benefit',\n        stakeholder: benefit.stakeholder || 'Unknown',\n        stk_category: benefit.category || 'Unknown',\n        stk_sub_category: benefit.sub_category || 'Unknown',\n        value: benefit.value || 'Unknown',\n        personality: benefit.personality || 'Unknown',\n        target_language: targetLanguage,\n        target_market: targetMarket\n      }\n    });\n    popCount++;\n  } else if (source.includes('Points of Differentiation') || source.includes('Brand')) {\n    outputItems.push({\n      json: {\n        type: 'PoD',\n        benefit_id: benefit.benefit_id || `PoD_${index}`,\n        brand_name: brandName,\n        product_name: productName,\n        benefit: benefit.benefit || 'Unknown benefit',\n        stakeholder: benefit.stakeholder || 'Unknown',\n        stk_category: benefit.category || 'Unknown',\n        stk_sub_category: benefit.sub_category || 'Unknown',\n        value: benefit.value || 'Unknown',\n        personality: benefit.personality || 'Unknown',\n        'Segment Title': unspscSegment,\n        'Family Title': unspscFamily,\n        'Class Title': unspscClass,\n        'Commodity Title': unspscCommodity,\n        'Commodity Code': commodityCode,\n        target_language: targetLanguage,\n        target_market: targetMarket\n      }\n    });\n    podCount++;\n  } else {\n    console.log(`⚠️ Benefit ${index} has unclear source: \"${source}\" - skipping`);\n    skippedCount++;\n  }\n});\n\nconsole.log('=== PROCESSING COMPLETE ===');\nconsole.log(`✓ Processed ${popCount} PoP benefits`);\nconsole.log(`✓ Processed ${podCount} PoD benefits`);\nconsole.log(`⚠️ Skipped ${skippedCount} benefits`);\nconsole.log(`📊 Total output items: ${outputItems.length}`);\n\nif (outputItems.length === 0) {\n  console.log('=== NO OUTPUT ITEMS GENERATED ===');\n  console.log('Sample benefit for debugging:', JSON.stringify(benefits[0], null, 2));\n  throw new Error('No benefits were processed into output items. Check benefit source values and data structure.');\n}\n\nreturn outputItems;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1760,
+        32
+      ],
+      "id": "3499787f-ec6b-4e06-9333-a6ac08bd7564",
+      "name": "Prepare BVP for Sheets"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "pop_filter",
+              "leftValue": "={{ $json.type }}",
+              "rightValue": "PoP",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [
+        -1536,
+        -64
+      ],
+      "id": "58c93074-1c92-49c2-9a0f-861e294c769f",
+      "name": "Filter PoP Benefits"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "pod_filter",
+              "leftValue": "={{ $json.type }}",
+              "rightValue": "PoD",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [
+        -1536,
+        128
+      ],
+      "id": "55403f9f-5dfb-4364-a496-a2664ec63fd9",
+      "name": "Filter PoD Benefits"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w",
+          "mode": "list",
+          "cachedResultName": "Brand Mindset Input-test",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "PoP_Benefits",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {
+          "cellFormat": "USER_ENTERED"
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        -1312,
+        -64
+      ],
+      "id": "6bb76547-fdfe-469f-8bca-d8d281ddb973",
+      "name": "Save PoP Benefits",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "GP0ycwiOqi6LmXaw",
+          "name": "Google Sheets account"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w",
+          "mode": "list",
+          "cachedResultName": "Brand Mindset Input-test",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "PoD_Benefits",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {
+          "cellFormat": "USER_ENTERED"
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        -1312,
+        128
+      ],
+      "id": "14047033-e3df-46b3-a2cf-603258a18e97",
+      "name": "Save PoD Benefits",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "GP0ycwiOqi6LmXaw",
+          "name": "Google Sheets account"
+        }
+      },
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "mode": "passThrough",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        -1088,
+        32
+      ],
+      "id": "8ccfd859-49f5-45a6-b99f-d7d9424c452a",
+      "name": "Merge BVP Results"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w",
+          "mode": "list",
+          "cachedResultName": "Brand Mindset Input-test",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2138296752,
+          "mode": "list",
+          "cachedResultName": "Form Responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w/edit#gid=2138296752"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "bvp_summary": "BVP Benefits Saved Successfully",
+            "workflowStep_C": "C_BVPFramework",
+            "timestamp_C": "={{ new Date().toISOString() }}",
+            "Product/Service name": "={{ $('Store BVP Framework').item.json['Product/Service name'] }}"
+          },
+          "matchingColumns": [
+            "Product/Service name"
+          ],
+          "schema": [
+            {
+              "id": "Product/Service name",
+              "displayName": "Product/Service name",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "bvp_summary",
+              "displayName": "bvp_summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "workflowStep_C",
+              "displayName": "workflowStep_C",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "timestamp_C",
+              "displayName": "timestamp_C",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Save BVP Summary to Excel",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        -864,
+        32
+      ],
+      "id": "735f0efd-45c7-46d1-83bb-df0385f927b5",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "GP0ycwiOqi6LmXaw",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "name": "No Items to Process",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -4704,
+        800
+      ],
+      "id": "79ac5973-78cc-4b42-b193-71e56319fe6b"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.rawData['Brand Stage (Lifecycle Phase)'] }}",
+                    "rightValue": "=Startup / Launch",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    },
+                    "id": "28a144f2-cfac-471f-9572-8fb0af04ef22"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Startup"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "1f287fd1-27ed-4c83-bcef-78abd397ffac",
+                    "leftValue": "={{ $json.rawData['Brand Stage (Lifecycle Phase)'] }}",
+                    "rightValue": "Growth",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Growth"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "13e18217-097f-42f2-b032-d4bb5bb3b2ab",
+                    "leftValue": "={{ $json.rawData['Brand Stage (Lifecycle Phase)'] }}",
+                    "rightValue": "Maturation",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Maturation"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "fec6be63-054d-47b5-8582-c0195df901fd",
+                    "leftValue": "={{ $json.rawData['Brand Stage (Lifecycle Phase)'] }}",
+                    "rightValue": "Decline",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Decline"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -4256,
+        576
+      ],
+      "id": "2ada30a2-7e41-4071-96a1-175751bc8ef7",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "allBvpResults",
+        "options": {}
+      },
+      "name": "Aggregate All BVP Results1",
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -2208,
+        32
+      ],
+      "id": "7f3b1b7c-ad94-413b-8d3a-5e51452b1dd7"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract and prepare all benefits for batch processing\nconst allBenefits = [];\nlet brandContext = {};\n\n// Get all input items from the merge node\nconst inputItems = $input.all();\nconsole.log('Number of merged input items:', inputItems.length);\n\n// Process each input item\nlet productData = null;\nlet brandData = null;\n\nfor (const item of inputItems) {\n  console.log('Processing item with keys:', Object.keys(item.json || item));\n  \n  const itemData = item.json || item;\n  \n  // Check if this item contains product benefits\n  if (itemData.productBenefitsStructured) {\n    console.log('Found productBenefitsStructured');\n    productData = itemData;\n  }\n  \n  // Check if this item contains brand benefits  \n  if (itemData.brandBenefitsStructured) {\n    console.log('Found brandBenefitsStructured');\n    brandData = itemData;\n  }\n  \n  // Also check for direct Points_of_Parity/Points_of_Differentiation\n  if (itemData.Points_of_Parity) {\n    console.log('Found direct Points_of_Parity');\n    productData = itemData;\n  }\n  \n  if (itemData.Points_of_Differentiation) {\n    console.log('Found direct Points_of_Differentiation');\n    brandData = itemData;\n  }\n}\n\n// Extract brand context from available data\nif (productData || brandData) {\n  const sourceData = productData || brandData;\n  brandContext = {\n    brandName: sourceData.companyName || sourceData['Company/Organization Name'] || 'Unknown',\n    productName: sourceData['Product/Service name'] || 'Unknown',\n    targetMarket: sourceData.rawData?.['Product Target Market'] || 'Unknown',\n    targetLanguage: sourceData.rawData?.['Target Market Language'] || 'English',\n    unspscSegment: sourceData.rawData?.['UNSPSC - Segment Title'] || 'Unknown',\n    unspscFamily: sourceData.rawData?.['UNSPSC - Family Title'] || 'Unknown',\n    workflowId: sourceData.workflowId || Date.now().toString()\n  };\n}\n\nconsole.log('Brand context:', brandContext);\n\n// Function to extract benefits from nested structures\nfunction extractBenefitsFromData(data, sourceType, benefitType) {\n  const benefits = [];\n  \n  function findAndExtractBenefits(obj, currentPath = []) {\n    if (Array.isArray(obj)) {\n      obj.forEach((item, index) => {\n        if (typeof item === 'string' && item.trim().length > 10) {\n          let stakeholder = 'Unknown';\n          let category = 'Unknown';\n          let subCategory = 'Unknown';\n          \n          const stakeholderKeywords = ['End-Users', 'Investors', 'Regulators', 'Partners', 'Employees', 'Distributors', 'Community', 'Media and Influencers'];\n          const categoryKeywords = ['Financial', 'Functional', 'Emotional', 'Self-Expression', 'Social', 'Cultural', 'Experiential'];\n          \n          for (let i = currentPath.length - 1; i >= 0; i--) {\n            if (stakeholderKeywords.includes(currentPath[i])) {\n              stakeholder = currentPath[i];\n              break;\n            }\n          }\n          \n          for (let i = currentPath.length - 1; i >= 0; i--) {\n            if (categoryKeywords.includes(currentPath[i])) {\n              category = currentPath[i];\n              if (i + 1 < currentPath.length) {\n                subCategory = currentPath[i + 1];\n              }\n              break;\n            }\n          }\n          \n          benefits.push({\n            benefit: item,\n            stakeholder: stakeholder,\n            category: category,\n            subCategory: subCategory,\n            source: sourceType,\n            benefitId: `${benefitType}_${stakeholder}_${category}_${index}`,\n            benefitType: benefitType\n          });\n        }\n      });\n    } else if (typeof obj === 'object' && obj !== null) {\n      Object.keys(obj).forEach(key => {\n        findAndExtractBenefits(obj[key], [...currentPath, key]);\n      });\n    }\n  }\n  \n  findAndExtractBenefits(data);\n  return benefits;\n}\n\n// Extract Product Benefits (Points of Parity)\nif (productData) {\n  let productBenefits = [];\n  \n  // Try to get from productBenefitsStructured first\n  if (productData.productBenefitsStructured) {\n    const parsedData = typeof productData.productBenefitsStructured === 'string' \n      ? JSON.parse(productData.productBenefitsStructured)\n      : productData.productBenefitsStructured;\n      \n    if (parsedData.Points_of_Parity) {\n      console.log('Extracting from productBenefitsStructured.Points_of_Parity');\n      productBenefits = extractBenefitsFromData(\n        parsedData.Points_of_Parity, \n        'Product (Points of Parity)', \n        'POP'\n      );\n    }\n  }\n  \n  // Fallback to direct Points_of_Parity\n  if (productBenefits.length === 0 && productData.Points_of_Parity) {\n    console.log('Extracting from direct Points_of_Parity');\n    productBenefits = extractBenefitsFromData(\n      productData.Points_of_Parity, \n      'Product (Points of Parity)', \n      'POP'\n    );\n  }\n  \n  console.log(`Extracted ${productBenefits.length} product benefits`);\n  allBenefits.push(...productBenefits);\n}\n\n// Extract Brand Benefits (Points of Differentiation)\nif (brandData) {\n  let brandBenefits = [];\n  \n  // Try to get from brandBenefitsStructured first\n  if (brandData.brandBenefitsStructured) {\n    const parsedData = typeof brandData.brandBenefitsStructured === 'string'\n      ? JSON.parse(brandData.brandBenefitsStructured)\n      : brandData.brandBenefitsStructured;\n      \n    if (parsedData.Points_of_Differentiation) {\n      console.log('Extracting from brandBenefitsStructured.Points_of_Differentiation');\n      brandBenefits = extractBenefitsFromData(\n        parsedData.Points_of_Differentiation, \n        'Brand (Points of Differentiation)', \n        'POD'\n      );\n    }\n  }\n  \n  // Fallback to direct Points_of_Differentiation\n  if (brandBenefits.length === 0 && brandData.Points_of_Differentiation) {\n    console.log('Extracting from direct Points_of_Differentiation');\n    brandBenefits = extractBenefitsFromData(\n      brandData.Points_of_Differentiation, \n      'Brand (Points of Differentiation)', \n      'POD'\n    );\n  }\n  \n  console.log(`Extracted ${brandBenefits.length} brand benefits`);\n  allBenefits.push(...brandBenefits);\n}\n\nconsole.log(`Total benefits extracted: ${allBenefits.length}`);\nconsole.log('Sample benefits:', allBenefits.slice(0, 3));\n\nif (allBenefits.length === 0) {\n  console.error('No benefits found! Input data structure:', JSON.stringify(inputItems, null, 2));\n}\n\n// Return both the benefits array and brand context for batch processing\nreturn {\n  consolidatedBenefits: allBenefits,\n  brandContext: brandContext,\n  totalBenefits: allBenefits.length,\n  timestamp: new Date().toISOString()\n};"
+      },
+      "name": "Prepare Benefits for Batching2",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -3232,
+        32
+      ],
+      "id": "f5aae1ca-5e3f-4446-abb7-634996af7826"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Split the benefits array into batches for processing\nconst inputData = $input.first().json;\nconst benefits = inputData.consolidatedBenefits || [];\nconst brandContext = inputData.brandContext || {};\nconst BATCH_SIZE = 50; // Process 50 benefits at a time\n\nconsole.log('Input data structure:', Object.keys(inputData));\nconsole.log('Total benefits to split:', benefits.length);\nconsole.log('Brand context:', brandContext);\n\nif (benefits.length === 0) {\n  console.warn('No benefits found to process!');\n  return [{ json: { error: 'No benefits found', inputData: inputData } }];\n}\n\nconst batches = [];\nfor (let i = 0; i < benefits.length; i += BATCH_SIZE) {\n  const batch = benefits.slice(i, i + BATCH_SIZE);\n  const batchData = {\n    batchNumber: Math.floor(i / BATCH_SIZE) + 1,\n    totalBatches: Math.ceil(benefits.length / BATCH_SIZE),\n    benefits: batch,\n    brandContext: brandContext,\n    batchSize: batch.length,\n    startIndex: i,\n    endIndex: Math.min(i + BATCH_SIZE - 1, benefits.length - 1),\n    totalBenefits: benefits.length\n  };\n  \n  console.log(`Created batch ${batchData.batchNumber} with ${batchData.batchSize} benefits`);\n  console.log('Sample benefit from batch:', batch[0]);\n  \n  batches.push(batchData);\n}\n\nconsole.log(`Created ${batches.length} batches from ${benefits.length} benefits`);\n\nreturn batches.map(batch => ({ json: batch }));"
+      },
+      "name": "Split Benefits into Batches2",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -3008,
+        32
+      ],
+      "id": "8d86215d-bb43-4036-9031-2b642161993d"
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "name": "Process Each Batch2",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -2784,
+        32
+      ],
+      "id": "d479f32b-35d3-4069-8658-d5fe3950b35b"
+    }
+  ],
+  "connections": {
+    "D. BVP Categorization": {
+      "main": [
+        [
+          {
+            "node": "Store Categorized BVP",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "E. Origin Maker",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "F. Vision Maker",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "G. Brand Strategy Maker",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Categorized BVP": {
+      "main": [
+        [
+          {
+            "node": "Prepare Identity Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "E. Origin Maker": {
+      "main": [
+        [
+          {
+            "node": "Merge Brand Components",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "F. Vision Maker": {
+      "main": [
+        [
+          {
+            "node": "Merge Brand Components",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "G. Brand Strategy Maker": {
+      "main": [
+        [
+          {
+            "node": "Merge Brand Components",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Brand Components": {
+      "main": [
+        [
+          {
+            "node": "Store Brand Components",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Brand Components": {
+      "main": [
+        [
+          {
+            "node": "Compile Complete BrandBook Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Identity Context": {
+      "main": [
+        [
+          {
+            "node": "H. Fixed Identity Maker",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "I. Growth Identity Maker",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "J. Situational Identity Maker",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "H. Fixed Identity Maker": {
+      "main": [
+        [
+          {
+            "node": "Merge Identity Types",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "I. Growth Identity Maker": {
+      "main": [
+        [
+          {
+            "node": "Merge Identity Types",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "J. Situational Identity Maker": {
+      "main": [
+        [
+          {
+            "node": "Merge Identity Types",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Identity Types": {
+      "main": [
+        [
+          {
+            "node": "Store Identity Types",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Identity Types": {
+      "main": [
+        [
+          {
+            "node": "Compile Complete BrandBook Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compile Complete BrandBook Data": {
+      "main": [
+        [
+          {
+            "node": "K. BrandBook Compiler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "K. BrandBook Compiler": {
+      "main": [
+        [
+          {
+            "node": "Update Status to Done",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Read Brand Form Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Brand Form Data": {
+      "main": [
+        [
+          {
+            "node": "Filter Pending Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Pending Items": {
+      "main": [
+        [
+          {
+            "node": "Process One Item",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Items to Process",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process One Item": {
+      "main": [
+        [
+          {
+            "node": "Prepare Workflow Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Workflow Data": {
+      "main": [
+        [
+          {
+            "node": "Brand Context Repository",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Brand Context Repository": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "A. Product Benefit Finder": {
+      "main": [
+        [
+          {
+            "node": "Store Product Benefits",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "B. Brand-Product Benefit Creator": {
+      "main": [
+        [
+          {
+            "node": "Store Brand Benefits",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Product Benefits": {
+      "main": [
+        [
+          {
+            "node": "Save Product Benefits to Excel",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Extract Individual Benefits",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait for A & B Completion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Brand Benefits": {
+      "main": [
+        [
+          {
+            "node": "Save Brand Benefits to Excel",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Extract Individual Brand Benefits",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait for A & B Completion",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Wait for A & B Completion": {
+      "main": [
+        [
+          {
+            "node": "Prepare Benefits for Batching2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "C. BVP Generator": {
+      "main": [
+        [
+          {
+            "node": "Aggregate All BVP Results1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store BVP Framework": {
+      "main": [
+        [
+          {
+            "node": "Prepare BVP for Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare BVP for Sheets": {
+      "main": [
+        [
+          {
+            "node": "Filter PoP Benefits",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Filter PoD Benefits",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter PoP Benefits": {
+      "main": [
+        [
+          {
+            "node": "Save PoP Benefits",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter PoD Benefits": {
+      "main": [
+        [
+          {
+            "node": "Save PoD Benefits",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save PoP Benefits": {
+      "main": [
+        [
+          {
+            "node": "Merge BVP Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save PoD Benefits": {
+      "main": [
+        [
+          {
+            "node": "Merge BVP Results",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge BVP Results": {
+      "main": [
+        [
+          {
+            "node": "Save BVP Summary to Excel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save BVP Summary to Excel": {
+      "main": [
+        [
+          {
+            "node": "D. BVP Categorization",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "A. Product Benefit Finder",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "B. Brand-Product Benefit Creator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate All BVP Results1": {
+      "main": [
+        [
+          {
+            "node": "Store BVP Framework",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Benefits for Batching2": {
+      "main": [
+        [
+          {
+            "node": "Split Benefits into Batches2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Benefits into Batches2": {
+      "main": [
+        [
+          {
+            "node": "Process Each Batch2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Each Batch2": {
+      "main": [
+        [],
+        [
+          {
+            "node": "C. BVP Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "instanceId": "15babe984bffc8d4488e8a2a0a8ec8f00010a4ffa53aa1beffdf33350e7b8936"
+  }
+}

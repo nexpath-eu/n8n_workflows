@@ -1,0 +1,145 @@
+{
+  "createdAt": "2025-08-02T12:06:49.643Z",
+  "updatedAt": "2025-08-06T11:10:06.711Z",
+  "id": "vX25hOYZzK9zDCQg",
+  "name": "My workflow",
+  "active": false,
+  "isArchived": true,
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "image",
+        "prompt": "={{ $json.chatInput }}",
+        "model": "dall-e-3",
+        "options": {},
+        "requestOptions": {}
+      },
+      "id": "0ec98c44-049d-46c3-a336-3b41ae996084",
+      "name": "Generate Image with DALL-E 3",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [-624, 96],
+      "credentials": {
+        "openAiApi": {
+          "id": "24f4qODVRQ0INcJS",
+          "name": "OpenAI - n8n automations"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toFormat",
+        "options": {}
+      },
+      "id": "02068915-6d55-4b90-8c37-c9791eef18dd",
+      "name": "Convert to PNG",
+      "type": "n8n-nodes-base.editImage",
+      "typeVersion": 1,
+      "position": [-400, 96]
+    },
+    {
+      "parameters": {
+        "name": "={{ 'AI_Generated_' + $now.format('YYYY-MM-DD_HH-mm-ss') + '.png' }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (Root folder)"
+        },
+        "options": {}
+      },
+      "id": "5eef9f84-d0b4-48d6-be34-ad1bc42c4333",
+      "name": "Save to Google Drive",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [-176, 96]
+    },
+    {
+      "parameters": {
+        "subject": "🎨 Your AI Generated Image is Ready!",
+        "options": {
+          "attachments": "={{ 'data:image/png;base64,' + $('Convert to PNG').item.binary.data.data }}"
+        }
+      },
+      "id": "17be7829-a5c3-4f86-bbf1-ebe04bb7e37a",
+      "name": "Send Email with Image",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [48, 96],
+      "webhookId": "51028c85-b3be-4c0a-840b-f46fe51f87be"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [-1168, 112],
+      "id": "8896979f-4d2f-4b23-995f-0a6517884373",
+      "name": "When chat message received",
+      "webhookId": "e3f4a694-1c9e-47f2-b4e1-0b620138b8c8"
+    }
+  ],
+  "connections": {
+    "Generate Image with DALL-E 3": {
+      "main": [
+        [
+          {
+            "node": "Convert to PNG",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to PNG": {
+      "main": [
+        [
+          {
+            "node": "Save to Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save to Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Send Email with Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Generate Image with DALL-E 3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "07fefb1d-5241-41c7-a1e2-4e163a2ff5d7",
+  "triggerCount": 0,
+  "tags": ["4"]
+}

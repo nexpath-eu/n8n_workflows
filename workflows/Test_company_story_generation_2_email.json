@@ -1,0 +1,101 @@
+{
+  "createdAt": "2025-08-04T07:53:57.525Z",
+  "updatedAt": "2025-08-17T12:10:20.324Z",
+  "id": "cvLh3ItTlTH4imal",
+  "name": "test-company story generation 2 email",
+  "active": false,
+  "isArchived": true,
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4e04fec4-441e-45f7-acea-0017a4b5c104",
+              "name": "model",
+              "type": "string",
+              "value": "flux"
+            },
+            {
+              "id": "aa80cd68-1c82-4032-b1d7-e098856eec38",
+              "name": "width",
+              "type": "string",
+              "value": "1080"
+            },
+            {
+              "id": "da6d305f-aece-49bd-ae02-52df59915c60",
+              "name": "height",
+              "type": "string",
+              "value": "1920"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e93867d1-11b5-4632-babb-6dbf914bb7fc",
+      "name": "Fields - Set Values",
+      "type": "n8n-nodes-base.set",
+      "position": [192, 0],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "path": "5b347b5d-8f35-45b3-a499-de95153088f0",
+        "formTitle": "Company Story Generator",
+        "formDescription": "Enter your company details to generate a brand story and comic illustration",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Company Name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Brand Name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Year of Registration",
+              "fieldType": "number",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Industry",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9e78a80c-c032-48b1-aeb0-0221180da56d",
+      "name": "Webform Trigger",
+      "type": "n8n-nodes-base.formTrigger",
+      "position": [0, 0],
+      "webhookId": "5b347b5d-8f35-45b3-a499-de95153088f0",
+      "typeVersion": 2.1
+    }
+  ],
+  "connections": {
+    "Webform Trigger": {
+      "main": [
+        [
+          {
+            "node": "Fields - Set Values",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "84a8cfc0-2374-4e1d-9b91-71847a34c5f3",
+  "triggerCount": 0,
+  "tags": []
+}

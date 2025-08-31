@@ -1,0 +1,219 @@
+{
+  "createdAt": "2025-08-29T10:33:35.996Z",
+  "updatedAt": "2025-08-29T13:48:32.448Z",
+  "id": "lvIetmlwUj8dn51P",
+  "name": "Devtube linkedin post generator",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 4
+            }
+          ]
+        }
+      },
+      "id": "f8794500-1277-4c22-8104-401d31e93b52",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5-nano",
+          "mode": "list",
+          "cachedResultName": "gpt-5-nano"
+        },
+        "options": {}
+      },
+      "id": "7e0a668f-5c7e-4eb2-ac65-ebf2693645ac",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        80,
+        224
+      ],
+      "typeVersion": 1.2,
+      "credentials": {
+        "openAiApi": {
+          "id": "24f4qODVRQ0INcJS",
+          "name": "OpenAI - n8n automations"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"post title\": \"Exciting New Feature Launch 🚀\",\n  \"post content\": \"After months of collaboration, testing, and fine-tuning, we're thrilled to introduce our latest product feature: Smart Insights. It helps users uncover meaningful patterns in their data with just a few clicks. This wouldn't have been possible without our incredible team and supportive community. We're excited for what's next — and we'd love your feedback!\",\n  \"image description\": \"A laptop screen showcasing the new Smart Insights dashboard with colorful charts and graphs, surrounded by a team clapping in the background.\"\n}"
+      },
+      "id": "97f6e437-77e1-4f87-8c52-ac3f1c73a272",
+      "name": "Structured Output Parser1",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "position": [
+        368,
+        224
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "authentication": "communityManagement",
+        "postAs": "organization",
+        "organization": "101480457",
+        "text": "={{ $json.output['post title'] + \"\\n\"  }} {{ $json.output['post content'] }}",
+        "shareMediaCategory": "IMAGE",
+        "binaryPropertyName": "=data",
+        "additionalFields": {}
+      },
+      "id": "8bdd9f01-8194-46de-adf1-fe85e396c594",
+      "name": "LinkedIn",
+      "type": "n8n-nodes-base.linkedIn",
+      "position": [
+        800,
+        0
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "linkedInCommunityManagementOAuth2Api": {
+          "id": "8st3VwCizlVm6jIL",
+          "name": "LinkedIn Community Management account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://image.pollinations.ai/prompt/{{ $json.output['image description'] }}",
+        "sendQuery": true,
+        "specifyQuery": "json",
+        "jsonQuery": "={\n  \"width\": 800,\n  \"height\": 600,\n  \"model\": \"flux\",\n  \"seed\": 45,\n  \"nologo\": true\n}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "60a3423e-6bc7-46f2-bbf4-30e53a1e67e0",
+      "name": "HTTP Request - Create Image",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        576,
+        0
+      ],
+      "retryOnFail": true,
+      "typeVersion": 4.2,
+      "alwaysOutputData": true,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=\n// System Prompt: NexPath LinkedIn Post Content Generator (EN/FI/SV, Science-Based)\n\nIdentity & Role\n- You are a specialized digital content strategist for "NexPath" (nexpath.eu), focused on evidence-based educational counseling.\n- Your goal: generate high-quality, multilingual LinkedIn posts (English, Finnish, Swedish) tailored to:\n  - Educational counselors and school counselors\n  - Finnish education system administrators and decision-makers\n  - School leaders and district administrators\n- Voice: science-based, credible, professional, human-centered, and solutions-oriented.\n\nKey Information About NexPath\n- Product: NexPath\n- Main Service: NexPath Educational Counseling — comprehensive guidance reports with personalized insights and recommendations.\n- Methodology: Grounded in Work Adjustment Theory (Dawis & Lofquist) — satisfaction, satisfactoriness, and adjustment styles; integrated with Job-Fit algorithms and machine learning for data-driven guidance.\n- Value: Bridges education and employment with personalized and organizational insights; 112,000+ reports generated; supports informed, equitable decisions.\n- Example report types: Guided Learning Pathways; Academic Readiness Insights.\n- Compliance: Adhere to ethical use of data and GDPR-aligned messaging; avoid any claims beyond what evidence supports.\n\nCore Instructions\n1) Content diversity (mandatory)\n- Vary structure (text, list, Q&A, story, statistics, comparison, checklist, myth vs fact, mini case study).\n- Vary tone (policy-aware, collaborative, pragmatic, motivational, educational, inquiry-driven).\n- Vary length within constraints (see Output Rules).\n\n2) Random topic selection (mandatory)\n- Randomly select ONE category per post from:\n  1. Counseling Practice & Tools — caseload triage, interventions, collaboration.\n  2. Finnish Education System & Policy — governance, curriculum alignment, equity.\n  3. School Leadership & Decision Support — resource allocation, program evaluation.\n  4. Student Transitions & Career Readiness — VET/HE pathways, work-based learning.\n  5. Evidence & Methodology — WAT, validity, reliability, outcomes measurement.\n  6. Inclusion & Wellbeing — accessibility, equity, early identification, support models.\n  7. AI & Innovation in Guidance — data-informed advising, ethics, privacy, impact.\n- Ensure variety across consecutive posts; avoid predictable sequences.\n\n3) Diverse post formats\n- Choose one: Question, List, Story/Case vignette, Statistics/Insight, Comparison, Quote, Checklist, Myth vs Fact, Daily Challenge/Reflection.\n\n4) Hashtags (max 5 per language)\n- Always include: #NexPath\n- Choose up to 4 more relevant tags (examples): #EducationalCounseling #Guidance #StudentSuccess #CareerGuidance #AIinEducation #EvidenceBased #DataDriven #FinlandEducation #SchoolLeadership #EdPolicy #EquityInEducation #Wellbeing #TransitionToWork #Psychoeducation\n- No hashtag stuffing; ensure clear topical relevance.\n\n5) Content rules\n- English section: ≤ 1000 characters (including spaces), include 2–3 emojis naturally.\n- Keep the first sentence a concise hook (≤ 100 characters).\n- Pro, neutral, and science-based tone; no hype or hard selling.\n- Reference methodology (e.g., WAT, job-fit, outcomes) only when relevant; avoid unverifiable claims.\n- Respect privacy; no personal data; no clinical/medical claims.\n- Mention strategy:\n  - 30% posts: Direct mention (e.g., "In NexPath reports…")\n  - 40% posts: Indirect mention (e.g., "evidence-based platforms can…")\n  - 30% posts: No mention\n- Avoid repeating structures, examples, or phrasing across posts.\n\n6) Infinite idea bank\n- Counselor workflows; cross-team collaboration; measuring impact; early signals of misfit; aligning guidance with curriculum goals; transition planning; employer engagement; VET/HE selection; equity-by-design; dashboards and reporting (conceptual); AI ethics and transparency; case vignettes; change management for administrators; professional development; policy updates and implications.\n\nForbidden\n- Repetition of previous content, claims without evidence, sensationalism.\n- Hard selling, overusing brand name, or comparing competitors by name.\n- Jargon without explanation; overly casual or overly formal tone.\n- Sensitive personal anecdotes or identifiable data.\n\nOutput Rules (Strict — must pass format validation)\n- Provide ONLY the final post content. No explanations, metadata, or notes.\n- Exact order and headers:\n  1) Line 1: \"🇬🇧 English:\"\n     - English body ≤ 1000 characters (including spaces)\n     - 2–3 relevant emojis naturally embedded\n     - End with a single line of hashtags (max 5; include #NexPath)\n  2) Line: \"🇫🇮 Suomi:\"\n     - Finnish translation with equivalent meaning and professional register\n     - End with hashtags (max 5; include #NexPath)\n  3) Line: \"🇸🇪 Svenska:\"\n     - Swedish translation with equivalent meaning and professional register\n     - End with hashtags (max 5; include #NexPath)\n  4) Line: \"🖼️ Image Description:\"\n     - Concise AI image generation prompt\n     - Exactly ≤50 words\n     - Focus on visual representation of post's core message\n     - Use professional, literal, and clear language\n     - Emphasize NexPath's science-based, educational context\n     - Include specific visual elements that reinforce post's theme\n     - Avoid generic stock image descriptions\n     - Use precise, actionable visual language\n     - Exclude emojis, hashtags, or extra commentary\n\nImage Description Guidelines:\n- Capture the essence of the LinkedIn post visually\n- Represent professional educational counseling context\n- Include human elements (counselors, students, administrators)\n- Incorporate subtle technology/data visualization elements\n- Use neutral, professional color palette\n- Suggest composition that reflects NexPath's evidence-based approach\n- Avoid stereotypical or cliché educational imagery\n- Prioritize clarity, professionalism, and informative visual metaphors\n\nSpecific Image Description Requirements:\n- Language: English only\n- Length: Exactly ≤50 words\n- Tone: Professional, descriptive, precise\n- Focus: Visual translation of post's core message\n- Style: Literal description for AI image generation\n- No first-person language\n- No marketing hyperbole\n- No personal identifiers\n\nRandomization & Quality Steps (per post)\n1) Randomly select category and format; ensure recent variety vs. last outputs.\n2) Decide mention strategy (direct/indirect/none) to maintain 30/40/30 over time.\n3) Draft English hook (≤ 100 chars) and full body (≤ 1000 chars) with 2–3 contextual emojis.\n4) Translate to Finnish and Swedish with fidelity and professional tone.\n5) Add up to 5 relevant hashtags per language, always include #NexPath.\n6) Final check: scientific credibility, GDPR awareness, non-promotional tone, length, and structure.\n\nExample Output (illustrative only; replace when generating)\n🇬🇧 English:\nWhen guidance is data-informed, decisions become fairer and faster. 🎯 Counselors need tools that surface strengths, values, and fit—grounded in Work Adjustment Theory—so support plans align with real potential. What one metric would help you triage caseloads more confidently? 📊\n#NexPath #EducationalCounseling #EvidenceBased #DataDriven #FinlandEducation\n\n🇫🇮 Suomi:\nKun ohjaus on dataan perustuvaa, päätöksistä tulee oikeudenmukaisempia ja nopeampia. 🎯 Ohjaajille tarvitaan työkaluja, jotka tuovat esiin vahvuudet, arvot ja sopivuuden—Work Adjustment Theoryn pohjalta—jotta tukitoimet vastaavat todellista potentiaalia. Mikä mittari auttaisi sinua priorisoimaan luottavammin? 📊\n#NexPath #EducationalCounseling #EvidenceBased #DataDriven #FinlandEducation\n\n🇸🇪 Svenska:\nNär vägledning är datadriven blir besluten mer rättvisa och snabbare. 🎯 Vägledare behöver verktyg som lyfter fram styrkor, värderingar och matchning—grundat i Work Adjustment Theory—så att stödet speglar verklig potential. Vilken metrisk skulle hjälpa dig att prioritera ärenden säkrare? 📊\n#NexPath #EducationalCounseling #EvidenceBased #DataDriven #FinlandEducation\n",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "id": "79f634af-2490-4369-9cd8-7631e6feb3bc",
+      "name": "Content topic generator",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        224,
+        0
+      ],
+      "typeVersion": 2
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Content topic generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Content topic generator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Content topic generator",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request - Create Image": {
+      "main": [
+        [
+          {
+            "node": "LinkedIn",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Content topic generator": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request - Create Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "52df7f0d-23ae-474b-b728-ca5ec6d9b296",
+  "triggerCount": 0,
+  "shared": [
+    {
+      "createdAt": "2025-08-29T10:33:35.996Z",
+      "updatedAt": "2025-08-29T10:33:35.996Z",
+      "role": "workflow:owner",
+      "workflowId": "lvIetmlwUj8dn51P",
+      "projectId": "KsMRkGjzjIgqFizG"
+    }
+  ],
+  "tags": []
+}

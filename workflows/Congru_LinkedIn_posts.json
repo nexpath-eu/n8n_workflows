@@ -1,0 +1,213 @@
+{
+  "id": "EorUVSEUqCHFbJQl",
+  "name": "Congru LinkedIn posts",
+  "active": false,
+  "createdAt": "2025-05-28T07:44:50.329Z",
+  "updatedAt": "2025-08-17T12:10:33.958Z",
+  "tags": [
+    {
+      "createdAt": "2025-08-06T11:13:58.849Z",
+      "updatedAt": "2025-08-17T12:13:20.985Z",
+      "id": "PTDpGFle0Aa0Jj9D",
+      "name": "Congru"
+    },
+    {
+      "createdAt": "2025-08-08T08:11:56.183Z",
+      "updatedAt": "2025-08-08T08:11:56.183Z",
+      "id": "57X59euuQJG5XSvC",
+      "name": "Final"
+    }
+  ],
+  "nodes": [
+    {
+      "parameters": {
+        "url": "={{ $('Get Data from Sheets').item.json['Image (URL)'] }}",
+        "options": {
+          "allowUnauthorizedCerts": false
+        }
+      },
+      "id": "af9ada5d-db3d-4ece-a98c-4c6d1a86d4e5",
+      "name": "Get Image",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [0, 0],
+      "typeVersion": 4.2,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [1, 2, 3, 4, 5],
+              "triggerAtHour": 7
+            }
+          ]
+        }
+      },
+      "id": "c68f30e9-0750-4cb0-8378-71bdeec4590e",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [-1856, 480],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-nano",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-nano"
+        },
+        "options": {}
+      },
+      "id": "45790d67-ca26-4e81-97ab-1ba358481f71",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [-1344, 720],
+      "typeVersion": 1.2,
+      "credentials": {
+        "openAiApi": {
+          "id": "24f4qODVRQ0INcJS",
+          "name": "OpenAI - n8n automations"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1H3LoDSVbyks1LPBLDupieDK3cPa96Em859kNdtgtCA8",
+          "mode": "list",
+          "cachedResultName": "LinkedIn post scheduler",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1H3LoDSVbyks1LPBLDupieDK3cPa96Em859kNdtgtCA8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1953355328,
+          "mode": "list",
+          "cachedResultName": "Congru",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1H3LoDSVbyks1LPBLDupieDK3cPa96Em859kNdtgtCA8/edit#gid=1953355328"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Status",
+              "lookupValue": "Pending"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8aca8648-8e8d-465e-82ef-1fc9345cb03b",
+      "name": "Get Data from Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [-1648, 480],
+      "typeVersion": 4.5,
+      "alwaysOutputData": true,
+      "retryOnFail": false,
+      "notesInFlow": false,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "GP0ycwiOqi6LmXaw",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=# LinkedIn Post Generation\n\n## Post Description:\n{{ $json[\"Post Description\"] }}\n\n## Instructions:\n{{ $json[\"Instructions\"] }}\n\n---\n\n**Task:**\nUsing the information above, generate a LinkedIn post text with the following requirements:\n\n- Create a new, positive, professional, and clear post using the Post Description and Instructions.\n- If Instructions explicitly request to keep the post content exactly as in the Post Description, do so without changes.\n- Begin the post with the label \"🇬🇧 English:\"\n- Then output the English post content (limit to 1000 characters), including 2–3 relevant emojis naturally, and relevant hashtags.\n- Below the English post, provide the Finnish translation under a visually distinct title \"🇫🇮 Suomi:\" on its own line.\n- After Finnish, provide the Swedish translation under the visually distinct title \"🇸🇪 Svenska:\" on its own line.\n- End each language section with relevant hashtags, always including #Congru.\n- Provide only the final post content as described, no explanations or additional text.",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=You are an expert social media and LinkedIn content writer.\n\nYou will be provided with:\n- A brief post description\n- Specific instructions from the user\n\nPlease follow these steps:\n\n1. Initial Creation:\nIf you are given a post description and instructions, write a polished, professionally worded LinkedIn post suitable for sharing. Strictly follow the instructions and ensure the message is engaging and succinct.\nIf instructed, add a call to action or particular phrase (for example, \"Connect with me\" at the bottom).\n\n2. Formatting:\nKeep the tone positive, inclusive, and professional.\nAdd relevant hashtags in small case.\nLimit the content to within 1300 characters.\nPlace the call to action or special instruction at the end if requested.\nOutput ONLY the final LinkedIn post content. Do NOT include any explanations, markdown, headings, or commentary—just the post text, ready to copy and share on LinkedIn."
+            }
+          ]
+        }
+      },
+      "id": "b16b2cca-7b5c-45b5-8dd5-c3cb67b680d6",
+      "name": "Generate Post Content",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "position": [-1424, 480],
+      "typeVersion": 1.6
+    }
+  ],
+  "connections": {
+    "Get Image": {
+      "main": [
+        [
+          {
+            "node": "Post With Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Data from Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Generate Post Content",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Regenerate Post Content",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Data from Sheets": {
+      "main": [
+        [
+          {
+            "node": "Generate Post Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Post Content": {
+      "main": [
+        [
+          {
+            "node": "Data Formatting 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Helsinki",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "instanceId": "eb7f0c30-cce1-4fc5-9080-d083ca489f77",
+    "syncedAt": "2025-08-31T14:59:00.000Z"
+  },
+  "pinData": {}
+}

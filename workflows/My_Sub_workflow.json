@@ -1,0 +1,103 @@
+{
+  "createdAt": "2025-08-06T18:57:22.655Z",
+  "updatedAt": "2025-08-07T14:43:06.884Z",
+  "id": "tx3wHNJEZ5Iq5W2c",
+  "name": "My Sub-workflow",
+  "active": false,
+  "isArchived": true,
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "text",
+        "operation": "message",
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-nano",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-NANO"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You are an expert brand manager skilled in competitive analysis, stakeholder-centric brand mapping, and market research, using David Aaker's Brand Equity Model.",
+              "role": "system"
+            }
+          ]
+        },
+        "simplify": true,
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [496, -208],
+      "id": "2cdb573e-0067-4b56-a0d1-4843807c7ecf",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "24f4qODVRQ0INcJS",
+          "name": "OpenAI - n8n automations"
+        }
+      }
+    },
+    {
+      "id": "da042221-ca73-4740-a706-c46ef1cd0569",
+      "typeVersion": 1.1,
+      "name": "Start",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [288, -208],
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "productInfo_market_targetMarket",
+              "type": "any"
+            },
+            {
+              "name": "productInfo_commodity_title",
+              "type": "any"
+            },
+            {
+              "name": "productInfo_market_language",
+              "type": "any"
+            },
+            {
+              "name": "productInfo_segment_title",
+              "type": "any"
+            },
+            {
+              "name": "productInfo_family_title",
+              "type": "any"
+            },
+            {
+              "name": "productInfo_class_title",
+              "type": "any"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": null,
+  "versionId": "ded9f6e7-9072-4a8f-8074-2b73871f3994",
+  "triggerCount": 0,
+  "tags": []
+}

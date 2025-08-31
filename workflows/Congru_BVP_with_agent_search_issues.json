@@ -1,0 +1,82 @@
+{
+  "createdAt": "2025-08-05T13:08:03.942Z",
+  "updatedAt": "2025-08-06T11:26:24.396Z",
+  "id": "vogu98ZlOv2o0hzO",
+  "name": "Congru BVP - با ایجنت - هنوز تو سرچ مشکل داره",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "11oBLnrpcmygkKhF0tK62iZ6ntTHG_cIprOklEnExwoQ",
+          "mode": "list",
+          "cachedResultName": "Congru UNSPSC BVP",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/11oBLnrpcmygkKhF0tK62iZ6ntTHG_cIprOklEnExwoQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 914407529,
+          "mode": "list",
+          "cachedResultName": "English-USA",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/11oBLnrpcmygkKhF0tK62iZ6ntTHG_cIprOklEnExwoQ/edit#gid=914407529"
+        },
+        "options": {}
+      },
+      "name": "Read Google Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [-784, 48],
+      "id": "c3c6fa0b-59a9-45e8-ab13-739201e3711f",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "GP0ycwiOqi6LmXaw",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json[\"Status\"]}}",
+              "operation": "notEqual",
+              "value2": "Done"
+            }
+          ]
+        }
+      },
+      "name": "Filter Rows To Process",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [-560, 48],
+      "id": "4ab238fb-28a3-461a-99eb-f48b2b0bf476"
+    }
+  ],
+  "connections": {
+    "Read Google Sheet": {
+      "main": [
+        [
+          {
+            "node": "Filter Rows To Process",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "4d335b2c-86ae-47ad-be40-986e977bb5cc",
+  "triggerCount": 0,
+  "tags": ["Congru"]
+}

@@ -1,0 +1,435 @@
+{
+  "createdAt": "2025-06-15T09:15:56.832Z",
+  "updatedAt": "2025-08-17T12:11:30.617Z",
+  "id": "k30YGbHFO3Dtp4SU",
+  "name": "SEO blog post creation",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "basicAuth",
+        "formTitle": "SEO Blog Generator / Profile.Center",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "keyword",
+              "fieldType": "textarea",
+              "placeholder": "Keyword",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "title",
+              "fieldType": "textarea",
+              "placeholder": "Title",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "audience",
+              "placeholder": "Audience",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "brands_to_avoid",
+              "placeholder": "Brand to Avoid",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "tone",
+              "placeholder": "Tone of Voice",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [0, 288],
+      "id": "94936cb4-3673-49fe-a5cd-7db25966e61a",
+      "name": "On form submission",
+      "webhookId": "41ba981e-f4c0-417e-a37d-181e56c3abb1"
+    },
+    {
+      "parameters": {
+        "url": "=https://www.googleapis.com/customsearch/v1?q={{ $json.title }}&key=AIzaSyC-0s8x9Wg7UsVHPlFVDM7Mm3FyVZaGQCI&cx=91783cb3c438c415d",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [240, 288],
+      "id": "0f169f03-bea4-440d-a444-9007be6af034",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "You are an SEO expert and subject-matter expert. Your task is to generate an SEO article title for the keyword provided by the user based on the context of the Google Search.",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "HumanMessagePromptTemplate",
+              "message": "=For context about what my article should be about, these are the top ranking results for {{ $('On form submission').item.json.keyword }}: {{ $json.items }} What are the principles that made these rank?"
+            },
+            {
+              "message": "=To craft an SEO-friendly article title for the keyword \"{{ $('On form submission').item.json.keyword }}\" that aligns with the principles observed in the top-ranking results you've shared, it's important to understand what made those titles effective. Here are the principles that likely contributed to their high rankings:   1. **Keyword Placement and Clarity**: Each title directly addresses the query by including the exact keyword or a very close variant. This clarity ensures search engines can easily understand the relevance of the content. 2. **Brevity and Directness**: The titles are concise, making them easy to read and understand quickly. They avoid unnecessary words and get straight to the point. 3. **Inclusion of Definitions or Explanations**: The titles suggest that the article will define or explain the concept, which is precisely what someone searching for \"{{ $('On form submission').item.json.keyword }}\" would be looking for. 4. **Variety in Presentation**: Despite covering similar content, each title approaches the subject from a slightly different angle. This variety can capture interest from a broader audience."
+            },
+            {
+              "type": "HumanMessagePromptTemplate",
+              "message": "=Given these principles, please help me generate a title that will rank for the keyword \"{{ $('On form submission').item.json.keyword }}\" by modeling after the syntax of the top ranking titles. Don't copy but give me something better, and avoid language such as \"Master\", \"Comprehensive\" or \"Discover\" or \"Unveil\". Do not use gerunds, and write in active, present voice only. Return the title only. Do not include any special symbols such as quotation mark and colons. "
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [448, 288],
+      "id": "9e1197b3-e105-4e60-b118-710547867ec9",
+      "name": "Title generation"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=I want a Google search phrase that will get me authoritative information for my article titled {{ $('On form submission').item.json.title }}, aimed at {{ $json.text }}. Please return a search phrase that would give me good general overview of this topic five words or less. Include any words your are not familiar with in the search query. Return just the phrase, do not include any special symbols such as quotation mark and colons. "
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [800, 288],
+      "id": "f577a5b1-7c59-4adf-b1d3-bf4a30a4f751",
+      "name": "Search query"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an expert blog writer. \nHere is some research i have done for a blog post titled \"{{ $('On form submission').item.json.title }}\". Please study it deeply : \n\n{\nArticle Title : {{ $('On form submission').item.json.title }}\n\nTarget Keyword : {{ $('On form submission').item.json.keyword }}\n\nAudience for my blog post : {{ $('On form submission').item.json.audience }}\n\nExclude the brands : {{ $('On form submission').item.json.brands_to_avoid }}\nCan you please write a detailed blog outline that has unique sections. The outline is supposed to include specific points and details that the article can mention. Avoid generic points. This should be deeply researched, not general.  \n\nInclude 7-8 bullets per section and, use some of the links above as references if you can. For each bullet, don't just say \"discuss how\", but actually explain in detail the points that can be made. Do not include things you know to be false, there may be inaccuracies. You are writing this for a sophisticated audience, avoid generic points, make specific references. Make sure to define key terms for users in the outline. Stay away from very controversial topics. In the introduction, give background information needed for the rest of the article. \n\nPlease return it in a basic array in the format and ONLY return the outline array, escaping quotes in format. Include a full section in each array item. : \n\n[\"section 1 including all sub-bullets\",\"section 2 including all sub-bullets\",\"section 3 including all sub-bullets\",\"section 4  including all sub-bullets\"... etc\n\nEach section should be encapsulated with \"\" and all content within should be escaped to ensure it is a valid array item\n\nHere an example of a valid output. Please follow this structure, ignore the content : \n\n[\n  \"Introduction - Discover the vibrant city of Miami, a destination that offers a blend of rich history, diverse culture, and a plethora of hidden gems. Unearth the lesser-known marvels that make Miami a unique destination for adventure seekers. Explore the numerous attractions from historic landmarks to eclectic neighborhoods, local cuisines, and vibrant nightlife.\",\n  \"History of Miami - Begin the adventure with a journey into Miami's past. Learn about the city's transformation from a sleepy settlement to a bustling metropolis. Understand the influence of diverse cultures on the city's development, as evident in its architecture, cuisine, and lifestyle. Discover the historical significance of Miami's landmarks such as the Ernest Hemingway's Home. Uncover the intriguing stories behind Miami's famous neighborhoods like Key West. Explore the role of art and culture in shaping Miami, as illustrated by the Art Basel event.\",\n  \"Top Attractions - Venture beyond Miami's famous beaches and explore the city's top attractions. Discover the artistic brilliance of the Wynwood Art District, known for its vibrant street art. Visit the iconic South Beach, famous for its nightlife and boutique shops. Explore the enchanting neighborhood of Coconut Grove, known for its tree-lined streets and shopping areas. Visit the Holocaust Memorial, a grim reminder of a dark chapter in human history. Explore the diverse wildlife at the Everglades National Park, one of Miami's natural treasures.\",\n  \"Off the Beaten Path - Step away from the tourist trail and discover Miami's hidden gems. Experience the thrill of a water taxi ride across Biscayne Bay for an alternative view of the city. Visit the lesser-known Art Kabinett sector, featuring unique installation art. Explore the abandoned bridges and hidden bars on Duval Street. Take a culinary adventure in the local neighborhoods, known for their authentic cuisines. Indulge in a shopping spree at the Brickell City Centre, a trendy shopping and condo complex in downtown Miami.\",\n  \"Local Cuisine - Dive into Miami's culinary scene and savor the city's diverse flavors. Enjoy the ultra-fresh food and drinks at Bartaco, a local favorite. Experience fine dining at upscale Italian restaurants like Il Mulino New York. Explore the city's local food markets for a taste of Miami's homegrown produce. Sample the unique fusion of Cuban and American cuisines, a testament to Miami's multicultural heritage.\",\n  \"Nightlife - Experience the city's vibrant nightlife, a perfect blend of sophistication and fun. Visit the American Social Bar & Kitchen, a hotspot for sports lovers. Explore the nightlife in Mary Brickell Village, known for its clubby atmosphere. Enjoy an evening at the Smith & Wollensky Miami Beach South Pointe Park, known for its stunning views and vintage wines. Visit the iconic Miami Beach, famous for its pulsating nightlife.\",\n  \"Conclusion - Miami is more than just stunning beaches and glitzy nightlife. It's a treasure trove of experiences waiting to be discovered. From its rich history and diverse culture to its hidden gems, local cuisine, and vibrant nightlife, Miami offers a unique adventure for every traveler. Experience the magic of Miami Beach and create unforgettable memories with your family.\"\n]"
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [1168, 288],
+      "id": "7b544b09-d0ed-4dfa-b109-c0b925215f1e",
+      "name": "Generate outline"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an SEO expert who writes in an straightforward, practical, educational tone that is matter-of-fact instead of a storytelling or narrative style, focused on informing the \"how to\", \"what is\", and \"why\" rather than narrating to the audience {{ $('On form submission').first().json.audience }}. Write at a 6th grade reading level. Output in markdown only.\n\nUse the following tone and voice:{{ $('On form submission').first().json.tone }}\nUse active, present tense, and avoid complex language and syntax such as \"unravel\", \"delve\", etc. without narration.\n\nNow, excluding the title, introduce the blog in 3-5 sentences. Then, use an h2 header to write the the section title. Then provide a concise, SEO-optimized title. Do not include h3 subheaders. Feel free to use bullets, numbered lists, or paragraphs, or bold text for emphasis when you see fit. You should transition naturally from each section, build off of each section, and you should not repeat the same sentence structure. Do not include a conclusion, sum up or summary, no \"in conclusion\", \"to conclude\" or variations. Do not include links or mention any company that are competitive with the brand (avoid \"{{ $('On form submission').first().json.brands_to_avoid }}\"). \n<Article Outline>\n{{ $json.text }}\n<Introduction>"
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [1520, 288],
+      "id": "0443ce4e-cae8-431f-8ca5-1046e8419f7a",
+      "name": "Write intro"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-nano-2025-04-14",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-nano-2025-04-14"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [672, 528],
+      "id": "c5ae1f89-3bc7-4161-a1f9-8ce13479f249",
+      "name": "OpenAI 4.1 nano"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [1648, 512],
+      "id": "d59f6e42-dd1d-471d-b900-d9668a1ff7b9",
+      "name": "OpenAI 4.1. mini"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an SEO expert who writes in an straightforward, practical, educational tone that is matter-of-fact instead of a storytelling or narrative style, focused on informing the \"how to\", \"what is\", and \"why\" rather than narrating to the audience {{ $('On form submission').first().json.audience }}. Write at a 6th grade reading level. Output in markdown only. \n\n\nUse the following tone and voice:\n{{ $('On form submission').first().json.tone }}\nUse active, present tense, and avoid complex language and syntax such as \"unravel\", \"delve\", etc. without narration.\n\nNow continue writing this article with an concise title relating to our topic, {{ $('On form submission').first().json.title }}{{ $('On form submission').first().json.keyword }}. Do not repeat anything already written, and do not repeat the same sentence structure. Exclude a conclusion. Use the information I have given you to write something deeply interesting and original. Add references and data points I have provided you with above to make the article more valuable to the reader. \n\n<Article Outline>\n{{ $('Generate outline').item.json.text }}\n<Article Body>"
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.6,
+      "position": [1888, 288],
+      "id": "83d68785-8084-45e5-b8d2-9d3a7e159247",
+      "name": "Write body"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $json.id }}",
+        "simple": false,
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "insert",
+              "text": "=Title:\n{{ $json.name }}\nSub:\n{{ $('Title generation').item.json.text }}\\n\\n\nIntro:\n{{ $('Write intro').item.json.text }}\\n\\n\nBody:\n{{ $('Write body').item.json.text }}\\n\\n\nKeywords:\n{{ $('On form submission').item.json.keyword }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [2464, 288],
+      "id": "efd6dd52-bee3-4245-9690-ac76ee126ff1",
+      "name": "Filling the content"
+    },
+    {
+      "parameters": {
+        "folderId": "1gwg2_dn_sJ3yQ6PhQSAGIKLNckeHLPfK",
+        "title": "={{ $('On form submission').item.json.title }}"
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [2240, 288],
+      "id": "68def617-e7b2-448a-9a8a-ff5d888420b0",
+      "name": "Create a Google Docs"
+    },
+    {
+      "parameters": {
+        "sendTo": "soboutipour@gmail.com",
+        "subject": "=مطلب جدید:  {{ $('Create a Google Docs').item.json.name }}",
+        "emailType": "text",
+        "message": "={{ $('Write body').item.json.text }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [2688, 288],
+      "id": "e528b211-db57-4518-963a-793e4194130e",
+      "name": "Gmail",
+      "webhookId": "1891f23c-2a79-42c0-b24b-42d056256807"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1H3LoDSVbyks1LPBLDupieDK3cPa96Em859kNdtgtCA8",
+          "mode": "list",
+          "cachedResultName": "LinkedIn post scheduler",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1H3LoDSVbyks1LPBLDupieDK3cPa96Em859kNdtgtCA8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 757418542,
+          "mode": "list",
+          "cachedResultName": "ProfileCenter",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1H3LoDSVbyks1LPBLDupieDK3cPa96Em859kNdtgtCA8/edit#gid=757418542"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Status",
+              "lookupValue": "=Pending"
+            }
+          ]
+        },
+        "combineFilters": "OR",
+        "options": {
+          "returnFirstMatch": false
+        }
+      },
+      "id": "dd1b3ac8-2b44-4f7b-b37f-2465696dafd7",
+      "name": "Get Data from Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [224, 0],
+      "typeVersion": 4.5,
+      "alwaysOutputData": true,
+      "retryOnFail": false,
+      "notesInFlow": false
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [0, 6, 1, 2, 3],
+              "triggerAtHour": 7
+            }
+          ]
+        }
+      },
+      "id": "81079fb4-1d51-4c62-9a63-64a5bae2237d",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [0, 0],
+      "typeVersion": 1.2
+    }
+  ],
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Title generation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Title generation": {
+      "main": [
+        [
+          {
+            "node": "Search query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search query": {
+      "main": [
+        [
+          {
+            "node": "Generate outline",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate outline": {
+      "main": [
+        [
+          {
+            "node": "Write intro",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI 4.1 nano": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Title generation",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Search query",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI 4.1. mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Generate outline",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Write intro",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Write body",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write intro": {
+      "main": [
+        [
+          {
+            "node": "Write body",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Write body": {
+      "main": [
+        [
+          {
+            "node": "Create a Google Docs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a Google Docs": {
+      "main": [
+        [
+          {
+            "node": "Filling the content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filling the content": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Data from Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "73a82a6b-e32c-415e-b294-dabd9e16ac83",
+  "triggerCount": 0,
+  "tags": ["Testing"]
+}

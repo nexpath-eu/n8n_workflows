@@ -1,0 +1,95 @@
+{
+  "createdAt": "2025-08-02T12:53:41.738Z",
+  "updatedAt": "2025-08-17T12:10:58.375Z",
+  "id": "brUxYv45fL9BGX9a",
+  "name": "Test-comic story generation",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4e04fec4-441e-45f7-acea-0017a4b5c104",
+              "name": "model",
+              "type": "string",
+              "value": "flux"
+            },
+            {
+              "id": "aa80cd68-1c82-4032-b1d7-e098856eec38",
+              "name": "width",
+              "type": "string",
+              "value": "1080"
+            },
+            {
+              "id": "da6d305f-aece-49bd-ae02-52df59915c60",
+              "name": "height",
+              "type": "string",
+              "value": "1920"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ca3e261e-a864-4f6e-ab4d-05221c4aa442",
+      "name": "Fields - Set Values",
+      "type": "n8n-nodes-base.set",
+      "position": [-416, -320],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "path": "5b347b5d-8f35-45b3-a499-de95153088f0",
+        "formTitle": "Company Story Generator",
+        "formDescription": "Enter your company details to generate a brand story",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Company Name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Brand Name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Year of Registration",
+              "fieldType": "number",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f20b10ad-f278-4307-8146-a9228825dab9",
+      "name": "Webform Trigger",
+      "type": "n8n-nodes-base.formTrigger",
+      "position": [-608, -320],
+      "webhookId": "5b347b5d-8f35-45b3-a499-de95153088f0",
+      "typeVersion": 2.1
+    }
+  ],
+  "connections": {
+    "Webform Trigger": {
+      "main": [
+        [
+          {
+            "node": "Fields - Set Values",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "26374d66-e3e9-4d84-a941-eca95a857fda",
+  "triggerCount": 0,
+  "tags": ["Testing"]
+}

@@ -1,0 +1,97 @@
+{
+  "createdAt": "2025-08-06T17:26:00.990Z",
+  "updatedAt": "2025-08-17T12:11:05.524Z",
+  "id": "yla330evVKewnID5",
+  "name": "🛠️ AI Prompt Maker",
+  "active": false,
+  "isArchived": true,
+  "nodes": [
+    {
+      "id": "430f2ed6-ccbe-4ccd-844b-c7458d0e87b0",
+      "name": "Gemini 2.5 Flash",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "position": [1968, 1160],
+      "parameters": {
+        "options": {
+          "temperature": 0
+        },
+        "modelName": "models/gemini-2.5-flash"
+      },
+      "credentials": {
+        "googlePalmApi": {
+          "id": "kAiPhudDOeQ4Csvu",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      },
+      "typeVersion": 1
+    },
+    {
+      "id": "fc337c72-6ce9-43fa-96b2-1581b54983ca",
+      "name": "Prompt Request",
+      "type": "n8n-nodes-base.formTrigger",
+      "position": [1368, 720],
+      "webhookId": "bef818b2-581a-44ad-bd07-a8b26cfb5b8c",
+      "parameters": {
+        "options": {
+          "path": "prompt-maker",
+          "buttonLabel": "Create Prompt",
+          "appendAttribution": false
+        },
+        "formTitle": "AI Prompt Maker",
+        "formFields": {
+          "values": [
+            {
+              "fieldType": "textarea",
+              "fieldLabel": "What prompt do you want ?",
+              "placeholder": "Talk about the goal of the prompt, any related context and any input format (e.g. input variables). You can also provide output examples.",
+              "requiredField": true
+            },
+            {
+              "fieldType": "dropdown",
+              "fieldLabel": "Select Sections",
+              "multiselect": true,
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "System Instructions"
+                  },
+                  {
+                    "option": "Examples"
+                  },
+                  {
+                    "option": "Inputs"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "formDescription": "Let AI create your perfect prompt.."
+      },
+      "typeVersion": 2.2
+    }
+  ],
+  "connections": {
+    "Prompt Request": {
+      "main": [
+        [
+          {
+            "node": "Gemini 2.5 Flash",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": null,
+  "staticData": null,
+  "meta": {
+    "templateId": "5289"
+  },
+  "pinData": null,
+  "versionId": "6fa1e27a-68dd-4c7a-8d67-752c47d79e81",
+  "triggerCount": 0,
+  "tags": []
+}

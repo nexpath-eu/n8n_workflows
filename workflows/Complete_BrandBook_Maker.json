@@ -1,0 +1,224 @@
+{
+  "createdAt": "2025-08-30T10:57:56.357Z",
+  "updatedAt": "2025-08-30T21:40:41.015Z",
+  "id": "LhmgNvTNAFvrBHuE",
+  "name": "Complete BrandBook Maker",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4",
+          "mode": "list",
+          "cachedResultName": "GPT-4"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You are a Congru Model specialist with deep expertise in brand categorization frameworks.",
+              "role": "system"
+            },
+            {
+              "content": "# BVP CATEGORIZATION USING CONGRU MODEL\n\nCategorize the BVP framework elements according to the Congru Model classification system.\n\n## INPUT BVP FRAMEWORK\n{{ $('C. BVP Generator').item.json }}\n\n## CATEGORIZATION TASK\nApply Congru Model categories to each BVP element:\n- Fixed Identity (non-negotiable core elements)\n- Growth Identity (evolving/developmental elements)\n- Situational Identity (context-dependent elements)\n\n## OUTPUT FORMAT\nProvide JSON with categorized BVP elements according to Congru Model:\n- fixed_elements: Core non-negotiable BVP items\n- growth_elements: Developmental BVP items\n- situational_elements: Context-adaptive BVP items\n- categorization_rationale: Explanation of categorization logic"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -1312,
+        32
+      ],
+      "id": "0c790af7-0cf6-4c38-911a-97f47470d232",
+      "name": "D. BVP Categorization",
+      "credentials": {
+        "openAiApi": {
+          "id": "24f4qODVRQ0INcJS",
+          "name": "OpenAI - n8n automations"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w",
+          "mode": "list",
+          "cachedResultName": "Brand Mindset Input-test"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Categorized_BVP",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "name": "Store Categorized BVP",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        -896,
+        32
+      ],
+      "id": "8f7ffdea-d26d-40a2-9128-ea13bb63a06e",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "GP0ycwiOqi6LmXaw",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4",
+          "mode": "list",
+          "cachedResultName": "GPT-4"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "Using your expertise in the Burmann Identity model, answer all queries and complete tasks related to brand identity. Provide detailed, accurate, and well-structured information grounded in the Burmann Identity model. The tone should be inspiring, and the narrative should reflect the brand personality.",
+              "role": "system"
+            },
+            {
+              "content": "# BRAND ORIGIN STORY CREATION\n\nCreate the origin story for {{ $('Prepare Workflow Data').item.json.rawData.brandName || $('Prepare Workflow Data').item.json.rawData.companyName || 'the brand' }}, highlighting its {{ $('Prepare Workflow Data').item.json.rawData['Brand Origin'] || $('Prepare Workflow Data').item.json.rawData['Company\\'s Origin (Heritage)'] || 'brand origin' }}.\n\n## BRAND CONTEXT\n- **Brand Name:** {{ $('Prepare Workflow Data').item.json.rawData.brandName || $('Prepare Workflow Data').item.json.rawData.companyName }}\n- **Brand Origin:** {{ $('Prepare Workflow Data').item.json.rawData['Brand Origin'] || $('Prepare Workflow Data').item.json.rawData['Company\\'s Origin (Heritage)'] }}\n- **Brand Advantage:** {{ $('Prepare Workflow Data').item.json.rawData['Brand Advantage (Superior Benefit)'] }}\n- **Industry:** {{ $('Prepare Workflow Data').item.json.rawData['Industry (vertical) / ISIC code'] || $('Prepare Workflow Data').item.json.rawData['ISIC5 - Class Title'] }}\n- **Brand Stage:** {{ $('Prepare Workflow Data').item.json.rawData['Brand Stage (Lifecycle Phase)'] }}\n- **Founding Spark:** {{ $('Prepare Workflow Data').item.json.rawData['Founding spark (year/place)'] }}\n- **First Barrier:** {{ $('Prepare Workflow Data').item.json.rawData['First barrier & response'] }}\n- **Growth Barrier:** {{ $('Prepare Workflow Data').item.json.rawData['Biggest Brand Growth Barrier'] }}\n\n## OUTPUT REQUIREMENTS\nCreate two tables:\n1. **Brand Origin Statement** - Core origin narrative\n2. **Brand History** - Key milestones and development\n\nProvide JSON with brand_origin_statement and brand_history structures."
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -960,
+        -160
+      ],
+      "id": "85edd213-02d6-4646-b0de-c42e7e51a791",
+      "name": "E. Origin Maker",
+      "credentials": {
+        "openAiApi": {
+          "id": "24f4qODVRQ0INcJS",
+          "name": "OpenAI - n8n automations"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4",
+          "mode": "list",
+          "cachedResultName": "GPT-4"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You are an expert in Brand Identity and know the Burmann Identity model in detail. Use inspiring language that motivates stakeholders to align behind a common future state.",
+              "role": "system"
+            },
+            {
+              "content": "# BRAND VISION CREATION\n\nCraft an aspirational, future-oriented Vision that describes the brand goals.\n\n## BRAND CONTEXT\n- **Brand Vision:** {{ $('Prepare Workflow Data').item.json.rawData['Brand Vision'] }}\n- **Future of Brand:** {{ $('Prepare Workflow Data').item.json.rawData['Future of the Brand (BHAGs)'] }}\n- **Future of Industry:** {{ $('Prepare Workflow Data').item.json.rawData['Future of the Industry'] }}\n- **Core Values:** {{ $('Prepare Workflow Data').item.json.rawData['Core Values'] }}\n- **Industry:** {{ $('Prepare Workflow Data').item.json.rawData['Industry (vertical) / ISIC code'] || $('Prepare Workflow Data').item.json.rawData['ISIC5 - Class Title'] }}\n\n## TASK\nCombine Vision with Core Values in the industry context to produce a finalized Brand Vision Statement.\n\n## OUTPUT FORMAT\nProvide JSON with brand_vision_statement structure including vision_description, supporting_values, and industry_alignment."
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -960,
+        224
+      ],
+      "id": "a3583165-76ea-405a-a1fe-09cdce937512",
+      "name": "F. Vision Maker",
+      "credentials": {
+        "openAiApi": {
+          "id": "24f4qODVRQ0INcJS",
+          "name": "OpenAI - n8n automations"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4",
+          "mode": "list",
+          "cachedResultName": "GPT-4"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You are a strategic brand consultant specializing in BCG strategy palette implementation for brand development.",
+              "role": "system"
+            },
+            {
+              "content": "# BRAND STRATEGY DEVELOPMENT\n\nCreate a comprehensive brand strategy using the BCG strategy palette approach.\n\n## BRAND CONTEXT\n- **Personal vs Corporate Impact:** {{ $('Prepare Workflow Data').item.json.rawData['Personal vs. Corporate Brand Impact (1–10, the lower means more Personal)'] }}\n- **Brand Stage:** {{ $('Prepare Workflow Data').item.json.rawData['Brand Stage (Lifecycle Phase)'] }}\n- **Brand Position:** {{ $('Prepare Workflow Data').item.json.rawData['Brand Position (in the Market Location)'] }}\n- **Target Market:** {{ $('Prepare Workflow Data').item.json.rawData['Product Target Market'] }}\n- **Decision Making:** {{ $('Prepare Workflow Data').item.json.rawData['Decision-Making Style (Organizational mindset)'] }}\n- **Customer Types:** {{ $('Prepare Workflow Data').item.json.rawData['Type of customer'] }}\n- **Customer Benefits:** {{ $('Prepare Workflow Data').item.json.rawData['Customer Benefits (Brand-level)'] }}\n- **Brand Advantage:** {{ $('Prepare Workflow Data').item.json.rawData['Brand Advantage (Superior Benefit)'] }}\n- **Growth Barrier:** {{ $('Prepare Workflow Data').item.json.rawData['Biggest Brand Growth Barrier'] }}\n- **Long-term Goals:** {{ $('Prepare Workflow Data').item.json.rawData['Future of the Brand (BHAGs)'] }}\n\n## TASK\nDevelop brand strategy using BCG strategy palette (classical, adaptive, visionary, shaping, renewal).\n\n## OUTPUT FORMAT\nProvide JSON with mindset_brief and strategy_palette structures."
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -960,
+        416
+      ],
+      "id": "bc4e6d86-c973-4f21-9e41-e561d79d11f6",
+      "name": "G. Brand Strategy Maker",
+      "credentials": {
+        "openAiApi": {
+          "id": "24f4qODVRQ0INcJS",
+          "name": "OpenAI - n8n automations"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "D. BVP Categorization": {
+      "main": [
+        [
+          {
+            "node": "Store Categorized BVP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveManualExecutions": true,
+    "saveExecutionProgress": true
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "50b34ab5-0105-42cc-a7d0-93213e4d925c",
+  "triggerCount": 0,
+  "shared": [
+    {
+      "createdAt": "2025-08-30T10:57:56.357Z",
+      "updatedAt": "2025-08-30T10:57:56.357Z",
+      "role": "workflow:owner",
+      "workflowId": "LhmgNvTNAFvrBHuE",
+      "projectId": "KsMRkGjzjIgqFizG"
+    }
+  ],
+  "tags": []
+}

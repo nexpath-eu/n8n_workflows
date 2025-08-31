@@ -1,0 +1,100 @@
+{
+  "createdAt": "2025-08-04T11:37:04.297Z",
+  "updatedAt": "2025-08-13T11:29:46.985Z",
+  "id": "MXt4J8vkevhiiC1T",
+  "name": "Congru PoP Generation - v1.0",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "// Get the data from the previous Google Sheet update\nconst previousData = $input.item.json;\n\nconsole.log('Full previous data:', previousData);\n\n// Extract information - need to access the correct field names from your sheet\nconst commodityTitle = previousData[\"Commodity Title\"] || previousData.commodityTitle || \"\";\nconst language = previousData[\"Language\"] || previousData.language || \"english\";\nconst targetMarket = previousData[\"Target Market\"] || previousData.targetMarket || \"\";\n\n// The key fix: access the localized product name correctly\n// Try multiple possible field names based on your sheet structure\nconst localizedProductName = \n  previousData[\"Local Product Name\"] || \n  previousData[\"Persian name\"] || \n  previousData[\"Localized Product Name\"] ||\n  previousData.persianName ||\n  previousData.localProductName ||\n  previousData.localizedProductName ||\n  \"\"; // Empty fallback\n\nconsole.log('Extracted data:', {\n  commodityTitle,\n  localizedProductName,\n  language,\n  targetMarket\n});\n\n// Get hierarchy context for better translation\nconst hierarchyContext = {\n  segment: { \n    title: previousData[\"Segment Title\"] || \"\",\n    code: previousData[\"Segment Code\"] || \"\"\n  },\n  family: { \n    title: previousData[\"Family Title\"] || \"\",\n    code: previousData[\"Family Code\"] || \"\"\n  },\n  class: { \n    title: previousData[\"Class Title\"] || \"\",\n    code: previousData[\"Class Code\"] || \"\"\n  },\n  commodity: { \n    title: commodityTitle,\n    code: previousData[\"Commodity Code\"] || \"\"\n  }\n};\n\n// Generate search queries...\nconst searchQueries = [\n  `${localizedProductName || commodityTitle} manufacturers ${targetMarket}`,\n  `${localizedProductName || commodityTitle} companies ${targetMarket}`,\n  `${localizedProductName || commodityTitle} suppliers ${targetMarket}`\n];\n\nreturn {\n  json: {\n    searchQueries: searchQueries,\n    searchIndex: 0,\n    detectedLanguage: language,\n    languageCode: 'en',\n    countryCode: 'us',\n    totalQueries: searchQueries.length,\n    commodityTitle: commodityTitle,\n    localizedProductName: localizedProductName,\n    targetMarket: targetMarket,\n    hierarchyContext: hierarchyContext\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3664,
+        1024
+      ],
+      "id": "9d04a854-241c-46db-b101-46a08f231b0d",
+      "name": "Generate Search Queries"
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        3888,
+        1024
+      ],
+      "id": "49b5d84d-a58c-409c-848d-8f91740e0171",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Process search results\nconst allResults = $input.all();\nconst firstResult = allResults[0].json;\n\nlet commodityTitle = '';\nlet targetMarket = '';\nlet detectedLanguage = 'english';\n\ntry {\n  const searchQueriesData = $('Generate Search Queries').item.json;\n  commodityTitle = searchQueriesData.commodityTitle || '';\n  targetMarket = searchQueriesData.targetMarket || '';\n  detectedLanguage = searchQueriesData.detectedLanguage || 'english';\n} catch (error) {\n  detectedLanguage = firstResult.detectedLanguage || 'english';\n  commodityTitle = firstResult.commodityTitle || firstResult['Commodity Title'] || '';\n  targetMarket = firstResult.targetMarket || firstResult['Target Market'] || '';\n}\n\n// Process search results\nlet allSearchResults = [];\nallResults.forEach(result => {\n  if (result.json.items && Array.isArray(result.json.items)) {\n    const googleResults = result.json.items.map(item => ({\n      title: item.title,\n      link: item.link,\n      snippet: item.snippet,\n      displayLink: item.displayLink,\n      source: 'google'\n    }));\n    allSearchResults = allSearchResults.concat(googleResults);\n  }\n});\n\n// Generate market leaders report\nconst marketLeadersRTF = `━━━ MARKET LEADERS ━━━\\n\\n🏭 Companies & Manufacturers:\\n\\n${allSearchResults.slice(0, 5).map((result, i) => `${i+1}. ${result.title}\\n   📍 ${result.link}\\n   📝 ${result.snippet}\\n`).join('\\n')}\\n`;\n\nreturn {\n  json: {\n    \"Commodity Title\": commodityTitle,\n    \"Market Leaders\": marketLeadersRTF,\n    \"Status\": \"Done\"\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4336,
+        1024
+      ],
+      "id": "beeae3bf-7c71-4c7e-a794-64700fb990bc",
+      "name": "Process Search Results"
+    }
+  ],
+  "connections": {
+    "Generate Search Queries": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Process Search Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "fe567cd9-a4d8-4e9f-8005-ff76a14b9749",
+  "triggerCount": 1,
+  "tags": [
+    {
+      "id": "PTDpGFle0Aa0Jj9D",
+      "name": "Congru"
+    },
+    {
+      "id": "57X59euuQJG5XSvC",
+      "name": "Final"
+    }
+  ]
+}

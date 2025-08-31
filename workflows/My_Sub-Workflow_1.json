@@ -1,0 +1,115 @@
+{
+  "createdAt": "2025-08-18T07:09:39.040Z",
+  "updatedAt": "2025-08-18T14:43:34.183Z",
+  "id": "is8zsd0dQUHJGACk",
+  "name": "My Sub-Workflow 1",
+  "active": false,
+  "isArchived": true,
+  "nodes": [
+    {
+      "id": "c055762a-8fe7-4141-a639-df2372f30060",
+      "typeVersion": 1.1,
+      "name": "When Executed by Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        260,
+        340
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "b5942df6-0160-4ef7-965d-57583acdc8aa",
+      "name": "Replace me with your logic",
+      "type": "n8n-nodes-base.noOp",
+      "position": [
+        520,
+        340
+      ],
+      "parameters": {}
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Replace me with your logic",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "1c4d0435-a59f-4ee8-81fc-da184730019c",
+  "triggerCount": 0,
+  "shared": [
+    {
+      "createdAt": "2025-08-18T07:09:39.040Z",
+      "updatedAt": "2025-08-18T07:09:39.040Z",
+      "role": "workflow:owner",
+      "workflowId": "is8zsd0dQUHJGACk",
+      "projectId": "KsMRkGjzjIgqFizG",
+      "project": {
+        "createdAt": "2025-05-28T07:38:53.543Z",
+        "updatedAt": "2025-05-28T07:43:11.983Z",
+        "id": "KsMRkGjzjIgqFizG",
+        "name": "Shahram Soboutipour <soboutipour@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "projectRelations": [
+          {
+            "createdAt": "2025-05-28T07:38:53.543Z",
+            "updatedAt": "2025-05-28T07:38:53.543Z",
+            "role": "project:personalOwner",
+            "userId": "d04c1dfc-dfd7-4820-9571-46e93764563b",
+            "projectId": "KsMRkGjzjIgqFizG",
+            "user": {
+              "createdAt": "2025-05-28T07:38:53.543Z",
+              "updatedAt": "2025-08-31T04:01:19.374Z",
+              "id": "d04c1dfc-dfd7-4820-9571-46e93764563b",
+              "email": "soboutipour@gmail.com",
+              "firstName": "Shahram",
+              "lastName": "Soboutipour",
+              "personalizationAnswers": {
+                "version": "v4",
+                "personalization_survey_submitted_at": "2025-05-28T07:43:38.909Z",
+                "personalization_survey_n8n_version": "1.94.1",
+                "companySize": "<20",
+                "companyType": "saas",
+                "role": "business-owner",
+                "reportedSource": "google"
+              },
+              "settings": {
+                "easyAIWorkflowOnboarded": true,
+                "firstSuccessfulWorkflowId": "EorUVSEUqCHFbJQl",
+                "userActivated": true,
+                "userActivatedAt": 1748458318288,
+                "npsSurvey": {
+                  "responded": true,
+                  "lastShownAt": 1754592946568
+                },
+                "dismissedCallouts": {
+                  "preBuiltAgentsCalloutGoogleSheets": true
+                }
+              },
+              "role": "global:member",
+              "disabled": false,
+              "mfaEnabled": false,
+              "lastActiveAt": "2025-08-31",
+              "isPending": false
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "tags": []
+}

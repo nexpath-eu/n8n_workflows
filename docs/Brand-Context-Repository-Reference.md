@@ -18,13 +18,10 @@ Core workflow and language configuration data.
 |-------|---------------|------|-------------|
 | `rawData` | `$('Brand Context Repository').item.json.rawData` | Object | Complete original form data (fallback access) |
 | `workflowId` | `$('Brand Context Repository').item.json.workflowId` | String | Workflow execution identifier |
-| `targetLanguages` | `$('Brand Context Repository').item.json.targetLanguages` | Array | All target output languages |
-| `targetLanguage` | `$('Brand Context Repository').item.json.targetLanguage` | String | Primary target market language |
 
 **Example Usage:**
 
 ```javascript
-{{ $('Brand Context Repository').item.json.targetLanguage }}
 {{ $('Brand Context Repository').item.json.workflowId }}
 ```
 
@@ -36,19 +33,25 @@ Organizational-level information about the company entity.
 
 | Field | Access Pattern | Description | Source Field |
 |-------|---------------|-------------|--------------|
-| `companyName` | `$('Brand Context Repository').item.json.companyData.companyName` | Company name | Company name |
-| `companyDescription` | `$('Brand Context Repository').item.json.companyData.companyDescription` | Company description/mission (short) | Company description / mission (short) |
-| `companyOrigin` | `$('Brand Context Repository').item.json.companyData.companyOrigin` | Company's origin (heritage) | Company's Origin (Heritage) |
+| `companyName` | `$('Brand Context Repository').item.json.companyData.companyName` | Company/organization name | Company/Organization Name |
+| `companyHeadquarters` | `$('Brand Context Repository').item.json.companyData.companyHeadquarters` | Company headquarters location | Company headquarters (City, Country) |
+| `companyAddress` | `$('Brand Context Repository').item.json.companyData.companyAddress` | Company address | Address |
+| `companyPhone` | `$('Brand Context Repository').item.json.companyData.companyPhone` | Company phone number | Phone number |
 | `foundingSpark` | `$('Brand Context Repository').item.json.companyData.foundingSpark` | Founding spark (year/place) | Founding spark (year/place) |
 | `firstBarrier` | `$('Brand Context Repository').item.json.companyData.firstBarrier` | First barrier & response | First barrier & response |
 | `proofPoints` | `$('Brand Context Repository').item.json.companyData.proofPoints` | Proof points achieved | Proof points achieved |
-| `personalVsCorporate` | `$('Brand Context Repository').item.json.companyData.personalVsCorporate` | Personal vs. Corporate Brand Impact (1-10 scale) | Personal vs. Corporate Brand Impact (1–10, the lower means more Personal) |
+| `achievementYears` | `$('Brand Context Repository').item.json.companyData.achievementYears` | Achievement years/phases | Year(s) / Phase(s) |
+| `industryBarrier` | `$('Brand Context Repository').item.json.companyData.industryBarrier` | Barrier/industry norm overcome | Barrier / Industry norm |
+| `personalVsCorporate` | `$('Brand Context Repository').item.json.companyData.personalVsCorporate` | Personal vs. Corporate Brand Impact | Personal vs. Corporate Brand Impact |
 | `decisionMaking` | `$('Brand Context Repository').item.json.companyData.decisionMaking` | Decision-Making Style | Decision-Making Style (Organizational mindset) |
+| `multipleBrands` | `$('Brand Context Repository').item.json.companyData.multipleBrands` | Has multiple brands | Do you have more than one brand under the company? |
+| `brandOrganization` | `$('Brand Context Repository').item.json.companyData.brandOrganization` | How brands are organized | How are your brands organized within the company? |
 
 **Example Usage:**
 
 ```javascript
 {{ $('Brand Context Repository').item.json.companyData.companyName }}
+{{ $('Brand Context Repository').item.json.companyData.companyHeadquarters }}
 {{ $('Brand Context Repository').item.json.companyData.foundingSpark }}
 ```
 
@@ -60,7 +63,7 @@ Brand strategy, positioning, and identity elements.
 
 | Field | Access Pattern | Description | Source Field |
 |-------|---------------|-------------|--------------|
-| `brandName` | `$('Brand Context Repository').item.json.brandData.brandName` | Brand name (with fallbacks to company name) | Brand name \|\| Company name |
+| `brandName` | `$('Brand Context Repository').item.json.brandData.brandName` | Brand name (with fallbacks to company name) | Brand name \|\| Company/Organization Name |
 | `brandStage` | `$('Brand Context Repository').item.json.brandData.brandStage` | Brand lifecycle phase | Brand Stage (Lifecycle Phase) |
 | `brandVision` | `$('Brand Context Repository').item.json.brandData.brandVision` | Brand Vision statement | Brand Vision |
 | `brandMission` | `$('Brand Context Repository').item.json.brandData.brandMission` | Brand Mission statement | Brand Mission |
@@ -68,7 +71,7 @@ Brand strategy, positioning, and identity elements.
 | `brandAdvantage` | `$('Brand Context Repository').item.json.brandData.brandAdvantage` | Superior brand benefit | Brand Advantage (Superior Benefit) |
 | `brandPosition` | `$('Brand Context Repository').item.json.brandData.brandPosition` | Brand position in market | Brand Position (in the Market Location) |
 | `coreValues` | `$('Brand Context Repository').item.json.brandData.coreValues` | Core brand values | Core Values |
-| `brandOrigin` | `$('Brand Context Repository').item.json.brandData.brandOrigin` | Brand origin story | Brand Origin \|\| Company's Origin (Heritage) |
+| `brandOrigin` | `$('Brand Context Repository').item.json.brandData.brandOrigin` | Brand origin story | Brand Origin |
 | `growthBarrier` | `$('Brand Context Repository').item.json.brandData.growthBarrier` | Biggest growth barrier | Biggest Brand Growth Barrier |
 | `futureGoals` | `$('Brand Context Repository').item.json.brandData.futureGoals` | Future brand goals (BHAGs) | Future of the Brand (BHAGs) |
 | `environmentalPredictability` | `$('Brand Context Repository').item.json.brandData.environmentalPredictability` | Congru Model Axis A | Axis A — Environmental Predictability |
@@ -94,12 +97,18 @@ Product/service-specific information and descriptions.
 | `productDescriptionShort` | `$('Brand Context Repository').item.json.productData.productDescriptionShort` | Brief product description | Product description (short) |
 | `productDescriptionDetailed` | `$('Brand Context Repository').item.json.productData.productDescriptionDetailed` | Detailed product description | Product description (detailed) |
 | `targetMarket` | `$('Brand Context Repository').item.json.productData.targetMarket` | Primary target market | Product Target Market |
+| `targetLanguage` | `$('Brand Context Repository').item.json.productData.targetLanguage` | Primary target market language | Product Target Market Language |
 
 **Example Usage:**
 
 ```javascript
 {{ $('Brand Context Repository').item.json.productData.productName }}
 {{ $('Brand Context Repository').item.json.productData.targetMarket }}
+{{ $('Brand Context Repository').item.json.productData.targetLanguage }}
+```
+{{ $('Brand Context Repository').item.json.productData.productName }}
+{{ $('Brand Context Repository').item.json.productData.targetMarket }}
+{{ $('Brand Context Repository').item.json.productData.unspscCategory }}
 ```
 
 ---
@@ -148,23 +157,30 @@ International Standard Industrial Classification for the industry/sector.
 | Field | Access Pattern | Description | Source Field |
 |-------|---------------|-------------|--------------|
 | `isicHierarchy` | `$('Brand Context Repository').item.json.industryClassification.isicHierarchy` | **Complete ISIC hierarchy with codes** | Generated from all ISIC fields |
+| `isicSectionTitle` | `$('Brand Context Repository').item.json.industryClassification.isicSectionTitle` | ISIC5 Section Title | ISIC5 - Section Title |
+| `isicSectionCode` | `$('Brand Context Repository').item.json.industryClassification.isicSectionCode` | ISIC5 Section Code | ISIC5 - Section Code |
+| `isicDivisionTitle` | `$('Brand Context Repository').item.json.industryClassification.isicDivisionTitle` | ISIC5 Division Title | ISIC5 - Division Title |
+| `isicDivisionCode` | `$('Brand Context Repository').item.json.industryClassification.isicDivisionCode` | ISIC5 Division Code | ISIC5 - Division Code |
 | `isicGroupTitle` | `$('Brand Context Repository').item.json.industryClassification.isicGroupTitle` | ISIC5 Group Title | ISIC5 - Group Title |
 | `isicGroupCode` | `$('Brand Context Repository').item.json.industryClassification.isicGroupCode` | ISIC5 Group Code | ISIC5 - Group Code |
 | `isicClassTitle` | `$('Brand Context Repository').item.json.industryClassification.isicClassTitle` | ISIC5 Class Title | ISIC5 - Class Title |
 | `isicClassCode` | `$('Brand Context Repository').item.json.industryClassification.isicClassCode` | ISIC5 Class Code | ISIC5 - Class Code |
+| `isicIncludes` | `$('Brand Context Repository').item.json.industryClassification.isicIncludes` | What this classification includes | ISIC5 - Includes |
+| `isicIncludesAlso` | `$('Brand Context Repository').item.json.industryClassification.isicIncludesAlso` | Additional inclusions | ISIC5 - Includes Also |
+| `isicExcludes` | `$('Brand Context Repository').item.json.industryClassification.isicExcludes` | What this classification excludes | ISIC5 - Excludes |
 | `industryVertical` | `$('Brand Context Repository').item.json.industryClassification.industryVertical` | Industry vertical/ISIC code | Industry (vertical) / ISIC code |
 | `industryFuture` | `$('Brand Context Repository').item.json.industryClassification.industryFuture` | Future of the industry | Future of the Industry |
 
 **Hierarchy Format:**
 
 ```text
-Group Title (Code) > Class Title (Code)
+Section Title (Code) > Division Title (Code) > Group Title (Code) > Class Title (Code)
 ```
 
 **Example Output:**
 
 ```text
-Manufacture of food products (C10) > Manufacture of dairy products (C105)
+Manufacturing (C) > Manufacture of food products (C10) > Manufacture of dairy products (C105) > Manufacture of milk and other dairy products (C1051)
 ```
 
 **Example Usage:**
@@ -172,6 +188,7 @@ Manufacture of food products (C10) > Manufacture of dairy products (C105)
 ```javascript
 {{ $('Brand Context Repository').item.json.industryClassification.isicHierarchy }}
 {{ $('Brand Context Repository').item.json.industryClassification.industryFuture }}
+{{ $('Brand Context Repository').item.json.industryClassification.isicIncludes }}
 ```
 
 ---
@@ -197,7 +214,42 @@ Target audience and market analysis information.
 
 ---
 
+## 🌐 **DIGITAL PRESENCE DATA**
+
+Website and social media presence information.
+
+| Field | Access Pattern | Description | Source Field |
+|-------|---------------|-------------|--------------|
+| `website` | `$('Brand Context Repository').item.json.digitalPresence.website` | Brand/product website | Website representing the Brand/Product |
+| `instagramUrl` | `$('Brand Context Repository').item.json.digitalPresence.instagramUrl` | Instagram profile URL | Instagram URL |
+| `linkedinUrl` | `$('Brand Context Repository').item.json.digitalPresence.linkedinUrl` | LinkedIn profile URL | LinkedIn URL |
+
+**Example Usage:**
+
+```javascript
+{{ $('Brand Context Repository').item.json.digitalPresence.website }}
+{{ $('Brand Context Repository').item.json.digitalPresence.instagramUrl }}
+```
+
+---
+
 ## 🔧 **Implementation Notes**
+
+### New Data Structure Mapping
+
+The updated form structure includes several new fields that enhance data collection:
+
+**Company Information:**
+- Added: Company headquarters, address, phone number
+- Added: Multiple brands indicator and brand organization structure
+
+**Enhanced Product Classification:**
+- Simplified UNSPSC to single category field (expandable to full hierarchy)
+- Maintains support for detailed UNSPSC breakdown when available
+
+**Digital Presence:**
+- New category for website and social media URLs
+- Supports brand representation across digital channels
 
 ### Fallback Handling
 
@@ -205,7 +257,7 @@ All fields include fallback values to prevent workflow errors:
 
 - String fields default to 'Unknown'
 - Object fields maintain structure even with missing data
-- Brand name has multiple fallback sources (Brand name → Company name → 'Unknown Brand')
+- Brand name has multiple fallback sources (Brand name → Company/Organization Name → 'Unknown Brand')
 
 ### Data Types
 
@@ -216,9 +268,10 @@ All fields include fallback values to prevent workflow errors:
 ### Best Practices
 
 1. **Use semantic access patterns**: Access data through the organized categories rather than rawData when possible
-2. **Leverage hierarchies**: Use the pre-built hierarchy strings for clean, formatted classification data
+2. **Leverage hierarchies**: Use the pre-built hierarchy strings for clean, formatted classification data when available
 3. **Maintain fallbacks**: The rawData object is always available as a fallback for any missing organized fields
 4. **Consistent referencing**: Use the full access path for clarity in AI prompts
+5. **Digital presence integration**: Use the new digitalPresence category for online brand representation
 
 ### Migration from Old Patterns
 
@@ -234,31 +287,63 @@ All fields include fallback values to prevent workflow errors:
 ```javascript
 {{ $('Brand Context Repository').item.json.brandData.brandName }}
 {{ $('Brand Context Repository').item.json.productClassification.unspscHierarchy }}
+{{ $('Brand Context Repository').item.json.digitalPresence.website }}
 ```
 
 ---
 
 ## 📊 **Summary Statistics**
 
-- **Total Categories**: 6 main data categories
-- **Total Fields**: 40+ organized data points
-- **Hierarchy Fields**: 2 (UNSPSC + ISIC with codes)
+- **Total Categories**: 7 main data categories
+- **Total Fields**: 61 organized data points (streamlined)
+- **Hierarchy Fields**: 2 (UNSPSC + ISIC with full hierarchies)
+- **Classification Levels**: 
+  - UNSPSC: 4 levels (Segment > Family > Class > Commodity)
+  - ISIC: 4 levels (Section > Division > Group > Class) + includes/excludes
 - **Fallback Coverage**: 100% (all fields have fallback values)
-- **Source Coverage**: All identified AI prompt variables included
+- **Source Coverage**: All essential form fields mapped and organized
+- **Focus**: Core business data without redundancy
 
 ---
 
 ## 🚀 **Benefits**
 
-1. **Organized Structure**: Logical grouping makes data easy to find and use
-2. **Clean Access**: Semantic field names replace complex rawData paths
-3. **Enhanced Hierarchies**: Pre-built classification strings with codes
-4. **Error Prevention**: Comprehensive fallback handling
-5. **Performance**: Single data consolidation reduces multiple node queries
-6. **Maintainability**: Clear documentation and consistent patterns
-7. **Scalability**: Easy to extend with new categories or fields
+1. **Streamlined Structure**: Focused on essential business data without redundancy
+2. **Comprehensive Classification**: Full UNSPSC and ISIC hierarchies with all levels
+3. **Rich Context**: ISIC includes/excludes provide detailed classification context
+4. **Enhanced Organization**: Support for multi-brand company structures
+5. **Digital Integration**: Direct access to brand's online presence
+6. **Organized Structure**: Logical grouping makes data easy to find and use
+7. **Clean Access**: Semantic field names replace complex rawData paths
+8. **Enhanced Hierarchies**: Pre-built classification strings with complete codes
+9. **Error Prevention**: Comprehensive fallback handling
+10. **Performance**: Single data consolidation reduces multiple node queries
+11. **Maintainability**: Clear documentation and consistent patterns
+12. **Scalability**: Easy to extend with new categories or fields
+
+---
+
+## 📋 **Updated Field Count Summary**
+
+| Category | Fields | Notes |
+|----------|--------|-------|
+| Technical Metadata | 2 | Streamlined to essentials |
+| Company Data | 12 | Complete contact & organizational info |
+| Brand Data | 13 | Full brand strategy & positioning |
+| Product Data | 5 | Core product info, no redundant classification |
+| Product Classification (UNSPSC) | 9 | Complete 4-level hierarchy |
+| Industry Classification (ISIC) | 14 | Complete 4-level hierarchy + context |
+| Customer & Market Data | 5 | Target audience analysis |
+| Digital Presence | 3 | Online brand representation |
+| **Total** | **63** | **Optimized for business focus** |
+
+**Key Features:**
+- **Complete Classification**: Full UNSPSC and ISIC hierarchies handle all classification needs
+- **No Redundancy**: UNSPSC category removed from product data (covered in classification section)
+- **Business Focus**: Clean separation between product data and classification data
+- **Logical Organization**: Each data type in its appropriate category
 
 ---
 
 *Last Updated: September 1, 2025*  
-*Version: 2.0 - Reorganized Structure with Hierarchies*
+*Version: 5.1 - Eliminated Redundancy, Pure Business Focus*

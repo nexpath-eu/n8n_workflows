@@ -710,7 +710,7 @@
             {
               "id": "customer_market_data",
               "name": "customerMarketData",
-              "value": "={{ {\n  customerType: $json.rawData['Type of customer'] || 'Unknown',\n  marketGroups: $json.rawData['Market Groups'] || 'Unknown',\n  valuableCustomers: $json.rawData['Most Valuable Customer Groups'] || 'Unknown',\n  successGroups: $json.rawData['Groups Where You've Succeeded'] || 'Unknown',\n  customerBenefits: $json.rawData['Customer Benefits (Brand-level)'] || 'Unknown'\n} }}",
+              "value": "={{ {\n  customerType: $json.rawData['Type of customer'] || 'Unknown',\n  marketGroups: $json.rawData['Market Groups'] || 'Unknown',\n  valuableCustomers: $json.rawData['Most Valuable Customer Groups'] || 'Unknown',\n  successGroups: $json.rawData['Groups Where You\\'ve Succeeded'] || 'Unknown',\n  customerBenefits: $json.rawData['Customer Benefits (Brand-level)'] || 'Unknown'\n} }}",
               "type": "object"
             }
           ]
@@ -725,6 +725,301 @@
         608
       ],
       "id": "brand-context-repo-001"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "pop_cache_key",
+              "name": "pop_cache_key",
+              "value": "={{ $('Brand Context Repository').item.json.productClassification.unspscCommodityCode }}_{{ $('Brand Context Repository').item.json.targetLanguage }}_{{ $('Brand Context Repository').item.json.productData.targetMarket }}",
+              "type": "string"
+            },
+            {
+              "id": "pod_cache_key", 
+              "name": "pod_cache_key",
+              "value": "={{ $('Brand Context Repository').item.json.brandData.brandName }}_{{ $('Brand Context Repository').item.json.productData.productName }}_{{ $('Brand Context Repository').item.json.targetLanguage }}_{{ $('Brand Context Repository').item.json.productData.targetMarket }}",
+              "type": "string"
+            },
+            {
+              "id": "unspsc_commodity_code",
+              "name": "unspsc_commodity_code", 
+              "value": "={{ $('Brand Context Repository').item.json.productClassification.unspscCommodityCode }}",
+              "type": "string"
+            },
+            {
+              "id": "brand_name",
+              "name": "brand_name",
+              "value": "={{ $('Brand Context Repository').item.json.brandData.brandName }}",
+              "type": "string"
+            },
+            {
+              "id": "product_name",
+              "name": "product_name", 
+              "value": "={{ $('Brand Context Repository').item.json.productData.productName }}",
+              "type": "string"
+            },
+            {
+              "id": "target_language",
+              "name": "target_language",
+              "value": "={{ $('Brand Context Repository').item.json.targetLanguage }}",
+              "type": "string"
+            },
+            {
+              "id": "target_market",
+              "name": "target_market",
+              "value": "={{ $('Brand Context Repository').item.json.productData.targetMarket }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Cache Key Generator",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -4000,
+        608
+      ],
+      "id": "cache-key-generator-001"
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "value": "1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w",
+          "mode": "list",
+          "cachedResultName": "Brand Mindset Input-test"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "PoP_Benefits",
+          "mode": "list",
+          "cachedResultName": "PoP_Benefits"
+        },
+        "options": {
+          "range": "A:R"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "condition": "equal",
+              "field": "unspsc_commodity_code",
+              "value": "={{ $('Cache Key Generator').item.json.unspsc_commodity_code }}"
+            },
+            {
+              "condition": "equal", 
+              "field": "target_language",
+              "value": "={{ $('Cache Key Generator').item.json.target_language }}"
+            },
+            {
+              "condition": "equal",
+              "field": "target_market", 
+              "value": "={{ $('Cache Key Generator').item.json.target_market }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.4,
+      "position": [
+        -3800,
+        548
+      ],
+      "id": "pop-cache-lookup-001",
+      "name": "PoP Benefits Cache Lookup",
+      "continueOnFail": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": {
+          "__rl": true,
+          "value": "1XH2gaiKpAzVsylxZnzH9Cgfg13WgYEZvs6pzX3SQR8w",
+          "mode": "list",
+          "cachedResultName": "Brand Mindset Input-test"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "PoD_Benefits",
+          "mode": "list",
+          "cachedResultName": "PoD_Benefits"
+        },
+        "options": {
+          "range": "A:T"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "condition": "equal",
+              "field": "brand_name",
+              "value": "={{ $('Cache Key Generator').item.json.brand_name }}"
+            },
+            {
+              "condition": "equal",
+              "field": "product_name", 
+              "value": "={{ $('Cache Key Generator').item.json.product_name }}"
+            },
+            {
+              "condition": "equal",
+              "field": "target_language",
+              "value": "={{ $('Cache Key Generator').item.json.target_language }}"
+            },
+            {
+              "condition": "equal",
+              "field": "target_market",
+              "value": "={{ $('Cache Key Generator').item.json.target_market }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.4,
+      "position": [
+        -3800,
+        668
+      ],
+      "id": "pod-cache-lookup-001",
+      "name": "PoD Benefits Cache Lookup",
+      "continueOnFail": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "existing_pop_benefits",
+              "name": "existing_pop_benefits",
+              "value": "={{ $('PoP Benefits Cache Lookup').all() }}",
+              "type": "object"
+            },
+            {
+              "id": "existing_pod_benefits", 
+              "name": "existing_pod_benefits",
+              "value": "={{ $('PoD Benefits Cache Lookup').all() }}",
+              "type": "object"
+            },
+            {
+              "id": "pop_count",
+              "name": "pop_count",
+              "value": "={{ $('PoP Benefits Cache Lookup').all().length }}",
+              "type": "number"
+            },
+            {
+              "id": "pod_count",
+              "name": "pod_count", 
+              "value": "={{ $('PoD Benefits Cache Lookup').all().length }}",
+              "type": "number"
+            },
+            {
+              "id": "skip_node_a",
+              "name": "skip_node_a",
+              "value": "={{ $('PoP Benefits Cache Lookup').all().length > 0 }}",
+              "type": "boolean"
+            },
+            {
+              "id": "skip_node_b",
+              "name": "skip_node_b",
+              "value": "={{ $('PoD Benefits Cache Lookup').all().length > 0 }}",
+              "type": "boolean"
+            },
+            {
+              "id": "execute_node_a",
+              "name": "execute_node_a",
+              "value": "={{ $('PoP Benefits Cache Lookup').all().length === 0 }}",
+              "type": "boolean"
+            },
+            {
+              "id": "execute_node_b",
+              "name": "execute_node_b", 
+              "value": "={{ $('PoD Benefits Cache Lookup').all().length === 0 }}",
+              "type": "boolean"
+            },
+            {
+              "id": "cache_summary",
+              "name": "cache_summary",
+              "value": "PoP Benefits Found: {{ $('PoP Benefits Cache Lookup').all().length }}, PoD Benefits Found: {{ $('PoD Benefits Cache Lookup').all().length }}. Node A: {{ $('PoP Benefits Cache Lookup').all().length === 0 ? 'EXECUTE' : 'SKIP' }}, Node B: {{ $('PoD Benefits Cache Lookup').all().length === 0 ? 'EXECUTE' : 'SKIP' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Cache Decision Router",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -3600,
+        608
+      ],
+      "id": "cache-decision-router-001"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "execute_condition",
+              "leftValue": "={{ $('Cache Decision Router').item.json.execute_node_a }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equal"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -3400,
+        548
+      ],
+      "id": "if-execute-node-a-001",
+      "name": "IF Execute Node A"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "execute_condition",
+              "leftValue": "={{ $('Cache Decision Router').item.json.execute_node_b }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean", 
+                "operation": "equal"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -3400,
+        668
+      ],
+      "id": "if-execute-node-b-001",
+      "name": "IF Execute Node B"
     },
     {
       "parameters": {
@@ -2618,7 +2913,88 @@
       "main": [
         [
           {
+            "node": "Cache Key Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cache Key Generator": {
+      "main": [
+        [
+          {
+            "node": "PoP Benefits Cache Lookup",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "PoD Benefits Cache Lookup",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PoP Benefits Cache Lookup": {
+      "main": [
+        [
+          {
+            "node": "Cache Decision Router",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PoD Benefits Cache Lookup": {
+      "main": [
+        [
+          {
+            "node": "Cache Decision Router",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cache Decision Router": {
+      "main": [
+        [
+          {
+            "node": "IF Execute Node A",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "IF Execute Node B",
+            "type": "main",
+            "index": 0
+          },
+          {
             "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Execute Node A": {
+      "main": [
+        [
+          {
+            "node": "A. Product Benefit Finder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF Execute Node B": {
+      "main": [
+        [
+          {
+            "node": "B. Brand-Product Benefit Creator",
             "type": "main",
             "index": 0
           }
